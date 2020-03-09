@@ -1,0 +1,364 @@
+@import '~antd/lib/style/themes/default.less';
+//==========Card
+.cardHead {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  background-color: var(--customer-card-head-background);
+  padding: 16px 0;
+  box-shadow: 0 0 10px #CCC;
+  color: var(--primary-color);
+
+  & > span:nth-of-type(2) {
+    float: right;
+    margin: 0 30px;
+  }
+
+  & > span:nth-of-type(3) {
+    float: right;
+  }
+
+  & > span:nth-of-type(4) {
+    float: right;
+    margin: 0 30px;
+  }
+
+  & > i {
+    font-size: 22px;
+    line-height: 32px;
+  }
+}
+
+//=======Exception
+
+.exception {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  .imgBlock {
+    flex: 0 0 62.5%;
+    width: 62.5%;
+    padding-right: 152px;
+    zoom: 1;
+    &:before,
+    &:after {
+      content: ' ';
+      display: table;
+    }
+    &:after {
+      clear: both;
+      visibility: hidden;
+      font-size: 0;
+      height: 0;
+    }
+  }
+
+  .imgEle {
+    height: 360px;
+    width: 100%;
+    max-width: 430px;
+    float: right;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+  }
+
+  .content {
+    flex: auto;
+
+    h1 {
+      color: #434e59;
+      font-size: 72px;
+      font-weight: 600;
+      line-height: 72px;
+      margin-bottom: 24px;
+    }
+
+    .desc {
+      color: @text-color-secondary;
+      font-size: 20px;
+      line-height: 28px;
+      margin-bottom: 16px;
+    }
+
+    .actions {
+      button:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xl) {
+  .exception {
+    .imgBlock {
+      padding-right: 88px;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-sm) {
+  .exception {
+    display: block;
+    text-align: center;
+    .imgBlock {
+      padding-right: 0;
+      margin: 0 auto 24px;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xs) {
+  .exception {
+    .imgBlock {
+      margin-bottom: -24px;
+      overflow: hidden;
+    }
+  }
+}
+
+
+
+//=====GlobalHeader
+
+._header {
+  height: 64px;
+  padding: 0 12px 0 0;
+  //background: #FFF;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  position: relative;
+}
+
+:global {
+  .ant-layout {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+.logo {
+  height: 64px;
+  line-height: 58px;
+  vertical-align: top;
+  display: inline-block;
+  padding: 0 0 0 24px;
+  cursor: pointer;
+  font-size: 20px;
+  img {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.menu {
+  :global(.anticon) {
+    margin-right: 8px;
+  }
+  :global(.ant-dropdown-menu-item) {
+    width: 160px;
+  }
+}
+
+i.trigger {
+  font-size: 20px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: all 0.3s, padding 0s;
+  padding: 0 24px;
+  color: var(--text-color);
+  &:hover {
+    background: @primary-1;
+  }
+}
+
+._right {
+  float: right;
+  height: 100%;
+  .action {
+    cursor: pointer;
+    padding: 0 12px;
+    display: inline-block;
+    transition: all 0.3s;
+    height: 100%;
+    //color: var(--icon-color);
+    > i {
+      font-size: 16px;
+      vertical-align: middle;
+      //color: var(--icon-color);
+    }
+    &:hover,
+    &:global(.ant-popover-open) {
+      background: @primary-1;
+    }
+  }
+  .search {
+    padding: 0;
+    margin: 0 12px;
+    &:hover {
+      background: transparent;
+    }
+  }
+  .account {
+    .avatar {
+      margin: 20px 8px 20px 0;
+      color: @primary-color;
+      background-color: transparent;
+      padding: 2px;
+      vertical-align: middle;
+      border: 2px solid #CCC;
+      box-shadow: #dcdcdc 0 0 3px 1px inset;
+      & > img {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: @screen-md) {
+  .header {
+    :global(.ant-divider-vertical) {
+      vertical-align: unset;
+    }
+    .name {
+      display: none;
+    }
+    i.trigger {
+      padding: 0 12px;
+    }
+    .logo {
+      padding-right: 12px;
+      position: relative;
+    }
+    .right {
+      position: absolute;
+      right: 12px;
+      top: 0;
+      background: #fff;
+      .account {
+        .avatar {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+
+///===
+.header {
+  height: 64px;
+  padding: 0 12px 0 0;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  position: relative;
+  background: transparent;
+  color: white;
+}
+.name{
+  color: #666666;
+}
+
+
+
+
+.right {
+  float: right;
+  line-height: 64px;
+  .action {
+    cursor: pointer;
+    padding: 0 12px;
+    display: inline-block;
+    transition: all 0.3s;
+    height: 100%;
+    > i {
+      font-size: 16px;
+      vertical-align: middle;
+      color: white;
+    }
+    &:hover,
+    &:global(.ant-popover-open) {
+      background: @primary-1;
+    }
+  }
+  .search {
+    padding: 0;
+    margin: 0 12px;
+    &:hover {
+      background: transparent;
+    }
+  }
+  .account {
+    .avatar {
+      margin: 20px 8px 20px 0;
+      color: @primary-color;
+      background-color: transparent;
+      padding: 2px;
+      vertical-align: middle;
+      border: 2px solid #CCC;
+      box-shadow: #dcdcdc 0 0 3px 1px inset;
+      & > img {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+
+
+.headerSearch {
+  :global(.anticon-search) {
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .input {
+    transition: width 0.3s, margin-left 0.3s;
+    width: 0;
+    background: transparent;
+    border-radius: 0;
+    :global(.ant-select-selection) {
+      background: transparent;
+    }
+    input {
+      border: 0;
+      padding-left: 0;
+      padding-right: 0;
+      box-shadow: none !important;
+    }
+    &,
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid @border-color-base;
+    }
+    &.show {
+      width: 210px;
+      margin-left: 8px;
+    }
+  }
+}
+
+
+//ContainerCard
+
+.tooltipPrimary {
+  color: var(--primary-color);
+  font-size: 20px;
+}
+
+.tooltipWhite {
+  color: #fff;
+  font-size: 20px;
+}
+
+.closePrimary {
+  color: var(--primary-color);
+  font-size: 20px;
+  float: left;
+}
+
+.closeWhite {
+  color: #fff;
+  font-size: 20px;
+  float: left;
+}

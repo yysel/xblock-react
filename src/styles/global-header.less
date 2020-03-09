@@ -1,0 +1,196 @@
+@import '~antd/lib/style/themes/default.less';
+
+.xblock-global-header-menu {
+  :global(.anticon) {
+    margin-right: 8px;
+  }
+  :global(.ant-dropdown-menu-item) {
+    width: 160px;
+  }
+}
+
+.xblock-global-header-trigger {
+  font-size: 20px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: all 0.3s, padding 0s;
+  padding: 0 24px;
+  color: var(--text-color);
+  &:hover {
+    background: @primary-1;
+  }
+
+}
+
+.xblock-global-header-top {
+  height: 64px;
+  padding: 0 12px 0 0;
+  //background: #FFF;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  position: relative;
+}
+
+.xblock-global-header-logo {
+  height: 64px;
+  line-height: 58px;
+  vertical-align: top;
+  display: inline-block;
+  padding: 0 0 0 24px;
+  cursor: pointer;
+  font-size: 20px;
+  img {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.xblock-global-header-right {
+  float: right;
+  height: 100%;
+  .name {
+    color: #666666;
+  }
+  .action {
+    cursor: pointer;
+    padding: 0 12px;
+    display: inline-block;
+    transition: all 0.3s;
+    height: 100%;
+    //color: var(--icon-color);
+    > i {
+      font-size: 16px;
+      vertical-align: middle;
+      //color: var(--icon-color);
+    }
+    &:hover,
+    &:global(.ant-popover-open) {
+      background: @primary-1;
+    }
+  }
+  .search {
+    padding: 0;
+    margin: 0 12px;
+    &:hover {
+      background: transparent;
+    }
+  }
+  .account {
+    .avatar {
+      margin: 20px 8px 20px 0;
+      color: @primary-color;
+      background-color: transparent;
+      padding: 2px;
+      vertical-align: middle;
+      border: 2px solid #CCC;
+      box-shadow: #dcdcdc 0 0 3px 1px inset;
+      & > img {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.xblock-global-header-notice-icon-tabs {
+  :global {
+    .ant-tabs-nav-scroll {
+      text-align: center;
+    }
+    .ant-tabs-bar {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.xblock-global-header-notice-icon {
+  font-size: 16px;
+  padding: 4px;
+}
+
+.xblock-global-header-notice-popover {
+  width: 336px;
+  :global(.ant-popover-inner-content) {
+    padding: 0;
+  }
+}
+
+.xblock-global-header-notice-button {
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.3s;
+}
+
+.xblock-global-header-notice-notfound {
+  text-align: center;
+  padding: 73px 0 88px 0;
+  color: @text-color-secondary;
+  img {
+    display: inline-block;
+    margin-bottom: 16px;
+    height: 76px;
+  }
+}
+
+.xblock-global-header-notice-list {
+  max-height: 400px;
+  overflow: auto;
+  .item {
+    transition: all 0.3s;
+    overflow: hidden;
+    cursor: pointer;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    .meta {
+      width: 100%;
+    }
+
+    .avatar {
+      background: #fff;
+      margin-top: 4px;
+    }
+
+    &.read {
+      opacity: 0.4;
+    }
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      background: @primary-1;
+    }
+    .title {
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+    .description {
+      font-size: 12px;
+      line-height: @line-height-base;
+    }
+    .datetime {
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: @line-height-base;
+    }
+    .extra {
+      float: right;
+      color: @text-color-secondary;
+      font-weight: normal;
+      margin-right: 0;
+      margin-top: -1.5px;
+    }
+  }
+}
+.xblock-global-header-notice-clear {
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+  color: @text-color;
+  border-radius: 0 0 @border-radius-base @border-radius-base;
+  border-top: 1px solid @border-color-split;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: @heading-color;
+  }
+}

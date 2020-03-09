@@ -1,0 +1,18 @@
+import React from 'react';
+import BraftEditor from 'braft-editor';
+
+export default function Editor(props) {
+  return <BraftEditor value={props.value instanceof String ? BraftEditor.createEditorState(props.value) : props.value}
+                      onChange={(v) => props.onChange(v.toHTML())}
+                      defaultValue={BraftEditor.createEditorState(props.value)}
+                      contentStyle={{height: props.height? props.height:600, boxShadow: 'inset 0 1px 3px rgba(0,0,0,.1)'}}
+                      stripPastedStyles='true'
+                      media={{pasteImage: 'true'}}
+
+  />
+}
+
+Editor.EditorShow = (props) => {
+  const content = BraftEditor.createEditorState(props.value).toHTML();
+  return (<div dangerouslySetInnerHTML={{__html: content}}/>);
+};

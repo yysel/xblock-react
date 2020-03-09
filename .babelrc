@@ -1,0 +1,53 @@
+{
+  "presets": [
+    "es2015",
+    "react"
+  ],
+  "plugins": [
+    "transform-object-rest-spread",
+    "babel-plugin-transform-jsx-classname-components",
+    "@babel/plugin-proposal-optional-chaining",
+    "transform-decorators",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+    ["import", { "libraryName": "antd", "style": true }],
+    [
+      "transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true,
+        "moduleName": "babel-runtime"
+      }
+    ],
+    [
+      "module-alias",
+      [
+        {
+          "src": "./src/blocks",
+          "expose": "_block"
+        },
+        {
+          "src": "./src/components",
+          "expose": "_component"
+        },
+        {
+          "src": "./src/elements",
+          "expose": "_element"
+        },
+        {
+          "src": "./src/styles",
+          "expose": "_style"
+        },
+        {
+          "src": "./src/assets",
+          "expose": "_asset"
+        },
+        {
+          "src": "./src/tools",
+          "expose": "_tools"
+        }
+      ]
+    ]
+  ]
+}
