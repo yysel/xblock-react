@@ -1,7 +1,5 @@
-
 import { Icon } from '@ant-design/compatible'
 import React from 'react'
-import styles from '_style/element.less'
 
 export default (props) => {
   const {color, children, icon, ...rest} = props
@@ -12,7 +10,7 @@ export default (props) => {
     padding: '0 16px'
   }
   if (color && color !== 'primary') style.backgroundColor = color
-  return <span className={styles.colorbutton} style={style}
+  return <span className='xblock-element-color-button' style={style}
   >{icon && <Icon type={icon}/>} <span style={children.length === 2 ? {letterSpacing: 5} : {}}>{text}</span>
   </span>
 };

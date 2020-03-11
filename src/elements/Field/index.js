@@ -44,7 +44,7 @@ class Field extends React.Component {
   }
 }
 
-export default connect(({'@@element': {element}}) => ({element}))((props) => {
+export default connect(({'@@element': element}) => ({element}))((props) => {
   const {header: {parent, index: headerIndex}, index, mode = 'edit', element, header, ...rest} = props
   const parentValue = element[mode]?.[`${index}-${parent}`]?.value ? element[mode][`${index}-${parent}`].value : null
   const resetChildrenValue = () => {

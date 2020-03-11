@@ -228,7 +228,7 @@ export default class MainLaytout extends React.PureComponent {
                                                         path={route.path} exact
                                                         component={route.component}/>,
               )}
-              {/*{this.lock && <Redirect exact from="/" to={bashRedirect}/>}*/}
+              {this.lock && <Redirect exact from="/" to={bashRedirect}/>}
               {this.lock && <Route render={NotFount}/>}
             </Switch>
           </Content>

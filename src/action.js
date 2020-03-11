@@ -33,7 +33,6 @@ export const logout = () => registerState.dispatch({
 //获取当前用户
 export const getUser = () => registerState.dispatch({
   type: '@@xblock/fetchCurrent',
-
 })
 
 //获取菜单

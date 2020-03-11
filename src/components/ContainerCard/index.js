@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import Card from '../Card'
+import Card from '../../cards/ColorHeaderCard'
 import { Tooltip, Modal } from 'antd'
 import { checkCode } from '../../tools/response'
 import styles from '../../styles/component.less'

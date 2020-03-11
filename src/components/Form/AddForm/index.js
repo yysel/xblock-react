@@ -4,16 +4,16 @@ import {
   Row,
   Col,
   Modal,
+  Form
 } from 'antd'
 import { connect } from 'dva'
-import { Form } from '@ant-design/compatible'
 
 const FormItem = Form.Item
-const AddForm = Form.create()(props => {
-  const {form, onOk, addFormVisible, header, changeAddFormVisible, index, blockConfig} = props
+const AddForm = props => {
+  const {onOk, addFormVisible, header, changeAddFormVisible, index, blockConfig} = props
+  const [form] = Form.useForm()
   const okHandle = () => {
-    form.validateFields((err, value) => {
-      if (err) return
+    form.validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
       if (filter.length) {
         onOk(value).then(res => {
@@ -25,33 +25,50 @@ const AddForm = Form.create()(props => {
       }
     })
   }
+
+  const oneColumn = header.map(function (item, i) {
+    return (
+      <FormItem labelCol={{span: 5}} wrapperCol={{span: 15}} key={i} label={item.title} name={item.index}
+                rules={FormRule(item)}>
+        <Field header={item} mode={'add'} index={index}
+               extension={blockConfig?.header ? blockConfig.header : {}}/>
+
+      </FormItem>
+    )
+  })
+  const TwoColumn = <div>
+    <Row gutter={24}>{
+      header.map(function (item, i) {
+        return (
+          <Col span={12} key={i}>
+            <FormItem labelCol={{span: 5}} wrapperCol={{span: 15}} label={item.title} name={item.index}
+                      rules={FormRule(item)}>
+              <Field header={item} mode={'add'} index={index}
+                     extension={blockConfig?.header ? blockConfig.header : {}}/>
+
+            </FormItem>
+          </Col>
+        )
+      })
+    }</Row>
+  </div>
+
   return (
+
     <Modal
       title="新增"
-      width={'60%'}
+      width={header.length > 10 ? 800 : 600}
       visible={addFormVisible[index]}
       onOk={okHandle}
       onCancel={() => changeAddFormVisible(false)}
     >
-
-      <Row style={{height: '500px', overflowY: 'scroll'}}>
-        {header.map(function (item) {
-          return (
-            <Col sm={24} md={24} lg={12} xl={12} key={item.index}>
-              <FormItem labelCol={{span: 5}} wrapperCol={{span: 15}} label={item.title}>
-                {form.getFieldDecorator(item.index, {
-                  rules: FormRule(item),
-                  initialValue: item.default ? item.default : null,
-                })(<Field header={item} mode={'add'} index={index}
-                          extension={blockConfig?.header ? blockConfig.header : {}}/>)}
-              </FormItem>
-            </Col>)
-        })}
-      </Row>
+      <Form initialValues={{}} form={form}>
+        {header.length > 10 ? TwoColumn : oneColumn}
+      </Form>
     </Modal>
-  )
-})
 
-export default connect(({"@@container": {addFormVisible}}) => ({
+  )
+}
+export default connect(({'@@container': {addFormVisible}}) => ({
   addFormVisible,
 }))(AddForm)

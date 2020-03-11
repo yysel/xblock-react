@@ -9,7 +9,7 @@ import registerState from './registerState'
 import register from './register'
 
 export default class XBlock {
-  app = {}
+  dva = {}
   provider_list = []
   dispatch = null
   getState = null
@@ -32,7 +32,7 @@ export default class XBlock {
     app.start(root)
     registerState.dispatch = this.dispatch = app._store.dispatch
     registerState.getState = this.getState = app._store.getState
-    this.app = app
+    this.dva = app
     this.provider_list.forEach(provider => {
       provider.app = this
       provider.boot()

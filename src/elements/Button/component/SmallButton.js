@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '_style/element.less';
 
 export default (props) => {
   const { button: { color, title }, onClick } = props;
@@ -10,6 +9,6 @@ export default (props) => {
     borderRadius: 4,
     backgroundColor: (color && color !== 'primary') ? color: 'var(--primary-color)',
   };
-  return <span className={styles.buttonClick} style={style}
+  return <span className='xblock-element-small-button' style={style}
                onClick={onClick}>{title}</span>;
 }

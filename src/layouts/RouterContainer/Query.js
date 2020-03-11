@@ -9,7 +9,7 @@ import EditForm from '../../components/Form/EditForm'
 import TopFilterForm from '../../components/Form/TopFilterForm'
 import { Tabs, Row, Col, Empty, Skeleton } from 'antd'
 import blockStructure from '../../tools/block'
-import BaseCard from '../../components/Card'
+import BaseCard from '../../cards/ColorHeaderCard'
 import { goPage } from '../../tools/helper'
 import ExportModal from '../../components/Modals/ExportModal'
 import InnerButton from '../../elements/Button/InnerButton'
@@ -205,11 +205,13 @@ export default class BasicContainer extends Component {
         changeEditFormVisible: (v, value) => changeEditFormVisible(index, v, value),
         onClick: this.onClick,
         onChange: this.onChange,
-        InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props} />,
-        TopButton: (props) => <TopButton button={block.getTopButton()} {...buttonProps} {...props}  />,
-        Field: (props) => <Field index={index} {...props}/>,
-        Column: (props) => <Column event={event} {...props} dispatch={dispatch}
-                                   extension={this.config?.column ? this.config.column : {}}/>
+        InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props}
+                                             extension={this.config?.button ? this.config.button : {}}/>,
+        TopButton: (props) => <TopButton button={block.getTopButton()} {...buttonProps} {...props}
+                                         extension={this.config?.button ? this.config.button : {}}/>,
+        Input: (props) => <Field index={index} {...props} extension={this.config?.input ? this.config.input : {}}/>,
+        Cell: (props) => <Column event={event} {...props} dispatch={dispatch}
+                                 extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
       return <Col span={block.width || 24}> <Card block={block} onClick={this.onClick} setInitParam={this.setInitParam}
@@ -224,19 +226,18 @@ export default class BasicContainer extends Component {
             {tabItem.map(item => <TabPane tab={item.text} key={item.value}/>)}
           </Tabs>
         }
-        <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange} blockConfig={this.config}
-                       header={block.header.filter(i => i.filterable && i.filter_position === 'top')}/>
+        <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange}
+                       header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
+                       Input={props.Input}/>
 
-        <AddForm index={index} header={block.getAddHeader()} blockConfig={this.config}
+        <AddForm index={index} header={block.getAddHeader()}
                  changeAddFormVisible={(v) => changeAddFormVisible(index, v)}
-                 onOk={(value) => this.onClick('add', {value})}/>
+                 onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
         {TopExtra && <TopExtra {...props}/>}
         <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== 'uuid')}
                   changeEditFormVisible={(v) => changeEditFormVisible(index, v)}
-                  blockConfig={this.config}
+                  Input={props.Input}
                   onOk={(value) => this.onClick('edit', {value})}/>
-
-
         <Row>
           <Col span={leftExtraWidth}><Col>{LeftExtra && <LeftExtra {...props}/>}</Col></Col>
           <Col span={24 - leftExtraWidth - rightExtraWidth}><Component {...props} {...componentProps}/></Col>

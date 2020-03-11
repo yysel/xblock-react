@@ -64,7 +64,7 @@ export default class CommonTable extends PureComponent {
   }
 
   getColumn = () => {
-    const {block: {header = [], sorting}, blockConfig, event, Column} = this.props
+    const {block: {header = [], sorting}, Cell} = this.props
     return header.filter(item => item.visible).map(item => {
       let {
         title,
@@ -81,7 +81,6 @@ export default class CommonTable extends PureComponent {
         key: dataIndex,
         title: newTitle,
         dataIndex,
-        className: 'column_c',
       }
       if (sortable) {
         const order = sorting?.[dataIndex] ? sorting[dataIndex] + 'end' : false
@@ -94,7 +93,7 @@ export default class CommonTable extends PureComponent {
       if (filterable) {
         column.filterType = filterType
       }
-      column.render = (value, row) => <Column value={value} header={item} row={row}/>
+      column.render = (value, row) => <Cell value={value} header={item} row={row}/>
       return column
     })
   }
@@ -103,7 +102,6 @@ export default class CommonTable extends PureComponent {
     const {loading, dispatch, block: {content, pagination, button, property: {has_border, link}}, onRow, rowClassName, TopButton, ...rest} = this.props
     const {selectedRows} = this.state
     const column = this.getColumn()
-    const buttonOnTop = button ? button.filter(item => item.position === 'top') : []
     let size = 'default'
     let sizeRadio = 1
     const wind = window.screen.width

@@ -101,7 +101,7 @@ export function findParent (value, dict, all = []) {
  * @param parent
  * @returns {*}
  */
-export function getDictTree (dict, parent = null, disabled = []) {
+export function getDictTree (dict = [], parent = null, disabled = []) {
   return dict.filter(i => parent ? i.parent === parent : !i.parent).map(i => ({
     ...i,
     title: i.text,

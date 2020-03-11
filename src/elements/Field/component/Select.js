@@ -22,7 +22,7 @@ export default class SelectRadio extends PureComponent {
                onChange(inputValue);
              }}>确定</Button>}/>
     </Row> : (
-      <Row>
+      <Row >
         <Select style={{ width: custom ? '80%' : '100%' }}
                 showSearch
                 addonAfter={<Icon type="setting"/>}

@@ -7,18 +7,12 @@ const initState = {
 export default {
   namespace: '@@app',
   state: initState,
-  effects: {
-    * exportBlock ({payload, block, blockName, path}, {call}) {
-      const response = yield call(exportBlock, {payload, block, path})
-    },
-  },
+  effects: {},
   reducers: {
-    saveBlock (state, {data, index}) {
-      let block = {}
-      block[index] = data
+    save (state, {payload}) {
       return {
         ...state,
-        blockData: {...state.blockData, ...block},
+        ...payload,
       }
     },
   },

@@ -9,7 +9,7 @@ import {
 import Button from './component/ColorButton';
 import SmallButton from './component/SmallButton';
 import IconSwitchButton from './component/IconSwitchButton';
-import styles from '_style/element.less';
+import styles from '../../styles/element.less';
 
 export default [
   {
