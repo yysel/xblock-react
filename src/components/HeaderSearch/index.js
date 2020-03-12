@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Input, AutoComplete } from 'antd';
 import { Icon } from '@ant-design/compatible'
 import classNames from 'classnames';
-import styles from '_style/component.less';
+import styles from '_styles/component.less';
 
 export default class HeaderSearch extends PureComponent {
   static defaultProps = {

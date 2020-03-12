@@ -6,6 +6,7 @@ import Fetch from './fetch'
 import { logout } from './action'
 import Login from './layouts/UserLayout/Login.js'
 import Table from './blocks/Table/info'
+import Detail from './blocks/Detail/info'
 import ButtonRegisterList from './elements/Button/registerList'
 import ColumnRegisterList from './elements/Column/registerList'
 import FieldRegisterList from './elements/Field/registerList'
@@ -24,7 +25,7 @@ export default function (app) {
       component: Login,
     },
   ])
-  app.register.blockComponent(Table)
+  app.register.blockComponent([Table, Detail])
   app.register.button(ButtonRegisterList)
   app.register.input(FieldRegisterList)
   app.register.cell(ColumnRegisterList)

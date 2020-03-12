@@ -97,7 +97,7 @@ enquireScreen(b => {
   title,
   tabTitle
 }))
-export default class MainLaytout extends React.PureComponent {
+export default class MainLayout extends React.PureComponent {
   static childContextTypes = {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
@@ -232,36 +232,6 @@ export default class MainLaytout extends React.PureComponent {
               {this.lock && <Route render={NotFount}/>}
             </Switch>
           </Content>
-
-          {/*<Footer style={{ padding: 0 }}>*/}
-          {/*<GlobalFooter*/}
-          {/*links={[*/}
-          {/*{*/}
-          {/*key: 'Pro 首页',*/}
-          {/*title: '测试产品',*/}
-          {/*href: 'http://pro.ant.design',*/}
-          {/*blankTarget: true,*/}
-          {/*},*/}
-          {/*{*/}
-          {/*key: 'github',*/}
-          {/*title: <Icon type="github" />,*/}
-          {/*href: 'https://github.com/ant-design/ant-design-pro',*/}
-          {/*blankTarget: true,*/}
-          {/*},*/}
-          {/*{*/}
-          {/*key: 'Ant Design',*/}
-          {/*title: 'Hao Yun',*/}
-          {/*href: 'http://www.shineiot.com',*/}
-          {/*blankTarget: true,*/}
-          {/*},*/}
-          {/*]}*/}
-          {/*copyright={*/}
-          {/*<Fragment>*/}
-          {/*Copyright <Icon type="copyright"/> 2018 皓云信联出品*/}
-          {/*</Fragment>*/}
-          {/*}*/}
-          {/*/>*/}
-          {/*</Footer>*/}
         </Layout>
       </Layout>
     )

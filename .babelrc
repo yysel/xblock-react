@@ -10,7 +10,13 @@
     "transform-decorators",
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-syntax-dynamic-import",
-    ["import", { "libraryName": "antd", "style": true }],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": true
+      }
+    ],
     [
       "transform-runtime",
       {
@@ -24,28 +30,40 @@
       "module-alias",
       [
         {
+          "src": "./src/assets",
+          "expose": "_assets"
+        },
+        {
           "src": "./src/blocks",
-          "expose": "_block"
+          "expose": "_blocks"
         },
         {
           "src": "./src/components",
-          "expose": "_component"
+          "expose": "_components"
         },
         {
           "src": "./src/elements",
-          "expose": "_element"
+          "expose": "_elements"
+        },
+        {
+          "src": "./src/layouts",
+          "expose": "_layouts"
+        },
+        {
+          "src": "./src/models",
+          "expose": "_models"
         },
         {
           "src": "./src/styles",
-          "expose": "_style"
-        },
-        {
-          "src": "./src/assets",
-          "expose": "_asset"
+          "expose": "_styles"
         },
         {
           "src": "./src/tools",
           "expose": "_tools"
+        },
+        {
+          "src": "./src/xblock",
+          "expose": "_xblock"
         }
       ]
     ]
