@@ -43,23 +43,19 @@ export default class CommonTable extends PureComponent {
     onClick(button.index, {button, value})
   };
 
-  getInnerButton (sizeRadio) {
+  getInnerButton (sizeRadio, fixed) {
     const {block: {button = [], property: {button_show_key = 'button_status'}}, InnerButton} = this.props
     const buttonInner = button ? button.filter(item => item.position === 'inner') : []
     if (buttonInner.length <= 0) return null
     return {
       title: '操作',
-      fixed: 'right',
+      fixed: fixed ? 'right' : false,
       width: (buttonInner.length * 75 + 70) * sizeRadio,
       align: 'center',
-      render: (value) => {
-        return (
-          <div style={{marginLeft: -10, marginRight: -20}}>
-            <InnerButton onClick={(button) => this.onInnerButtonClick(button, value)} value={value}
-                         buttonStatue={value[button_show_key] && value[button_show_key] instanceof Object ? value[button_show_key] : {}}/>
-          </div>
-        )
-      },
+      render: (value) => <InnerButton onClick={(button) => this.onInnerButtonClick(button, value)}
+                                      value={value}
+                                      buttonStatue={value[button_show_key] && value[button_show_key] instanceof Object ? value[button_show_key] : {}}/>
+
     }
   }
 
@@ -117,7 +113,7 @@ export default class CommonTable extends PureComponent {
       sizeRadio = 0.7
       size = 'small'
     }
-    const innerButton = this.getInnerButton(sizeRadio)
+    const innerButton = this.getInnerButton(sizeRadio, column.length > 14)
     if (innerButton) column.push(innerButton)
     const data = {
       list: content,
@@ -138,9 +134,8 @@ export default class CommonTable extends PureComponent {
           bordered={has_border}
           selectedRows={selectedRows}
           loading={loading}
-          scroll={{x: column.length < 15 ? 0 : true}}
+          scroll={column.length <= 15 ? null : {x: '100vw'}}
           data={data}
-          ellipsis={true}
           columns={column}
           selectBar={button.filter(bnt => bnt.mode).length}
           rowClassName={link ? 'tableClickAble' : rowClassName}
