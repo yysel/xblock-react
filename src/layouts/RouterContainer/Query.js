@@ -203,12 +203,13 @@ export default class BasicContainer extends Component {
         changeEditFormVisible: (v, value) => changeEditFormVisible(index, v, value),
         onClick: this.onClick,
         onChange: this.onChange,
-        InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props}
+        InnerButton: (props) => <InnerButton event={this.event}
+                                             button={block.getInnerButton()} {...buttonProps} {...props}
                                              extension={this.config?.button ? this.config.button : {}}/>,
-        TopButton: (props) => <TopButton button={block.getTopButton()} {...buttonProps} {...props}
+        TopButton: (props) => <TopButton event={this.event} button={block.getTopButton()} {...buttonProps} {...props}
                                          extension={this.config?.button ? this.config.button : {}}/>,
         Input: (props) => <Field index={index} {...props} extension={this.config?.input ? this.config.input : {}}/>,
-        Cell: (props) => <Column event={this.event} {...props} dispatch={dispatch}
+        Cell: (props) => <Column index={index} event={this.event} {...props} dispatch={dispatch}
                                  extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
@@ -247,7 +248,7 @@ export default class BasicContainer extends Component {
         {BottomExtra && <BottomExtra {...props}/>}
       </Card></Col>
     }
-    return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '} ><Skeleton
+    return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}><Skeleton
       loading={fetchLoading || loading}><Empty/></Skeleton></BaseCard>
   }
 }
