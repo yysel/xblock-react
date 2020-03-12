@@ -19,11 +19,9 @@ import Column from '../../elements/Column'
 
 const TabPane = Tabs.TabPane
 
-@connect(({'@@container': {blockData, loading, addFormVisible, editFormVisible}, loading: {effects}}) => ({
+@connect(({'@@container': {blockData, loading}, loading: {effects}}) => ({
   blockData,
   loading,
-  addFormVisible,
-  editFormVisible,
   fetchLoading: effects['@@container/getBlock'],
 }))
 export default class BasicContainer extends Component {
@@ -210,14 +208,15 @@ export default class BasicContainer extends Component {
         TopButton: (props) => <TopButton button={block.getTopButton()} {...buttonProps} {...props}
                                          extension={this.config?.button ? this.config.button : {}}/>,
         Input: (props) => <Field index={index} {...props} extension={this.config?.input ? this.config.input : {}}/>,
-        Cell: (props) => <Column event={event} {...props} dispatch={dispatch}
+        Cell: (props) => <Column event={this.event} {...props} dispatch={dispatch}
                                  extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
-      return <Col span={block.width || 24}> <Card block={block} onClick={this.onClick} setInitParam={this.setInitParam}
-                                                  onChange={this.onChange} key={key} spin={loading}
-                                                  recycle={block.recyclable} sequence={key}
-                                                  menu={menu}
+      return <Col span={block.width || 24}> <Card block={block}
+                                                  onClick={this.onClick}
+                                                  setInitParam={this.setInitParam}
+                                                  onChange={this.onChange}
+                                                  loading={loading}
                                                   sync>
         {
           (tabItem && tabItem.length > 0) &&
@@ -248,8 +247,7 @@ export default class BasicContainer extends Component {
         {BottomExtra && <BottomExtra {...props}/>}
       </Card></Col>
     }
-    return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}
-                     titleStyle={{color: '#131313'}}><Skeleton
+    return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '} ><Skeleton
       loading={fetchLoading || loading}><Empty/></Skeleton></BaseCard>
   }
 }

@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d ./lib && rm -rf ./lib/assets && cp -r src/assets ./lib/assets && rm -rf ./lib/styles && cp -r src/styles ./lib/styles",
     "build:watch": "rm -rf ./lib/assets && cp -r src/assets ./lib/assets && rm -rf ./lib/styles && cp -r src/styles ./lib/styles && babel src -d ./lib --watch",
-    "move": "npm run build && rm -rf ../node_modules/rc-xblock &&  cp -r ./lib ../node_modules/rc-xblock"
+    "move": "npm run build && rm -rf ../node_modules/rc-xblock &&  cp -r ./lib ../node_modules/rc-xblock",
+    "capy": "rm -rf ./lib/styles && cp -r src/styles ./lib/styles"
   },
   "repository": {
     "type": "git",

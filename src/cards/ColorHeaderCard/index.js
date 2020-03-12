@@ -1,31 +1,46 @@
 import React from 'react'
-import { Row, Col, Card as AntCard } from 'antd'
+import { Row, Col, Card, Tooltip } from 'antd'
+import { SyncOutlined, FullscreenOutlined, RestOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 
 export default function (props) {
 
-  const {Icon, radius, color, titleStyle, title, Icons = []} = props
+  const {title, recycled = false, loading = false, onRecycle, onFullScreen, onSync, onBack} = props
+  const style = recycled ? {
+    color: '#ffffff',
+    backgroundColor: '#ff8684'
+  } : {}
   return (
-    <Row style={{width: '100%'}}>
-      <Col span={24}>
-        <div className='color-header-card-head' style={{
-          borderRadius: radius,
-          backgroundColor: color,
-          display: title ? 'block' : 'none',
-          width: '100%'
-        }}>
-          <span style={titleStyle}>{props.title}</span>
-          {Icon && <Icon/>}
-          {Icons.length > 0 && Icons.map(item => {
-            const Item = item
-            return <Item/>
-          })}
-        </div>
-      </Col>
-      <Col span={24}>
-        <AntCard style={{marginBottom: '25px', padding: 10}} {...props}
-                 title={null}>{props.children}</AntCard>
-      </Col>
-    </Row>
+    <div style={{width: '100%'}}>
+      <Row className='xblock-color-header-card-head' style={style}>
+        <Col className='color-header-card-head-left' flex='200px'></Col>
+        <Col flex='auto'>{title}</Col>
+        {
+          recycled ?
+            <Col className='color-header-card-head-right' flex='200px'>
+              <Tooltip  title={'返回'} placement="bottomLeft" onClick={onBack}>
+                <ArrowLeftOutlined className='xblock-color-icon'/>
+              </Tooltip>
+            </Col> :
+            <Col className='color-header-card-head-right' flex='200px'>
+              {onFullScreen &&<Tooltip  title={'全屏显示'} placement="bottomLeft" onClick={onFullScreen}>
+                <FullscreenOutlined className='xblock-color-icon'/>
+              </Tooltip>}
+              {onRecycle && <Tooltip key='RecycleIcon' title={'回收站'} placement="bottomLeft" onClick={onRecycle}>
+                <RestOutlined className='xblock-color-icon'/>
+              </Tooltip>}
+              {onSync &&<Tooltip  title={'刷新'} placement="bottomLeft" onClick={onSync}>
+                <SyncOutlined className='xblock-color-icon' spin={loading}/>
+              </Tooltip>}
+            </Col>
+        }
+
+      </Row>
+      <Row className='xblock-color-header-card-content'>
+        <Card style={{marginBottom: '25px', padding: 10, width: '100%'}} {...props}
+              title={null}>{props.children}</Card>
+      </Row>
+    </div>
+
   )
 
 }

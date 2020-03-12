@@ -1,4 +1,4 @@
-window.DEV = window.webpackHotUpdate ? true : false;
+window.DEV = window.devToolsOptions ? true : false;
 import XBlock from './xblock'
 import Provider from './xblock/Provider'
 import  './tools/globalFunction';

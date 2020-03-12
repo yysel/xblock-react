@@ -1,30 +1,27 @@
-.color-header-card-head {
+.xblock-color-header-card-head {
   font-size: 20px;
   font-weight: 600;
   text-align: center;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
+  border-top-right-radius: 14px;
+  border-top-left-radius: 14px;
   background-color: var(--customer-card-head-background);
   padding: 16px 0;
   box-shadow: 0 0 10px #CCC;
   color: var(--primary-color);
+  .color-header-card-head-right {
+    text-align: right;
+  }
+  .xblock-color-icon {
+    margin-right: 34px;
+  }
+}
 
-  & > span:nth-of-type(2) {
-    float: right;
-    margin: 0 30px;
+.xblock-color-header-card-content {
+  .ant-card-bordered {
+    border-top: none;
+  }
+  .ant-card {
+    border-radius: 0 0 4px 4px;
   }
 
-  & > span:nth-of-type(3) {
-    float: right;
-  }
-
-  & > span:nth-of-type(4) {
-    float: right;
-    margin: 0 30px;
-  }
-
-  & > i {
-    font-size: 22px;
-    line-height: 32px;
-  }
 }

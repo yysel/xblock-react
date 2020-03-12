@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field, FormRule } from '../../../elements'
+import { FormRules } from '../../../tools/validator'
 import {
   Row,
   Col,
@@ -10,7 +10,7 @@ import { connect } from 'dva'
 
 const FormItem = Form.Item
 const AddForm = props => {
-  const {onOk, addFormVisible, header, changeAddFormVisible, index, blockConfig} = props
+  const {onOk, addFormVisible, header, changeAddFormVisible, index, Input} = props
   const [form] = Form.useForm()
   const okHandle = () => {
     form.validateFields().then((value) => {
@@ -27,13 +27,21 @@ const AddForm = props => {
   }
 
   const oneColumn = header.map(function (item, i) {
+    const flex = item.title.length > 5 ? (item.title.length + 1) * 14 : 84
     return (
-      <FormItem labelCol={{span: 5}} wrapperCol={{span: 15}} key={i} label={item.title} name={item.index}
-                rules={FormRule(item)}>
-        <Field header={item} mode={'add'} index={index}
-               extension={blockConfig?.header ? blockConfig.header : {}}/>
+      <div style={{padding: '0 50px'}} key={i}>
+        <FormItem labelCol={{flex: `${flex}px`}}
+                  wrapperCol={{flex: 'auto'}}
+                  labelAlign='left'
+                  extra={item.description}
+                  label={item.title}
+                  name={item.index}
+                  rules={FormRules(item)}>
+          <Input header={item} mode={'add'}/>
 
-      </FormItem>
+        </FormItem>
+      </div>
+
     )
   })
   const TwoColumn = <div>
@@ -41,10 +49,13 @@ const AddForm = props => {
       header.map(function (item, i) {
         return (
           <Col span={12} key={i}>
-            <FormItem labelCol={{span: 5}} wrapperCol={{span: 15}} label={item.title} name={item.index}
-                      rules={FormRule(item)}>
-              <Field header={item} mode={'add'} index={index}
-                     extension={blockConfig?.header ? blockConfig.header : {}}/>
+            <FormItem labelCol={{flex: `${(item.title.length + 1) * 14}px`}}
+                      extra={item.description}
+                      wrapperCol={{flex: 'auto'}}
+                      label={item.title}
+                      name={item.index}
+                      rules={FormRules(item)}>
+              <Input header={item} mode={'add'}/>
 
             </FormItem>
           </Col>
@@ -57,13 +68,13 @@ const AddForm = props => {
 
     <Modal
       title="新增"
-      width={header.length > 10 ? 800 : 600}
+      width={header.length >= 8 ? 800 : 550}
       visible={addFormVisible[index]}
       onOk={okHandle}
       onCancel={() => changeAddFormVisible(false)}
     >
       <Form initialValues={{}} form={form}>
-        {header.length > 10 ? TwoColumn : oneColumn}
+        {header.length >= 8 ? TwoColumn : oneColumn}
       </Form>
     </Modal>
 

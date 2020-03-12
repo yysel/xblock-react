@@ -50,6 +50,7 @@ export default function TopFilterForm (props) {
           <Button
             style={{marginLeft: 8}}
             onClick={() => {
+              onChange({})
               form.resetFields()
             }}
           >
@@ -59,7 +60,6 @@ export default function TopFilterForm (props) {
             header.length > 4 && <a
               style={{marginLeft: 8, fontSize: 14}}
               onClick={() => {
-                onChange({})
                 setExpand(!expand)
               }}
             >

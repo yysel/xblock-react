@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Drawer, Form } from 'antd'
-import { Field, FormRule } from '../../../elements'
+import { FormRules } from '../../../tools/validator'
 import { isUndefined } from '../../../tools/type'
 import { connect } from 'dva'
 
 const EditForm = function (props) {
-  const {editFormVisible, header, changeEditFormVisible, value, onOk, index, blockConfig} = props
+  const {editFormVisible, header, changeEditFormVisible, value, onOk, index,Input} = props
 
   function okHandle (uuid, value) {
     const filter = Object.keys(value).map(k => {
@@ -35,10 +35,9 @@ const EditForm = function (props) {
     >
       <Form initialValues={value ? value : {}} onFinish={(v) => okHandle(value.uuid, v)}>
         {header.map(function (column) {
-          return (<Form.Item key={column.index} rules={FormRule(column)} name={column.index} labelCol={{span: 5}}
+          return (<Form.Item key={column.index} rules={FormRules(column)} name={column.index} labelCol={{span: 5}}
                              wrapperCol={{span: 15}} label={column.title}>
-            <Field header={column} row={value} mode={'edit'} index={index}
-                   extension={blockConfig?.header ? blockConfig.header : {}}/>
+            <Input header={column} row={value} mode={'edit'} />
           </Form.Item>)
         })}
         <div
