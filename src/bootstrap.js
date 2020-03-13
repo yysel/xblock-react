@@ -8,8 +8,8 @@ import Login from './layouts/UserLayout/Login.js'
 import Table from './blocks/Table/info'
 import Detail from './blocks/Detail/info'
 import ButtonRegisterList from './elements/Button/registerList'
-import ColumnRegisterList from './elements/Column/registerList'
-import FieldRegisterList from './elements/Field/registerList'
+import ColumnRegisterList from './elements/Cell/registerList'
+import FieldRegisterList from './elements/Input/registerList'
 
 export default function (app) {
   app.model(appModel)

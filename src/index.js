@@ -1,9 +1,13 @@
-window.DEV = window.devToolsOptions ? true : false;
 import XBlock from './xblock'
 import Provider from './xblock/Provider'
-import  './tools/globalFunction';
-export default new XBlock
+import Fetch from './fetch'
+import './tools/globalFunction'
+
+const xblock = new XBlock
 
 export {
-  Provider
+  Provider,
+  Fetch
 }
+
+export default xblock

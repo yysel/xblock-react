@@ -4,7 +4,7 @@ import { SyncOutlined, FullscreenOutlined, RestOutlined, ArrowLeftOutlined } fro
 
 export default function (props) {
 
-  const {title, recycled = false, loading = false, onRecycle, onFullScreen, onSync, onBack} = props
+  const {title, recycled = false, loading = false, onRecycle, onFullScreen, onSync, onBack,...rest} = props
   const style = recycled ? {
     color: '#ffffff',
     backgroundColor: '#ff8684'
@@ -36,7 +36,7 @@ export default function (props) {
 
       </Row>
       <Row className='xblock-color-header-card-content'>
-        <Card style={{marginBottom: '25px', padding: 10, width: '100%'}} {...props}
+        <Card style={{marginBottom: '25px', padding: 10, width: '100%'}} {...rest}
               title={null}>{props.children}</Card>
       </Row>
     </div>

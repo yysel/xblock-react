@@ -25,6 +25,11 @@ export default class XBlock {
       onError: this.onError,
       history: createHashHistory(),
     })
+    this.dva = app
+    this.provider_list.forEach(provider => {
+      provider.app = this
+      provider.boot()
+    })
     app.use(createLoading())
     app.router((p) => <Route {...p} {...props} />)
     this.model = app.model
@@ -35,7 +40,6 @@ export default class XBlock {
     this.dva = app
     this.provider_list.forEach(provider => {
       provider.app = this
-      provider.boot()
       provider.register()
     })
 

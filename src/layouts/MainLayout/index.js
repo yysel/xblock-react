@@ -116,9 +116,9 @@ export default class MainLayout extends React.PureComponent {
   }
 
   async componentWillMount () {
-    // const link = document.head.querySelector('link')
-    // link.href = `${this.props.favicon}`
-    await getUser()
+    const link = document.head.querySelector('link')
+    link.href = `${this.props.favicon}`
+    await getUser(this.props.dispatch)
     await getMenu({
       payload: false,
       callback: () => {

@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { getBlock, changeAddFormVisible, changeEditFormVisible, exportBlock } from '../../action'
 import { connect } from 'dva'
-import { BlockComponent } from '../../blocks'
-import Card from '../../components/ContainerCard'
-import register from '../../xblock/register'
-import AddForm from '../../components/Form/AddForm'
-import EditForm from '../../components/Form/EditForm'
+import { BlockComponent } from '_blocks'
+import Card from '_components/ContainerCard'
+import register from '_xblock/register'
+import AddForm from '_components/Form/AddForm'
+import EditForm from '_components/Form/EditForm'
 import TopFilterForm from '../../components/Form/TopFilterForm'
 import { Tabs, Row, Col, Empty, Skeleton } from 'antd'
-import blockStructure from '../../tools/block'
+import blockStructure from '_tools/block'
 import BaseCard from '../../cards/ColorHeaderCard'
-import { goPage } from '../../tools/helper'
-import ExportModal from '../../components/Modals/ExportModal'
-import InnerButton from '../../elements/Button/InnerButton'
-import TopButton from '../../elements/Button/TopButton'
-import Field from '../../elements/Field'
-import Column from '../../elements/Column'
+import { goPage } from '_tools/helper'
+import ExportModal from '_components/Modals/ExportModal'
+import InnerButton from '_elements/Button/InnerButton'
+import TopButton from '_elements/Button/TopButton'
+import Input from '_elements/Input'
+import Cell from '_elements/Cell'
 
 const TabPane = Tabs.TabPane
 
@@ -208,9 +208,9 @@ export default class BasicContainer extends Component {
                                              extension={this.config?.button ? this.config.button : {}}/>,
         TopButton: (props) => <TopButton event={this.event} button={block.getTopButton()} {...buttonProps} {...props}
                                          extension={this.config?.button ? this.config.button : {}}/>,
-        Input: (props) => <Field index={index} {...props} extension={this.config?.input ? this.config.input : {}}/>,
-        Cell: (props) => <Column index={index} event={this.event} {...props} dispatch={dispatch}
-                                 extension={this.config?.cell ? this.config.cell : {}}/>,
+        Input: (props) => <Input index={index} {...props} extension={this.config?.input ? this.config.input : {}}/>,
+        Cell: (props) => <Cell index={index} event={this.event} {...props} dispatch={dispatch}
+                               extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
       return <Col span={block.width || 24}> <Card block={block}
@@ -247,8 +247,12 @@ export default class BasicContainer extends Component {
 
         {BottomExtra && <BottomExtra {...props}/>}
       </Card></Col>
+    } else {
+      return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}>
+        <Skeleton loading={fetchLoading || loading}>
+          <Empty/>
+        </Skeleton>
+      </BaseCard>
     }
-    return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}><Skeleton
-      loading={fetchLoading || loading}><Empty/></Skeleton></BaseCard>
   }
 }

@@ -1,4 +1,10 @@
 import registerState from './xblock/registerState'
+import xblock from './xblock'
+
+const getDispatch = () => {
+  const registerState = require('./xblock/registerState').default
+  return registerState.dispatch
+}
 
 //获取block
 export const getBlock = (block, action, payload = {}, path) => registerState.dispatch({
@@ -31,13 +37,22 @@ export const logout = () => registerState.dispatch({
 })
 
 //获取当前用户
-export const getUser = () => registerState.dispatch({
-  type: '@@xblock/fetchCurrent',
-})
+export const getUser = (dispatch) => {
+  if (dispatch) {
+    return dispatch({
+      type: '@@xblock/fetchCurrent',
+    })
+  } else {
+  return  registerState.dispatch({
+      type: '@@xblock/fetchCurrent',
+    })
+  }
+
+}
 
 //获取菜单
-export const getMenu = (payload = {}) =>{
- return registerState.dispatch({
+export const getMenu = (payload = {}) => {
+  return registerState.dispatch({
     type: '@@xblock/fetchMenu',
     ...payload,
   })
