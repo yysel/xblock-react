@@ -27,8 +27,8 @@ export const getMeunMatcheys = (flatMenuKeys, path) => {
   })
 }
 
-@connect(({'@@app': {logo}, '@@xblock': {collapsed}}) => ({
-  logo, collapsed
+@connect(({'@@app': {logo,title}, '@@xblock': {collapsed}}) => ({
+  logo, collapsed,title
 }))
 export default class SiderMenu extends PureComponent {
   componentWillMount () {
@@ -224,6 +224,7 @@ export default class SiderMenu extends PureComponent {
 
   render () {
     const {logo, title, collapsed} = this.props
+    dd(title);
     const {openKeys} = this.state
     // Don't show popup menu when it is been collapsed
     const menuProps = collapsed
@@ -249,7 +250,7 @@ export default class SiderMenu extends PureComponent {
       >
         <div className='xblock-sider-menu-logo' key="logo">
           <Link to="/">
-            <img src={logo} alt="logo"/>
+            <img src={logo}/>
             <h1>{title}</h1>
           </Link>
         </div>

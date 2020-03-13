@@ -26,13 +26,13 @@ export default class XBlock {
       history: createHashHistory(),
     })
     this.dva = app
+    this.model = app.model
     this.provider_list.forEach(provider => {
       provider.app = this
       provider.boot()
     })
     app.use(createLoading())
     app.router((p) => <Route {...p} {...props} />)
-    this.model = app.model
     bootstrap(this)
     app.start(root)
     registerState.dispatch = this.dispatch = app._store.dispatch
