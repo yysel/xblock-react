@@ -117,8 +117,6 @@ export default class MainLayout extends React.PureComponent {
   }
 
   async componentWillMount () {
-    const link = document.head.querySelector('link')
-    link.href = `${this.props.favicon}`
     await getUser(this.props.dispatch)
     await getMenu({
       payload: false,
@@ -187,6 +185,11 @@ export default class MainLayout extends React.PureComponent {
     if (visible) fetchNotices()
   }
 
+  getFavicon = () => {
+    const link = document.head.querySelector('link')
+    link.href = `${this.props.favicon}`
+  }
+
   render () {
     const {
       currentUser,
@@ -196,6 +199,7 @@ export default class MainLayout extends React.PureComponent {
       menuData = [],
       rootPath,
     } = this.props
+    this.getFavicon()
     const menuRouter = RouterContainer({menu: menuData, user: currentUser, rootPath})
     const bashRedirect = RouterContainer.getRedirect()
     const layout = (

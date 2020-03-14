@@ -224,7 +224,6 @@ export default class SiderMenu extends PureComponent {
 
   render () {
     const {logo, title, collapsed} = this.props
-    dd(title);
     const {openKeys} = this.state
     // Don't show popup menu when it is been collapsed
     const menuProps = collapsed
