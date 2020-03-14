@@ -3,8 +3,9 @@ import { Route } from 'dva/router'
 import registerState from '../../xblock/registerState'
 import NoAccess from '../../components/Exception/403'
 import { checkAuthority } from '../../tools/auth'
-import BasicContainer from './Container';
+import BasicContainer from './Container'
 import { trim } from '../../tools/string'
+
 let firstPath = null
 const parseRoute = (router, menuRouter, user, rootPath) => {
   if (router.children && router.children.length > 0) {

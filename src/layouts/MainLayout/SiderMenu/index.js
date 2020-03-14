@@ -6,7 +6,7 @@ import { Link } from 'dva/router'
 import { urlToList } from './pathTools'
 import { checkAuthority } from '../../../tools/auth'
 import { connect } from 'dva'
-import { changeLayoutCollapsed } from '../../../action'
+import getAction from '../../../action'
 
 const {Sider} = Layout
 const {SubMenu} = Menu
@@ -27,8 +27,8 @@ export const getMeunMatcheys = (flatMenuKeys, path) => {
   })
 }
 
-@connect(({'@@app': {logo,title}, '@@xblock': {collapsed}}) => ({
-  logo, collapsed,title
+@connect(({'@@app': {logo, title}, '@@xblock': {collapsed}}) => ({
+  logo, collapsed, title
 }))
 export default class SiderMenu extends PureComponent {
   componentWillMount () {
@@ -77,7 +77,7 @@ export default class SiderMenu extends PureComponent {
   }
 
   onCollapse = collapsed => {
-    changeLayoutCollapsed({
+    getAction(this.props.dispatch).changeLayoutCollapsed({
       payload: collapsed,
     })
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getBlock, changeAddFormVisible, changeEditFormVisible, exportBlock } from '../../action'
+import getAction from '../../action'
 import { connect } from 'dva'
 import { BlockComponent } from '_blocks'
 import Card from '_components/ContainerCard'
@@ -25,6 +25,16 @@ const TabPane = Tabs.TabPane
   fetchLoading: effects['@@container/getBlock'],
 }))
 export default class BasicContainer extends Component {
+
+  constructor (props) {
+    super(props)
+    const {getBlock, changeAddFormVisible, changeEditFormVisible, exportBlock} = getAction(this.props.dispatch)
+    this.getBlock = getBlock
+    this.changeAddFormVisible = changeAddFormVisible
+    this.changeEditFormVisible = changeEditFormVisible
+    this.exportBlock = exportBlock
+  }
+
   state = {
     initParam: {},
     timestamp: 0,
@@ -69,7 +79,7 @@ export default class BasicContainer extends Component {
   }
 
   fetchBlock (action, option) {
-    return getBlock(this.props.index, action, option, this.props?.match?.path)
+    return this.getBlock(this.props.index, action, option, this.props?.match?.path)
   }
 
   getBlockData (data) {
@@ -123,7 +133,7 @@ export default class BasicContainer extends Component {
               sorting, header, title,
             } = this.getBlockData()
             ExportModal((v) => {
-              return exportBlock(this.props.index, {
+              return this.exportBlock(this.props.index, {
                 pagination,
                 parameter,
                 sorting,
@@ -199,8 +209,8 @@ export default class BasicContainer extends Component {
         key, block, loading, user, dispatch, blockConfig: this.config,
         event: this.event,
         setInitParam: this.setInitParam,
-        changeAddFormVisible: (v) => changeAddFormVisible(index, v),
-        changeEditFormVisible: (v, value) => changeEditFormVisible(index, v, value),
+        changeAddFormVisible: (v) => this.changeAddFormVisible(index, v),
+        changeEditFormVisible: (v, value) => this.changeEditFormVisible(index, v, value),
         onClick: this.onClick,
         onChange: this.onChange,
         InnerButton: (props) => <InnerButton event={this.event}
@@ -231,11 +241,11 @@ export default class BasicContainer extends Component {
                        Input={props.Input}/>
 
         <AddForm index={index} header={block.getAddHeader()}
-                 changeAddFormVisible={(v) => changeAddFormVisible(index, v)}
+                 changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
                  onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
         {TopExtra && <TopExtra {...props}/>}
         <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== 'uuid')}
-                  changeEditFormVisible={(v) => changeEditFormVisible(index, v)}
+                  changeEditFormVisible={(v) => this.changeEditFormVisible(index, v)}
                   Input={props.Input}
                   onOk={(value) => this.onClick('edit', {value})}/>
         <Row>

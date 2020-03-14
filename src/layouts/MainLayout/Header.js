@@ -7,22 +7,65 @@ import Debounce from 'lodash-decorators/debounce'
 import { Link } from 'dva/router'
 import NoticeIcon from './NoticeIcon'
 import { connect } from 'dva'
-import { changeLayoutCollapsed } from '../../action'
+import * as routerRedux from 'react-router-redux'
+import getAction from '../../action'
 
-@connect(({'@@app': {webSocketStatus, logo}, '@@xblock': {collapsed}}) => ({
-  webSocketStatus, logo, collapsed
+@connect(({'@@xblock': {currentUser, notices, collapsed}, loading, '@@app': {webSocketStatus, logo}}) => ({
+  currentUser: currentUser,
+  fetchingNotices: loading.effects['global/fetchNotices'],
+  webSocketStatus,
+  notices,
+  logo,
+  collapsed
 }))
 export default class Header extends PureComponent {
   state = {
     srcPic: 'http://localhost:8000/user.svg',
   }
 
+  constructor (props) {
+    super(props)
+    const {changeLayoutCollapsed, clearMenu, clearNotices, fetchNotices, logoutGoHome} = getAction(this.props.dispatch)
+    this.changeLayoutCollapsed = changeLayoutCollapsed
+    this.clearMenu = clearMenu
+    this.clearNotices = clearNotices
+    this.fetchNotices = fetchNotices
+    this.logoutGoHome = logoutGoHome
+  }
+
+  componentWillMount () {
+    this.fetchNotices()
+  }
+
   componentWillUnmount () {
     this.triggerResizeEvent.cancel()
   }
 
+  onMenuClick = ({key}) => {
+
+    if (key === 'personage') {
+      this.props.dispatch(routerRedux.push('/user/info'))
+      return
+    }
+    if (key === 'logout') {
+      this.logoutGoHome({
+        home: this.props.baseRedirect,
+      }).then(() => this.clearMenu({
+        payload: [],
+      }))
+    }
+  }
+
+  onNoticeVisibleChange = visible => {
+    if (visible) this.fetchNotices()
+  }
+
+  onNoticeClear = type => {
+    this.clearNotices({payload: {type}})
+  }
+
   handleMenuCollapse = collapsed => {
-    changeLayoutCollapsed({
+    this.changeLayoutCollapsed({
       payload: collapsed,
     })
   }
@@ -78,15 +121,12 @@ export default class Header extends PureComponent {
       fetchingNotices,
       isMobile,
       logo,
-      onNoticeVisibleChange,
-      onMenuClick,
       dispatch,
-      onNoticeClear,
       notices = [],
     } = this.props
     const currentUser = this.props.currentUser ? this.props.currentUser : {}
     const menu = (
-      <Menu className={'xblock-global-header-menu'} selectedKeys={[]} onClick={onMenuClick}>
+      <Menu className={'xblock-global-header-menu'} selectedKeys={[]} onClick={this.onMenuClick}>
         <Menu.Item key="personage">
           <UserOutlined/>
           个人中心
@@ -125,8 +165,8 @@ export default class Header extends PureComponent {
                 else goPage(item.data.path, {}, false, false, {reload: true})
               }
             }}
-            onClear={onNoticeClear}
-            onPopupVisibleChange={onNoticeVisibleChange}
+            onClear={this.onNoticeClear}
+            onPopupVisibleChange={this.onNoticeVisibleChange}
             loading={fetchingNotices}
             popupAlign={{offset: [20, -16]}}
           >

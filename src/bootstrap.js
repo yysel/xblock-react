@@ -3,7 +3,7 @@ import xblock from './models/xblock'
 import container from './models/container'
 import element from './models/element'
 import Fetch from './fetch'
-import { logout } from './action'
+import getAction from './action'
 import Login from './layouts/UserLayout/Login.js'
 import Table from './blocks/Table/info'
 import Detail from './blocks/Detail/info'
@@ -31,7 +31,7 @@ export default function (app) {
   app.register.cell(ColumnRegisterList)
   Fetch.after = ({code}) => {
     if (code === '3003') {
-      logout()
+      getAction().logout()
     }
   }
 }

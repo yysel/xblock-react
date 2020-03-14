@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Alert, message, Input, Button, Form } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { login } from '../../action'
+import getAction from '../../action'
 
 const FormItem = Form.Item
 const Password = Input.Password
@@ -14,6 +14,8 @@ const Password = Input.Password
 export default class LoginPage extends Component {
   constructor (props) {
     super(props)
+    const {login} = getAction(this.props.dispatch)
+    this.login = login
   }
 
   state = {
@@ -30,7 +32,7 @@ export default class LoginPage extends Component {
 
     const {params: {path}} = this.props.match
     const goPath = path ? path.replace(/@/g, '/') : null
-    login({
+    this.login({
       payload: {
         ...values,
         device_uuid: localStorage.getItem('device_uuid'),
@@ -39,7 +41,6 @@ export default class LoginPage extends Component {
     }).then((res) => message.error(res?.message || '请求失败'))
 
   }
-
 
   render () {
     const {} = this.props
@@ -73,7 +74,7 @@ export default class LoginPage extends Component {
         <div className='login'>
           <Form onFinish={this.handleSubmit} name="login-form">
             <div className='tabs'>
-              <FormItem name='username' rules={username.rules}>
+              <FormItem name='username' rules={username.rules} style={{marginTop:80}}>
                 <Input {...username.props} className='input'/>
               </FormItem>
               <FormItem name='password' rules={password.rules}>

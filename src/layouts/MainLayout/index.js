@@ -13,15 +13,7 @@ import NotFount from '../../components/Exception/404'
 import RouterContainer from '../RouterContainer'
 import registerState from '../../xblock/registerState'
 
-import {
-  getMenu,
-  getUser,
-  changeLayoutCollapsed,
-  clearNotices,
-  logoutGoHome,
-  clearMenu,
-  fetchNotices,
-} from '../../action'
+import getAction from '../../action'
 // import ThemeConfig from '../../../../src/common/ThemeConfig';
 
 const {Content, Header} = Layout
@@ -88,12 +80,10 @@ enquireScreen(b => {
   isMobile = b
 })
 
-@connect(({'@@xblock': {currentUser, mainLayoutMenu, notices}, loading, '@@app': {title, tabTitle, favicon}}) => ({
+@connect(({'@@xblock': {currentUser, mainLayoutMenu}, loading, '@@app': {title, tabTitle, favicon}}) => ({
   currentUser: currentUser,
   menuData: mainLayoutMenu,
-  fetchingNotices: loading.effects['global/fetchNotices'],
   fetchingMenu: loading.effects['global/fetchMenu'],
-  notices,
   title,
   tabTitle,
   favicon,
@@ -116,13 +106,13 @@ export default class MainLayout extends React.PureComponent {
     }
   }
 
-  async componentWillMount () {
-    await getUser(this.props.dispatch)
-    await getMenu({
+  componentWillMount () {
+    const {getMenu, getUser} = getAction(this.props.dispatch)
+    getUser()
+    getMenu({
       payload: false,
       callback: () => {
         // getMenu({ payload: true });
-        this.handleNoticeVisibleChange(true)
       },
     }).then(() => {
       this.lock = true
@@ -164,27 +154,6 @@ export default class MainLayout extends React.PureComponent {
     return theTitle
   }
 
-  handleNoticeClear = type => {
-    clearNotices({payload: {type}})
-  }
-
-  handleMenuClick = ({key}, home) => {
-    if (key === 'personage') {
-      this.props.dispatch(routerRedux.push('/user/info'))
-      return
-    }
-    if (key === 'logout') {
-      logoutGoHome({
-        home,
-      }).then(() => clearMenu({
-        payload: [],
-      }))
-    }
-  }
-  handleNoticeVisibleChange = visible => {
-    if (visible) fetchNotices()
-  }
-
   getFavicon = () => {
     const link = document.head.querySelector('link')
     link.href = `${this.props.favicon}`
@@ -193,15 +162,13 @@ export default class MainLayout extends React.PureComponent {
   render () {
     const {
       currentUser,
-      fetchingNotices,
-      notices,
       location,
       menuData = [],
       rootPath,
     } = this.props
     this.getFavicon()
     const menuRouter = RouterContainer({menu: menuData, user: currentUser, rootPath})
-    const bashRedirect = RouterContainer.getRedirect()
+    const baseRedirect = RouterContainer.getRedirect()
     const layout = (
       <Layout>
         <SiderMenu
@@ -216,16 +183,10 @@ export default class MainLayout extends React.PureComponent {
         <Layout style={{width: '100%'}}>
           <Header style={{padding: 0}}>
             <GlobalHeader
-              currentUser={currentUser}
-              fetchingNotices={fetchingNotices}
-              notices={notices}
               isMobile={this.state.isMobile}
-              onNoticeClear={this.handleNoticeClear}
-              onMenuClick={(v) => this.handleMenuClick(v, bashRedirect)}
-              onNoticeVisibleChange={this.handleNoticeVisibleChange}
+              baseRedirect={baseRedirect}
             />
           </Header>
-
           <Content style={{margin: '24px 24px 0', height: '100%'}}>
             <Switch>
               {menuRouter}
@@ -233,7 +194,7 @@ export default class MainLayout extends React.PureComponent {
                                                         path={route.path} exact
                                                         component={route.component}/>,
               )}
-              {this.lock && <Redirect exact from="/" to={bashRedirect}/>}
+              {this.lock && <Redirect exact from="/" to={baseRedirect}/>}
               {this.lock && <Route render={NotFount}/>}
             </Switch>
           </Content>
