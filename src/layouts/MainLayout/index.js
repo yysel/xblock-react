@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Layout } from 'antd'
-import DocumentTitle from 'react-document-title'
 import { connect } from 'dva'
-import { Route, Redirect, Switch, routerRedux } from 'dva/router'
+import { Route, Redirect, Switch } from 'dva/router'
 import { ContainerQuery } from 'react-container-query'
 import classNames from 'classnames'
 import { enquireScreen, unenquireScreen } from 'enquire-js'
@@ -144,20 +143,6 @@ export default class MainLayout extends React.PureComponent {
 
   }
 
-  getPageTitle () {
-    const {routerData = {}, location:{pathname}, tabTitle, title} = this.props
-    let theTitle = tabTitle ? tabTitle : title
-    if (routerData[pathname] && routerData[pathname].name) {
-      theTitle = `${routerData[pathname].name} - ${title}`
-    }
-    return theTitle
-  }
-
-  getFavicon = () => {
-    const link = document.head.querySelector('link')
-    link.href = `${this.props.favicon}`
-  }
-
   render () {
     const {
       currentUser,
@@ -165,7 +150,6 @@ export default class MainLayout extends React.PureComponent {
       menuData = [],
       rootPath,
     } = this.props
-    this.getFavicon()
     const menuRouter = RouterContainer({menu: menuData, user: currentUser, rootPath})
     const baseRedirect = RouterContainer.getRedirect()
     const layout = (
@@ -202,11 +186,9 @@ export default class MainLayout extends React.PureComponent {
     )
 
     return (
-      <DocumentTitle title={this.getPageTitle()}>
         <ContainerQuery query={query}>
           {params => <div className={classNames(params)}>{layout}</div>}
         </ContainerQuery>
-      </DocumentTitle>
     )
   }
 }
