@@ -27,13 +27,13 @@ export default class XBlock {
     })
     this.dva = app
     this.model = app.model
+    bootstrap(this)
     this.provider_list.forEach(provider => {
       provider.app = this
       provider.boot()
     })
     app.use(createLoading())
     app.router((p) => <Route {...p} {...props} />)
-    bootstrap(this)
     app.start(root)
     registerState.dispatch = this.dispatch = app._store.dispatch
     registerState.getState = this.getState = app._store.getState

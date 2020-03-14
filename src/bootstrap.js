@@ -12,10 +12,12 @@ import ColumnRegisterList from './elements/Cell/registerList'
 import FieldRegisterList from './elements/Input/registerList'
 
 export default function (app) {
+  //注册相关model
   app.model(appModel)
   app.model(xblock)
   app.model(container)
   app.model(element)
+  //注册无状态路由
   app.register.userRouter([
     {
       path: '/user/info',
@@ -25,10 +27,13 @@ export default function (app) {
       component: Login,
     },
   ])
+  //注册系统组件
   app.register.blockComponent([Table, Detail])
   app.register.button(ButtonRegisterList)
   app.register.input(FieldRegisterList)
   app.register.cell(ColumnRegisterList)
+
+  //注册fetch钩子函数
   Fetch.after = ({code}) => {
     if (code === '3003') {
       getAction().logout()
