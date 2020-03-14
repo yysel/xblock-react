@@ -101,7 +101,7 @@ export default class MainLayout extends React.PureComponent {
     const {location, routerData = [], menuData} = this.props
     return {
       location,
-      // breadcrumbNameMap: getBreadcrumbNameMap(menuData, routerData),
+      breadcrumbNameMap: getBreadcrumbNameMap(menuData, routerData),
     }
   }
 

@@ -31,7 +31,8 @@ export const getMeunMatcheys = (flatMenuKeys, path) => {
   logo, collapsed, title
 }))
 export default class SiderMenu extends PureComponent {
-  componentWillMount () {
+  constructor (props) {
+    super(props)
     this.flatMenuKeys = this.getFlatMenuKeys(this.props.menuData)
     this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(this.props),
@@ -236,7 +237,6 @@ export default class SiderMenu extends PureComponent {
     if (!selectedKeys.length) {
       selectedKeys = [openKeys[openKeys.length - 1]]
     }
-
     return (
       <Sider
         trigger={null}

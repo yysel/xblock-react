@@ -19,7 +19,7 @@ export default function TopFilterForm (props) {
   const [expand, setExpand] = useState(false)
   const [form] = Form.useForm()
   return (
-    <Form form={form} onFinish={onSubmit}>
+    <Form form={form} initialValues={parameter} onFinish={onSubmit}>
       <Row gutter={24}>
         {
           header.map((item, key) => {
