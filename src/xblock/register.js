@@ -7,11 +7,8 @@ const map = function (func) {
 const registerArray = function (data, key) {
   if (!data) return
   if (data instanceof Array) registerState[key] = [...data, ...registerState[key]]
-  else {
-    const array = registerState[key]
-    array.push(data)
-    registerState[key] = array
-  }
+  else registerState[key] = registerState[key] = [data, ...registerState[key]]
+
 }
 const registerObject = (data, key) => {
   registerState[key] = {...registerState[key], ...data}

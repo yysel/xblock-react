@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Alert, message, Input, Button, Form } from 'antd'
+import { message, Input, Button, Form } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import getAction from '../../action'
 
 const FormItem = Form.Item
 const Password = Input.Password
-@connect(({login, loading}) => ({
-  login,
-  submitting: loading.effects['login/login'],
-  register: loading.effects['login/register'],
+@connect(({loading}) => ({
+  submitting: loading.effects['@@xblock/login'],
+  register: loading.effects['@@xblock/register'],
 }))
 export default class LoginPage extends Component {
   constructor (props) {
@@ -29,7 +28,6 @@ export default class LoginPage extends Component {
   }
 
   handleSubmit = (values) => {
-
     const {params: {path}} = this.props.match
     const goPath = path ? path.replace(/@/g, '/') : null
     this.login({
@@ -38,7 +36,9 @@ export default class LoginPage extends Component {
         device_uuid: localStorage.getItem('device_uuid'),
       },
       goPath,
-    }).then((res) => message.error(res?.message || '请求失败'))
+    }).then((res) => {
+      if (!res.success) message.error(res?.message || '请求失败')
+    })
 
   }
 
@@ -74,14 +74,15 @@ export default class LoginPage extends Component {
         <div className='login'>
           <Form onFinish={this.handleSubmit} name="login-form">
             <div className='tabs'>
-              <FormItem name='username' rules={username.rules} style={{marginTop:80}}>
+              <FormItem name='username' rules={username.rules} style={{marginTop: 30}}>
                 <Input {...username.props} className='input'/>
               </FormItem>
               <FormItem name='password' rules={password.rules}>
                 <Password {...password.props} className='input'/>
               </FormItem>
               <FormItem>
-                <Button size="large" className='submit' type="primary" htmlType="submit">
+                <Button loading={this.props.submitting} size="large" className='submit' type="primary"
+                        htmlType="submit">
                   登 录
                 </Button>
               </FormItem>

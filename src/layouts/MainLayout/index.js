@@ -145,8 +145,7 @@ export default class MainLayout extends React.PureComponent {
   }
 
   getPageTitle () {
-    const {routerData = {}, location, tabTitle, title} = this.props
-    const {pathname} = location
+    const {routerData = {}, location:{pathname}, tabTitle, title} = this.props
     let theTitle = tabTitle ? tabTitle : title
     if (routerData[pathname] && routerData[pathname].name) {
       theTitle = `${routerData[pathname].name} - ${title}`
