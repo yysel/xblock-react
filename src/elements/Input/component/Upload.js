@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Upload as AntdUpload, message, Row, Col, Modal } from 'antd'
-import FileRenderModal from '../../Column/component/FileRenderModal'
-import { getToken } from '_tools/auth'
+import { Upload as AntdUpload, message, Modal } from 'antd'
+import FileRenderModal from '../../Cell/component/FileRenderModal'
 import { request } from '../../../fetch'
 import { Icon } from '@ant-design/compatible'
+import Fetch from '../../../fetch'
 
 function removeFile (url, params) {
   return request(url, {
@@ -96,7 +96,7 @@ export default class Upload extends Component {
           <AntdUpload
             action={uploadUrl}
             listType="picture-card"
-            headers={{'Authorization': `Bearer ${getToken()}`}}
+            headers={Fetch.getHeaders()}
             fileList={fileList}
             onPreview={() => this.show && this.show()}
             onChange={this.handleChange}

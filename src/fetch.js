@@ -8,6 +8,12 @@ export default class Fetch {
 
   static headers = {}
 
+  static _defaultHeaders = {
+    'Client-Type': 'web-admin',
+    'Location': registerState.getState('routing')?.location?.pathname,
+    'Authorization': `Bearer ${getToken()}`,
+  }
+
   static after () {
 
   }
@@ -45,18 +51,18 @@ export default class Fetch {
     return getToken()
   }
 
+  static getHeaders () {
+    return {...Fetch._defaultHeaders, ...Fetch.headers}
+  }
+
   static getOptions (options) {
     const defaultOptions = {
       credentials: 'include',
-      headers: {
-        'Client-Type': 'web-admin',
-        'Location': registerState.getState('routing')?.location?.pathname,
-        'Authorization': `Bearer ${Fetch.getToken()}`,
-      },
+      headers: Fetch.getHeaders(),
     }
     const newOptions = {
       ...defaultOptions, ...options,
-      headers: {...defaultOptions.headers, ...Fetch.headers, ...options?.headers}
+      headers: {...defaultOptions.headers, ...options?.headers}
     }
     if (newOptions.method === 'POST' || newOptions.method === 'PUT' || newOptions.method === 'GET') {
       if (!(newOptions.body instanceof FormData)) {
@@ -162,8 +168,26 @@ export default class Fetch {
       })
   }
 
+  static post (url, body, header) {
+    return Fetch.request(url, {
+      method: 'POST',
+      body,
+      header
+    })
+  }
+
+  static get (url, body, header) {
+    return Fetch.request(url, {
+      method: 'GET',
+      body,
+      header
+    })
+  }
+
 }
 export const request = Fetch.request
+export const post = Fetch.post
+export const get = Fetch.get
 export const uploadFile = Fetch.uploadFile
 export const download = Fetch.download
 export const proxy = Fetch.proxy

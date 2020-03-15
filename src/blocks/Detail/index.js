@@ -95,7 +95,7 @@ export default class CommonDetail extends PureComponent {
           <Button type="primary" style={{marginLeft: 8}}
                   onClick={() => this.submit((value) => this.onEditButton(value, firstContent.uuid, onClick))}>保
             存</Button>
-        </Col> : <Col style={{marginTop: 50}}><InnerButton value={firstContent}
+        </Col> : <Col span={24} style={{marginTop: 50}}><InnerButton value={firstContent}
                                                            onClick={(button) => {
                                                              open_edit ? this.submit((value) => {
                                                                this.onButtonClick(button, {
