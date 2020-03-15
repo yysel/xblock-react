@@ -1,6 +1,6 @@
 import { getLoginUser, getMenu, login, register, queryNotices, clearNotices, search } from '../api'
 import { setToken } from '../tools/auth'
-import * as routerRedux from 'react-router-redux'
+import { replace, push } from 'react-router-redux'
 import { checkCode } from '../tools/response'
 
 export default {
@@ -76,7 +76,7 @@ export default {
       if (response?.success && response?.data) {
         yield setToken(response.data)
         const path = yield (goPath && goPath != 'index') ? '/' + goPath : '/'
-        yield put(routerRedux.push(path))
+        yield put(replace(path))
         if (window.connection) {
           yield window.connection.keepOnline()
         }
@@ -105,7 +105,7 @@ export default {
       if (window.connection) {
         yield window.connection.stop()
       }
-      yield put(routerRedux.push(`/user/login/${goPath}`))
+      yield put(replace(`/user/login/${goPath}`))
     },
 
     * logoutGoHome ({home}, {put, select}) {
@@ -116,7 +116,7 @@ export default {
       if (window.connection) {
         yield window.connection.stop()
       }
-      yield put(routerRedux.push(`/user/login/${goPath}`))
+      yield put(replace(`/user/login/${goPath}`))
     },
 
     * register ({payload, goPath, callBack}, {call, put}) {
