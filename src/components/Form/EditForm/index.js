@@ -5,16 +5,17 @@ import { isUndefined } from '../../../tools/type'
 import { connect } from 'dva'
 
 const EditForm = function (props) {
-  const {editFormVisible, header, changeEditFormVisible, value, onOk, index,Input} = props
-
-  function okHandle (uuid, value) {
+  const {editFormVisible, header, changeEditFormVisible, value, onOk, index, Input, primaryKey = 'id'} = props
+  const primary = {}
+  primary[primaryKey] = value[primaryKey];
+  function okHandle (value) {
     const filter = Object.keys(value).map(k => {
       if (isUndefined(value[k])) {
         value[k] = null
       }
     })
     if (filter.length) {
-      onOk({...value, uuid}).then(({success}) => {
+      onOk({...value, ...primary}).then(({success}) => {
         if (success) {
           changeEditFormVisible(false)
           form.resetFields()
@@ -33,11 +34,11 @@ const EditForm = function (props) {
       width={500}
       getContainer={false}
     >
-      <Form initialValues={value ? value : {}} onFinish={(v) => okHandle(value.uuid, v)}>
+      <Form initialValues={value ? value : {}} onFinish={okHandle}>
         {header.map(function (column) {
           return (<Form.Item key={column.index} rules={FormRules(column)} name={column.index} labelCol={{span: 5}}
                              wrapperCol={{span: 15}} label={column.title}>
-            <Input header={column} row={value} mode={'edit'} />
+            <Input header={column} row={value} mode={'edit'}/>
           </Form.Item>)
         })}
         <div

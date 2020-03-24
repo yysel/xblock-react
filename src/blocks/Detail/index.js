@@ -18,11 +18,13 @@ export default class CommonDetail extends PureComponent {
     else this.props.onClick(button.index, {value: firstContent, button: button})
   }
 
-  onEditButton = (value, uuid, onClick) => {
-    const {block: {relation_index}, relationUuid} = this.props
-    if (uuid) {
+  onEditButton = (value, primaryValue, onClick) => {
+    const {block: {relation_index, primary_key}, relationUuid} = this.props
+    const primary = {}
+    primary[primary_key] = primaryValue
+    if (primaryValue) {
       if (onClick) onClick('edit', {
-        value: {...value, uuid},
+        value: {...value, ...primary},
         button: {},
       }, {parameter: {}})
     } else {
@@ -46,9 +48,11 @@ export default class CommonDetail extends PureComponent {
   }
 
   render () {
-    const {block: {content, header, property: {column = 3, has_border = false, open_edit = false}}, TopButton, InnerButton, onClick, Cell, Input, loading} = this.props
+    const {block: {content, header, primary_key, property: {column = 3, has_border = false, open_edit = false}}, TopButton, InnerButton, onClick, Cell, Input, loading} = this.props
     const editStatus = open_edit ? true : this.state.editStatus
     const firstContent = content[0] ? content[0] : {}
+    const primary = {}
+    const primaryValue = primary[primary_key] = firstContent[primary_key]
     const EditBoard = props => {
       const [form] = Form.useForm()
       this.form = form
@@ -76,35 +80,38 @@ export default class CommonDetail extends PureComponent {
     </Descriptions>
     return <Loading loading={loading}>
       <Row>
-        <Col style={{marginBottom: 20}} span={24}> <TopButton spread={false}
-                                                              value={firstContent}
-                                                              onClick={(button) => {
-                                                                open_edit ? this.submit((value) => {
-                                                                  this.onButtonClick(button, {
-                                                                    ...value,
-                                                                    uuid: firstContent.uuid,
-                                                                  })
-                                                                }) : this.onButtonClick(button, firstContent)
-                                                              }}
-        /></Col>
+        <Col style={{marginBottom: 20}} span={24}>
+          <TopButton spread={false}
+                     value={firstContent}
+                     onClick={(button) => {
+                       open_edit ? this.submit((value) => {
+                         this.onButtonClick(button, {
+                           ...value,
+                           ...primary
+                         })
+                       }) : this.onButtonClick(button, firstContent)
+                     }}
+          />
+        </Col>
         <Col span={24}>
           {editStatus ? <EditBoard onClick={onClick}/> : <Board/>}
         </Col>
         {(editStatus && !open_edit) ? <Col span={24} style={{textAlign: 'center', marginTop: 50}}>
           <Button onClick={() => this.setState({editStatus: false})}>取 消</Button>
           <Button type="primary" style={{marginLeft: 8}}
-                  onClick={() => this.submit((value) => this.onEditButton(value, firstContent.uuid, onClick))}>保
+                  onClick={() => this.submit((value) => this.onEditButton(value, primaryValue, onClick))}>保
             存</Button>
-        </Col> : <Col span={24} style={{marginTop: 50}}><InnerButton value={firstContent}
-                                                           onClick={(button) => {
-                                                             open_edit ? this.submit((value) => {
-                                                               this.onButtonClick(button, {
-                                                                 ...value,
-                                                                 uuid: firstContent.uuid,
-                                                               })
-                                                             }) : this.onButtonClick(button, firstContent)
-                                                           }}
-        /></Col>}
+        </Col> : <Col span={24} style={{marginTop: 50}}>
+          <InnerButton value={firstContent}
+                       onClick={(button) => {
+                         open_edit ? this.submit((value) => {
+                           this.onButtonClick(button, {
+                             ...value,
+                             ...primary,
+                           })
+                         }) : this.onButtonClick(button, firstContent)
+                       }}
+          /></Col>}
       </Row>
     </Loading>
   }

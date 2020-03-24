@@ -1,9 +1,10 @@
 import logo from '../assets/logo.png'
+import favicon from '../assets/favicon.png'
 
 const initState = {
-  logo: '',
-  title: 'x-block 只为快捷开发',
-  favicon: logo
+  logo,
+  title: '只为快捷开发',
+  favicon
 }
 export default {
   namespace: '@@app',

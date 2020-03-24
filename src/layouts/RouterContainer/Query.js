@@ -186,7 +186,7 @@ export default class BasicContainer extends Component {
   }
 
   render () {
-    const {menu, key, index, dispatch, user, fetchLoading} = this.props
+    const {key, index, dispatch, user, fetchLoading} = this.props
     const block = this.getBlockData()
     const loading = this.getLoading()
     if (block) {
@@ -200,10 +200,12 @@ export default class BasicContainer extends Component {
       const componentProps = this.config.props ? this.config.props : {}
       const rightExtraWidth = RightExtra ? (this.config.rightExtraWidth || 1) : 0
       const {tabItem, active} = this.getTabState(block)
+      const primaryKey = block.primary_key
       const buttonProps = {
         event: this.event,
         extension: this.config?.button ? this.config.button : {},
         dispatch,
+        primaryKey,
       }
       const props = {
         key, block, loading, user, dispatch, blockConfig: this.config,
@@ -213,13 +215,11 @@ export default class BasicContainer extends Component {
         changeEditFormVisible: (v, value) => this.changeEditFormVisible(index, v, value),
         onClick: this.onClick,
         onChange: this.onChange,
-        InnerButton: (props) => <InnerButton event={this.event}
-                                             button={block.getInnerButton()} {...buttonProps} {...props}
-                                             extension={this.config?.button ? this.config.button : {}}/>,
-        TopButton: (props) => <TopButton event={this.event} button={block.getTopButton()} {...buttonProps} {...props}
-                                         extension={this.config?.button ? this.config.button : {}}/>,
-        Input: (props) => <Input index={index} {...props} extension={this.config?.input ? this.config.input : {}}/>,
-        Cell: (props) => <Cell index={index} event={this.event} {...props} dispatch={dispatch}
+        InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props}/>,
+        TopButton: (props) => <TopButton event={this.event} button={block.getTopButton()} {...buttonProps} {...props}/>,
+        Input: (props) => <Input index={index} {...props} extension={this.config?.input ? this.config.input : {}}
+                                 primaryKey={primaryKey}/>,
+        Cell: (props) => <Cell index={index} event={this.event} {...props} dispatch={dispatch} primaryKey={primaryKey}
                                extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
@@ -236,15 +236,16 @@ export default class BasicContainer extends Component {
             {tabItem.map(item => <TabPane tab={item.text} key={item.value}/>)}
           </Tabs>
         }
-        <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange}
+        <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange} primaryKey={primaryKey}
                        header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
                        Input={props.Input}/>
 
-        <AddForm index={index} header={block.getAddHeader()}
+        <AddForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
                  changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
                  onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
         {TopExtra && <TopExtra {...props}/>}
-        <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== 'uuid')}
+        <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== primaryKey)}
+                  primaryKey={primaryKey}
                   changeEditFormVisible={(v) => this.changeEditFormVisible(index, v)}
                   Input={props.Input}
                   onOk={(value) => this.onClick('edit', {value})}/>

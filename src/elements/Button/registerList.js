@@ -82,10 +82,11 @@ export default [
     title: '开关',
     key: 'switch',
     component: (props) => {
-      const {value, event: {edit}, button: {index}} = props
+      const {value, event: {edit}, button: {index}, primaryKey} = props
+      const editValue = {}
+      editValue[primaryKey] = value[primaryKey]
       return <Switch checked={value?.[index]} onClick={(v, e) => {
         e.stopPropagation()
-        const editValue = {uuid: value.uuid}
         editValue[index] = v
         edit(editValue)
       }}/>

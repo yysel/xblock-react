@@ -95,7 +95,7 @@ export default class CommonTable extends PureComponent {
   }
 
   render () {
-    const {loading, dispatch, block: {content, pagination, button, property: {has_border, link}}, onRow, rowClassName, TopButton, ...rest} = this.props
+    const {loading, dispatch, block: {content, pagination, button, primary_key, property: {has_border, link}}, onRow, rowClassName, TopButton, ...rest} = this.props
     const {selectedRows} = this.state
     const column = this.getColumn()
     let size = 'default'
@@ -143,7 +143,7 @@ export default class CommonTable extends PureComponent {
           {...rest}
           onSelectRow={this.handleSelectRows.bind(this)}
           onChange={this.onChange}
-          rowKey='uuid'
+          rowKey={primary_key}
           onRow={(record) => {
             let event = onRow ? onRow(record) : {}
             if (link) event = {

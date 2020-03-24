@@ -20,7 +20,7 @@ window.send = (route, body, header = '') => {
 
 
 window.trim = (s, str) => {
-  if (str.substr(0, 1) == s) return str.substr(1);
+  if (str && str.substr(0, 1) == s) return str.substr(1);
   return str;
 };
 

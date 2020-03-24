@@ -3,15 +3,17 @@ import { getToken } from './tools/auth'
 import { Modal, Divider } from 'antd'
 import registerState from './xblock/registerState'
 import { downloadFile } from './tools/file'
-
+import React from 'react'
 export default class Fetch {
 
   static headers = {}
 
-  static _defaultHeaders = {
-    'Client-Type': 'web-admin',
-    'Location': registerState.getState('routing')?.location?.pathname,
-    'Authorization': `Bearer ${getToken()}`,
+  static defaultHeaders = () => {
+    return {
+      'Client-Type': 'web-admin',
+      'Location': registerState.getState('routing')?.location?.pathname,
+      'Authorization': `Bearer ${getToken()}`,
+    }
   }
 
   static after () {
@@ -52,7 +54,7 @@ export default class Fetch {
   }
 
   static getHeaders () {
-    return {...Fetch._defaultHeaders, ...Fetch.headers}
+    return {...Fetch.defaultHeaders(), ...Fetch.headers}
   }
 
   static getOptions (options) {
