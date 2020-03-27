@@ -7,7 +7,8 @@ export default (props) => {
   const style = {
     // width: 82 + children.length * 2,
     height: 32,
-    padding: '0 16px'
+    padding: '0 16px',
+    margin: '0 5px'
   }
   if (color && color !== 'primary') style.backgroundColor = color
   return <span className='xblock-element-color-button' style={style}

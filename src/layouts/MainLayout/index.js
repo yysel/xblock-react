@@ -177,7 +177,7 @@ export default class MainLayout extends React.PureComponent {
                                                         path={route.path} exact
                                                         component={route.component}/>,
               )}
-              {this.lock && <Redirect exact from="/" to={baseRedirect}/>}
+              {(this.lock && baseRedirect) && <Redirect exact from="/" to={baseRedirect}/>}
               {this.lock && <Route render={NotFount}/>}
             </Switch>
           </Content>
