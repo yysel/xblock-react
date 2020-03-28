@@ -42,7 +42,7 @@ export default class XBlock {
       provider.app = this
       provider.register()
     })
-
+    return this
   }
 
   provider (provider) {

@@ -1,16 +1,15 @@
 import TopButton from './Button/TopButton';
 import InnerButton from './Button/InnerButton';
 
-import Column from './Column';
-import FormRule from './Field/FormRule';
-import Field from './Field';
+import Cell from './Cell';
+
+import Input from './Input';
 
 export {
   TopButton,
   InnerButton,
-  Column,
-  FormRule,
-  Field,
+  Cell,
+  Input,
 };
 
 

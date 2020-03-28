@@ -95,6 +95,7 @@ export default class MainLayout extends React.PureComponent {
   state = {
     isMobile: false,
     menuBlock: {},
+    lock:false
   }
 
   getChildContext () {
@@ -111,10 +112,8 @@ export default class MainLayout extends React.PureComponent {
     getMenu({
       payload: false,
       callback: () => {
-        // getMenu({ payload: true });
+        this.setState({lock:true})
       },
-    }).then(() => {
-      this.lock = true
     })
 
   }
@@ -177,8 +176,8 @@ export default class MainLayout extends React.PureComponent {
                                                         path={route.path} exact
                                                         component={route.component}/>,
               )}
-              {(this.lock && baseRedirect) && <Redirect exact from="/" to={baseRedirect}/>}
-              {this.lock && <Route render={NotFount}/>}
+              {(this.state.lock && baseRedirect) && <Redirect exact from="/" to={baseRedirect}/>}
+              {this.state.lock && <Route render={NotFount}/>}
             </Switch>
           </Content>
         </Layout>
@@ -186,9 +185,9 @@ export default class MainLayout extends React.PureComponent {
     )
 
     return (
-        <ContainerQuery query={query}>
-          {params => <div className={classNames(params)}>{layout}</div>}
-        </ContainerQuery>
+      <ContainerQuery query={query}>
+        {params => <div className={classNames(params)}>{layout}</div>}
+      </ContainerQuery>
     )
   }
 }
