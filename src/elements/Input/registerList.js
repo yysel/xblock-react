@@ -38,7 +38,7 @@ export default [
   {
     title: '下拉单选',
     key: 'select',
-    component: (props) => <Select custom={false} {...props}/>,
+    component: (props) => <Select  {...props}/>,
   },
   {
     title: '单选',

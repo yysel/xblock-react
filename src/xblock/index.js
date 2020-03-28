@@ -3,10 +3,11 @@ import React from 'react'
 import { createHashHistory } from 'history'
 import createLoading from 'dva-loading'
 import Provider from './Provider'
-import bootstrap from '../bootstrap'
+import Bootstrap from '../bootstrap'
 import Route from './route'
 import registerState from './registerState'
 import register from './register'
+import appModel from '_models/app'
 
 export default class XBlock {
   dva = {}
@@ -15,6 +16,10 @@ export default class XBlock {
   getState = null
   model = null
   register = register
+
+  constructor () {
+    this.provider_list.push(new Bootstrap)
+  }
 
   onError = (e, dispatch) => {
     console.log(e.message)
@@ -27,10 +32,14 @@ export default class XBlock {
     })
     this.dva = app
     this.model = app.model
-    bootstrap(this)
+    app.model(appModel)
+    this.register.appConfig = (data) => {
+      const appModeled = app._models.find(i => i.namespace === '@@app')
+      appModeled.state = data
+    }
     this.provider_list.forEach(provider => {
       provider.app = this
-      provider.boot()
+      provider.boot(app)
     })
     app.use(createLoading())
     app.router((p) => <Route {...p} {...props} />)
@@ -40,7 +49,7 @@ export default class XBlock {
     this.dva = app
     this.provider_list.forEach(provider => {
       provider.app = this
-      provider.register()
+      provider.register(this.register)
     })
     return this
   }

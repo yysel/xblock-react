@@ -31,7 +31,6 @@ export default function TopFilterForm (props) {
                           labelAlign='left'
                           labelCol={{flex: `${(item.title.length + 1) * 14}px`}}
                           wrapperCol={{flex: 'auto'}}
-                          initialValue={parameter ? parameter[item.index] : null}
                 >
                   <Input header={item} mode={'filter'}/>
                 </FormItem>

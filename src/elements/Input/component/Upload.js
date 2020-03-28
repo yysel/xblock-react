@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { Upload as AntdUpload, message, Modal } from 'antd'
 import FileRenderModal from '../../Cell/component/FileRenderModal'
 import { request } from '../../../fetch'
-import { Icon } from '@ant-design/compatible'
 import Fetch from '../../../fetch'
-
+import {InboxOutlined} from '@ant-design/icons'
 function removeFile (url, params) {
   return request(url, {
     method: 'POST',
@@ -86,7 +85,7 @@ export default class Upload extends Component {
     const {fileList, uploadUrl, removeUrl} = this.state
     const uploadButton = (
       <div>
-        <Icon type="inbox" style={{color: 'var(--primary-color)', fontSize: 30}}/>
+        <InboxOutlined style={{color: 'var(--primary-color)', fontSize: 30}}/>
         <div className="ant-upload-text">选择文件</div>
       </div>
     )

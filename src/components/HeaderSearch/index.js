@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Input, AutoComplete } from 'antd';
-import { Icon } from '@ant-design/compatible'
+import {SearchOutlined} from '@ant-design/icons'
 import classNames from 'classnames';
 import styles from '_styles/component.less';
 
@@ -65,7 +65,7 @@ export default class HeaderSearch extends PureComponent {
     });
     return (
       <span className={classNames(className, styles.headerSearch)} onClick={this.enterSearchMode}>
-        <Icon type="search" key="Icon" />
+        <SearchOutlined />
         <AutoComplete
           key="AutoComplete"
           {...restProps}

@@ -1,8 +1,7 @@
 import React from 'react'
 import styles from '../../styles/element.less'
 import { Dropdown, Menu, Popconfirm, Button } from 'antd'
-
-import { Icon } from '@ant-design/compatible'
+import { DownOutlined } from '@ant-design/icons'
 import registerState from '../../xblock/registerState'
 
 const getButton = (key) => {
@@ -78,7 +77,7 @@ export default function TopButton (props) {
                                   onClick={() => onClick(item)}>{title}</Menu.Item>
               })}
             </Menu>}>
-              <Button type={'primary'}>更多操作 <Icon type="down"/></Button>
+              <Button type={'primary'}>更多操作 <DownOutlined/></Button>
             </Dropdown>
       </span>
     </div>)
