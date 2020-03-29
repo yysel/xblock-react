@@ -1,13 +1,11 @@
 import dva from 'dva'
 import React from 'react'
-import { createHashHistory } from 'history'
 import createLoading from 'dva-loading'
 import Provider from './Provider'
 import Bootstrap from '../bootstrap'
 import Route from './route'
 import registerState from './registerState'
 import register from './register'
-import appModel from '_models/app'
 
 export default class XBlock {
   dva = {}
@@ -28,11 +26,9 @@ export default class XBlock {
   run (root, props) {
     const app = dva({
       onError: this.onError,
-      history: createHashHistory(),
     })
     this.dva = app
     this.model = app.model
-    app.model(appModel)
     this.register.appConfig = (data) => {
       const appModeled = app._models.find(i => i.namespace === '@@app')
       appModeled.state = data

@@ -8,7 +8,7 @@ const getButton = (key) => {
 }
 
 export default function InnerButton (props) {
-  const {button = [], extension = {}, onClick, value = {}, event, style, buttonStatue = {}} = props
+  const {button = [], extension = {}, onClick, value = {}, event, style,primaryKey, buttonStatue = {}} = props
   return (
     <div className='xblock-element-inner-button' style={style}>
       {button.map((item, key) => {
@@ -19,6 +19,7 @@ export default function InnerButton (props) {
           index,
           title,
           event,
+          primaryKey,
           key
         }
         let ButtonComponent = getButton(component)

@@ -20,7 +20,7 @@ function RouterConfig ({history, ...rest}) {
                    component={(props) => <UserLayout rootPath={XBlock.userLayout.path}  {...props} {...rest}/>}/>
             <Route path={XBlock.mainLayout.path}
                    component={(props) => <MainLayout rootPath={XBlock.mainLayout.path} {...props} {...rest} />}/>
-            <Route render={() => '没发现3'}/>
+            <Route render={() => '页面不存在'}/>
           </Switch>
         </ConnectedRouter>
       </DocumentTitleAndIcon>

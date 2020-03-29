@@ -9,7 +9,7 @@ const getButton = (key) => {
   return button?.component ? button.component : null
 }
 export default function TopButton (props) {
-  const {button, spread = true, extension = {}, event, onClick, value = {}, style = {}} = props
+  const {button, spread = true, extension = {}, event, onClick, value = {}, style = {},primaryKey} = props
   return (button.length < 4 || spread) ? (
     <div style={style}>
       {button.map((item) => {
@@ -20,6 +20,7 @@ export default function TopButton (props) {
           index,
           title,
           event,
+          primaryKey
         }
         let ButtonComponent = getButton(component)
         let DefaultButton = <ButtonComponent {...buttonProps} > {title}</ButtonComponent>

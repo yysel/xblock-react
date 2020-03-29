@@ -10,15 +10,19 @@ import ButtonRegisterList from './elements/Button/registerList'
 import ColumnRegisterList from './elements/Cell/registerList'
 import FieldRegisterList from './elements/Input/registerList'
 import Provider from './xblock/Provider'
+import access from './extension/access'
+import appModel from '_models/app'
+
 export default class Bootstrap extends Provider {
 
   boot () {
-    const app =this.app;
+    const app = this.app
     //注册相关model
 
     app.model(xblock)
     app.model(container)
     app.model(element)
+    app.model(appModel)
     //注册无状态路由
     app.register.userRouter([
       {
@@ -34,6 +38,7 @@ export default class Bootstrap extends Provider {
     app.register.button(ButtonRegisterList)
     app.register.input(FieldRegisterList)
     app.register.cell(ColumnRegisterList)
+    app.register.input(access)
 
     //注册fetch钩子函数
     Fetch.after = ({code}) => {
