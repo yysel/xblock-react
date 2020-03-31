@@ -4,6 +4,7 @@ import { Modal, Divider } from 'antd'
 import registerState from './xblock/registerState'
 import { downloadFile } from './tools/file'
 import React from 'react'
+
 export default class Fetch {
 
   static headers = {}
@@ -151,22 +152,21 @@ export default class Fetch {
     })
   }
 
-  static uploadFile (url, params) {
-
+  static upload (url, params, headers) {
     let formData = new FormData()
     for (let key in params) {
       formData.append(key, params[key])
     }
-    return fetch(url, {
+    return Fetch.fetch(url, {
       method: 'POST',
       body: formData,
+      headers,
     }).then((response) => response.json())
       .then((responseData) => {
-        console.log('uploadImage', responseData)
         return responseData
       })
       .catch((err) => {
-        console.log('err', err)
+        console.log('文件上传错误', err)
       })
   }
 
@@ -190,6 +190,6 @@ export default class Fetch {
 export const request = Fetch.request
 export const post = Fetch.post
 export const get = Fetch.get
-export const uploadFile = Fetch.uploadFile
+export const upload = Fetch.upload
 export const download = Fetch.download
 export const proxy = Fetch.proxy

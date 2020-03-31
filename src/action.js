@@ -3,9 +3,8 @@ import registerState from './xblock/registerState'
 export default function getAction (dispatch) {
   let thisDispatch = registerState.dispatch
   if (dispatch) thisDispatch = dispatch
-
   return {
-//获取block
+    //获取block
     getBlock: (block, action, payload = {}, path) => thisDispatch({
       type: '@@container/getBlock',
       block,
@@ -19,7 +18,14 @@ export default function getAction (dispatch) {
       payload,
       path,
     }),
-//登录
+
+    importBlock: (block, payload = {}, path) => thisDispatch({
+      type: '@@container/importBlock',
+      block,
+      payload,
+      path,
+    }),
+    //登录
     login: (payload = {}) => thisDispatch({
       type: '@@xblock/login',
       ...payload,
@@ -30,17 +36,17 @@ export default function getAction (dispatch) {
       ...payload,
     }),
 
-//登出用户
+    //登出用户
     logout: () => thisDispatch({
       type: '@@xblock/logout',
     }),
 
-//获取当前用户
+    //获取当前用户
     getUser: () => thisDispatch({
       type: '@@xblock/fetchCurrent',
     }),
 
-//获取菜单
+    //获取菜单
     getMenu: (payload = {}) => {
       return thisDispatch({
         type: '@@xblock/fetchMenu',
@@ -48,7 +54,7 @@ export default function getAction (dispatch) {
       })
     },
 
-//改变新增表单的显隐状态
+    //改变新增表单的显隐状态
     changeAddFormVisible: (index, status) => thisDispatch({
       type: '@@container/changeAddFormVisible',
       status,

@@ -11,7 +11,9 @@ import { Tabs, Row, Col, Empty, Skeleton } from 'antd'
 import blockStructure from '_tools/block'
 import BaseCard from '../../cards/ColorHeaderCard'
 import { goPage } from '_tools/helper'
-import ExportModal from '_components/Modals/ExportModal'
+import showExportModal from '_components/Modals/ExportModal'
+import showImportModal from '_components/Modals/ExcelImportModal'
+import showImportResult from '_components/Modals/ImprotResult'
 import InnerButton from '_elements/Button/InnerButton'
 import TopButton from '_elements/Button/TopButton'
 import Input from '_elements/Input'
@@ -28,11 +30,12 @@ export default class BasicContainer extends Component {
 
   constructor (props) {
     super(props)
-    const {getBlock, changeAddFormVisible, changeEditFormVisible, exportBlock} = getAction(this.props.dispatch)
+    const {getBlock, changeAddFormVisible, changeEditFormVisible, exportBlock, importBlock} = getAction(this.props.dispatch)
     this.getBlock = getBlock
     this.changeAddFormVisible = changeAddFormVisible
     this.changeEditFormVisible = changeEditFormVisible
     this.exportBlock = exportBlock
+    this.importBlock = importBlock
   }
 
   state = {
@@ -132,7 +135,7 @@ export default class BasicContainer extends Component {
               parameter,
               sorting, header, title,
             } = this.getBlockData()
-            ExportModal((v) => {
+            return showExportModal((v) => {
               return this.exportBlock(this.props.index, {
                 pagination,
                 parameter,
@@ -141,12 +144,17 @@ export default class BasicContainer extends Component {
               }, this.props?.match?.path)
             }, header, title, pagination.page)
           }
-
-          case 'detail':
-            return
-          case 'add':
-          case 'delete':
-          case 'edit':
+          case 'import':
+            return showImportModal(() => {
+              return this.exportBlock(this.props.index, {
+                is_sample: true,
+              }, this.props?.match?.path)
+            }, (file) => {
+              return this.importBlock(this.props.index, {file}, this.props?.match?.path).then(res => {
+                this.event.select()
+                showImportResult(res, this.props.dispatch)
+              })
+            })
           default:
             return this.action(action, value)
         }

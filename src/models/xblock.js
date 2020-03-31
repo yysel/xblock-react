@@ -1,4 +1,4 @@
-import { getLoginUser, getMenu, login, register, queryNotices, clearNotices, search } from '../api'
+import { getLoginUser, getMenu, login, register, queryNotices, clearNotices } from '../api'
 import { setToken } from '../tools/auth'
 import { replace, push } from 'react-router-redux'
 import { checkCode } from '../tools/response'
@@ -50,15 +50,6 @@ export default {
       if (callback) {
         yield callback()
       }
-    },
-
-    * search ({payload}, {put, call}) {
-      const response = yield call(search, payload)
-      if (response?.success && response?.data)
-        yield put({
-          type: 'saveSearchResult',
-          payload: response.data,
-        })
     },
 
     * fetchCurrent (_, {call, put}) {
