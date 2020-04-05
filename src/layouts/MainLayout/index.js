@@ -79,13 +79,10 @@ enquireScreen(b => {
   isMobile = b
 })
 
-@connect(({'@@xblock': {currentUser, mainLayoutMenu}, loading, '@@app': {title, tabTitle, favicon}}) => ({
+@connect(({'@@xblock': {currentUser, mainLayoutMenu}, loading}) => ({
   currentUser: currentUser,
   menuData: mainLayoutMenu,
   fetchingMenu: loading.effects['global/fetchMenu'],
-  title,
-  tabTitle,
-  favicon,
 }))
 export default class MainLayout extends React.PureComponent {
   static childContextTypes = {

@@ -14,6 +14,7 @@ export default class Fetch {
       'Client-Type': 'web-admin',
       'Location': registerState.getState('routing')?.location?.pathname,
       'Authorization': `Bearer ${getToken()}`,
+      'Cache-Control': 'no-cache'
     }
   }
 

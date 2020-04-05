@@ -44,6 +44,9 @@ export default {
   config: (data) => {
     registerObject(data, 'config')
   },
+  mainLayout:(data)=>{
+    registerObject(data, 'mainLayout')
+  },
 
   menu: (data) => {
     registerArray(data, 'menu')
