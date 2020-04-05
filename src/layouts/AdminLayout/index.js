@@ -84,7 +84,7 @@ enquireScreen(b => {
   menuData: mainLayoutMenu,
   fetchingMenu: loading.effects['global/fetchMenu'],
 }))
-export default class MainLayout extends React.PureComponent {
+export default class AdminLayout extends React.PureComponent {
   static childContextTypes = {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
@@ -92,7 +92,7 @@ export default class MainLayout extends React.PureComponent {
   state = {
     isMobile: false,
     menuBlock: {},
-    lock:false
+    lock: false
   }
 
   getChildContext () {
@@ -104,19 +104,22 @@ export default class MainLayout extends React.PureComponent {
   }
 
   componentWillMount () {
+    registerState.mount.bind(this)
+    registerState.mount(this.props)
     const {getMenu, getUser} = getAction(this.props.dispatch)
     getUser()
     getMenu({
       payload: false,
       callback: () => {
-        this.setState({lock:true})
+        this.setState({lock: true})
       },
     })
 
   }
 
   componentDidMount () {
-
+    registerState.mounted.bind(this)
+    registerState.mounted(this.props)
     document.documentElement.onkeydown = (ev) => {
       if (ev.shiftKey && ev.keyCode === 8) {
         window.history.go(-1)

@@ -47,7 +47,8 @@ export default {
   mainLayout:(data)=>{
     registerObject(data, 'mainLayout')
   },
-
+  mainLayoutMount:(func)=>{registerState.mount=func},
+  mainLayoutMounted:(func)=>{registerState.mounted=func},
   menu: (data) => {
     registerArray(data, 'menu')
   },
