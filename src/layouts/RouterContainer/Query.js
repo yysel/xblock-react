@@ -10,7 +10,7 @@ import TopFilterForm from '../../components/Form/TopFilterForm'
 import { Tabs, Row, Col, Empty, Skeleton } from 'antd'
 import blockStructure from '_tools/block'
 import BaseCard from '../../cards/ColorHeaderCard'
-import { goPage } from '_tools/helper'
+import { goPage, parseString, parseUrl } from '_tools/helper'
 import showExportModal from '_components/Modals/ExportModal'
 import showImportModal from '_components/Modals/ExcelImportModal'
 import showImportResult from '_components/Modals/ImprotResult'
@@ -18,6 +18,7 @@ import InnerButton from '_elements/Button/InnerButton'
 import TopButton from '_elements/Button/TopButton'
 import Input from '_elements/Input'
 import Cell from '_elements/Cell'
+import * as Type from '_tools/type'
 
 const TabPane = Tabs.TabPane
 
@@ -30,7 +31,13 @@ export default class BasicContainer extends Component {
 
   constructor (props) {
     super(props)
-    const {getBlock, changeAddFormVisible, changeEditFormVisible, exportBlock, importBlock} = getAction(this.props.dispatch)
+    const {
+      getBlock,
+      changeAddFormVisible,
+      changeEditFormVisible,
+      exportBlock,
+      importBlock
+    } = getAction(this.props.dispatch)
     this.getBlock = getBlock
     this.changeAddFormVisible = changeAddFormVisible
     this.changeEditFormVisible = changeEditFormVisible
@@ -124,7 +131,19 @@ export default class BasicContainer extends Component {
       return event({value, dispatch: this.props.dispatch, event: this.event})
     } else {
       if (button?.link) {
-        goPage(button?.link, value, true)
+        let href = button.link
+        let self = false
+        if (Type.isObject(button.link)) {
+          href = button.link.href
+          self = button.link.self
+        }
+        if (href.substr(0, 4) === 'http') {
+          const newUrl = parseString(href, value)
+          if (self) return window.location.href = newUrl
+          return window.open(newUrl)
+        } else {
+          goPage(href, value, true)
+        }
       } else {
         switch (action) {
           case 'return':
