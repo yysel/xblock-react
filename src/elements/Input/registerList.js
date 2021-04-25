@@ -13,6 +13,7 @@ import TreeCascade from './component/TreeCascade';
 import Date from './component/Date';
 import Month from './component/Month';
 import Password from './component/Password';
+import DateTime from './component/DateTime'
 
 export default [
   {
@@ -81,6 +82,11 @@ export default [
     title: '日期',
     key: 'date',
     component: Date,
+  },
+  {
+    title: '日期时间',
+    key: 'datetime',
+    component: DateTime,
   },
   {
     title: '月份选择器',

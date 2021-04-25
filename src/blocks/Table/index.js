@@ -32,7 +32,8 @@ export default class CommonTable extends PureComponent {
 
   onTopButtonClick = (button) => {
     const {selectedRowsValue, selectedRows} = this.state
-    const {changeAddFormVisible, onClick} = this.props
+    const {changeAddFormVisible, changeCommonFormVisible, onClick} = this.props
+    if (button.form) return changeCommonFormVisible(true, button)
     if (button.index === 'add') return changeAddFormVisible(true)
     onClick(button.index, {value: selectedRows, button, selectedRows: selectedRowsValue})
   }
@@ -95,7 +96,15 @@ export default class CommonTable extends PureComponent {
   }
 
   render () {
-    const {loading, dispatch, block: {content, pagination, button, primary_key, property: {has_border, link}}, onRow, rowClassName, TopButton, ...rest} = this.props
+    const {
+      loading,
+      dispatch,
+      block: {content, pagination, button, primary_key, property: {has_border, link}},
+      onRow,
+      rowClassName,
+      TopButton,
+      ...rest
+    } = this.props
     const {selectedRows} = this.state
     const column = this.getColumn()
     let size = 'default'
@@ -104,12 +113,10 @@ export default class CommonTable extends PureComponent {
     if (wind > 1700) {
       size = 'default'
       sizeRadio = 1
-    }
-    else if (wind <= 1700 && wind > 1400) {
+    } else if (wind <= 1700 && wind > 1400) {
       size = 'middle'
       sizeRadio = 0.85
-    }
-    else {
+    } else {
       sizeRadio = 0.7
       size = 'small'
     }

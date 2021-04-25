@@ -61,6 +61,13 @@ export default function getAction (dispatch) {
       index,
     }),
 
+    changeCommonFormVisible: (index, status, button) => thisDispatch({
+      type: '@@container/changeCommonFormVisible',
+      status,
+      index,
+      button
+    }),
+
     /**
      * //改变编辑表单的显隐状态
      * @param index

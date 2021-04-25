@@ -8,6 +8,8 @@ const initState = {
   addFormVisible: {},
   editFormVisible: {},
   editFormValue: {},
+  commonFormVisible: {},
+  commonFormButton: {},
 }
 export default {
   namespace: '@@container',
@@ -71,6 +73,16 @@ export default {
       return {
         ...state,
         addFormVisible: {...addFormVisible},
+      }
+    },
+
+    changeCommonFormVisible (state, {status, index, button}) {
+      let commonFormVisible = {...state.commonFormVisible}
+      commonFormVisible[index] = status
+      return {
+        ...state,
+        commonFormButton: button,
+        commonFormVisible: {...commonFormVisible},
       }
     },
 
