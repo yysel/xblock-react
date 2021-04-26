@@ -23,9 +23,10 @@ import * as Type from '_tools/type'
 
 const TabPane = Tabs.TabPane
 
-@connect(({'@@container': {blockData, loading}, loading: {effects}}) => ({
+@connect(({'@@container': {blockData, loading, commonFormVisible}, loading: {effects}}) => ({
   blockData,
   loading,
+  commonFormVisible,
   fetchLoading: effects['@@container/getBlock'],
 }))
 export default class BasicContainer extends Component {
@@ -218,7 +219,7 @@ export default class BasicContainer extends Component {
   }
 
   render () {
-    const {key, index, dispatch, user, fetchLoading} = this.props
+    const {key, index, dispatch, user, fetchLoading, commonFormVisible} = this.props
     const block = this.getBlockData()
     const loading = this.getLoading()
     if (block) {
@@ -276,9 +277,10 @@ export default class BasicContainer extends Component {
         <AddForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
                  changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
                  onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
-        <CommonForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
-                    changeCommonFormVisible={(v, button) => this.changeCommonFormVisible(index, v, button)}
-                    onOk={(value, action) => this.onClick(action, {value})} Input={props.Input}/>
+        {commonFormVisible[index] && <CommonForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
+                                                 changeCommonFormVisible={(v, button) => this.changeCommonFormVisible(index, v, button)}
+                                                 onOk={(value, action) => this.onClick(action, {value})}
+                                                 Input={props.Input}/>}
         {TopExtra && <TopExtra {...props}/>}
         <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== primaryKey)}
                   primaryKey={primaryKey}

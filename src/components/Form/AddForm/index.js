@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormRules } from '../../../tools/validator'
+import { FormRules } from '_tools/validator'
 import {
   Row,
   Col,
@@ -12,6 +12,10 @@ const FormItem = Form.Item
 const AddForm = props => {
   const {onOk, addFormVisible, header, changeAddFormVisible, index, Input} = props
   const [form] = Form.useForm()
+  const initValue = {}
+  header.forEach(i => {
+    if (i.default) initValue[i.index] = i.default
+  })
   const okHandle = () => {
     form.validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
@@ -73,7 +77,7 @@ const AddForm = props => {
       onOk={okHandle}
       onCancel={() => changeAddFormVisible(false)}
     >
-      <Form initialValues={{}} form={form}>
+      <Form initialValues={initValue} form={form}>
         {header.length >= 8 ? TwoColumn : oneColumn}
       </Form>
     </Modal>

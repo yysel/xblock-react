@@ -14,6 +14,10 @@ const CommonForm = props => {
   const formBuilder = commonFormButton.form
   const formTitle = formBuilder?.title ? formBuilder.title : commonFormButton.title
   const [form] = Form.useForm()
+
+  formBuilder?.fields.forEach(i => {
+    if (i.default && !commonFormValue[i.index]) commonFormValue[i.index] = i.default
+  })
   const okHandle = () => {
     form.validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
@@ -72,12 +76,13 @@ const CommonForm = props => {
       title={formTitle}
       width={formBuilder?.fields?.length >= 8 ? 800 : 550}
       visible={commonFormVisible[index]}
+      // visible={true}
       onOk={okHandle}
       onCancel={() => changeCommonFormVisible(false, {})}
       cancelText={formBuilder?.cancel_title}
       okText={formBuilder?.confirm_title}
     >
-      <Form initialValues={{}} form={form}>
+      <Form initialValues={commonFormValue} form={form}>
         {formBuilder?.fields?.length >= 8 ? TwoColumn : oneColumn}
       </Form>
     </Modal>
