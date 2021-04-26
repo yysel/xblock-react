@@ -61,11 +61,12 @@ export default function getAction (dispatch) {
       index,
     }),
 
-    changeCommonFormVisible: (index, status, button) => thisDispatch({
+    changeCommonFormVisible: (index, status, button,value) => thisDispatch({
       type: '@@container/changeCommonFormVisible',
       status,
       index,
-      button
+      button,
+      value
     }),
 
     /**

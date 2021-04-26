@@ -10,7 +10,7 @@ import { connect } from 'dva'
 
 const FormItem = Form.Item
 const CommonForm = props => {
-  const {onOk, commonFormVisible, changeCommonFormVisible, commonFormButton, index, Input} = props
+  const {onOk, commonFormVisible, changeCommonFormVisible, commonFormButton, index, Input, commonFormValue} = props
   const formBuilder = commonFormButton.form
   const formTitle = formBuilder?.title ? formBuilder.title : commonFormButton.title
   const [form] = Form.useForm()
@@ -18,7 +18,7 @@ const CommonForm = props => {
     form.validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
       if (filter.length) {
-        onOk(value, commonFormButton.index).then(res => {
+        onOk({...commonFormValue, ...value}, commonFormButton.index).then(res => {
           if (res?.success) {
             changeCommonFormVisible(false, {})
             form.resetFields()
@@ -84,6 +84,6 @@ const CommonForm = props => {
 
   )
 }
-export default connect(({'@@container': {commonFormVisible, commonFormButton}}) => ({
-  commonFormVisible, commonFormButton
+export default connect(({'@@container': {commonFormVisible, commonFormButton, commonFormValue}}) => ({
+  commonFormVisible, commonFormButton, commonFormValue
 }))(CommonForm)

@@ -118,7 +118,7 @@ export default class BasicContainer extends Component {
   action = (action, value) => {
     const {pagination, parameter, sorting} = this.getBlockData()
     return this.fetchBlock(action, {...value, parameter}).then((res) => {
-      if(res?.success){
+      if (res?.success) {
         this.onChange({
           pagination,
           parameter,
@@ -135,7 +135,7 @@ export default class BasicContainer extends Component {
     if (this.config?.event?.[action]) {
       return event({value, dispatch: this.props.dispatch, event: this.event})
     } else {
-     if (button?.link) {
+      if (button?.link) {
         let href = button.link
         let self = false
         if (Type.isObject(button.link)) {
@@ -245,7 +245,7 @@ export default class BasicContainer extends Component {
         setInitParam: this.setInitParam,
         changeAddFormVisible: (v) => this.changeAddFormVisible(index, v),
         changeEditFormVisible: (v, value) => this.changeEditFormVisible(index, v, value),
-        changeCommonFormVisible: (v,button) => this.changeCommonFormVisible(index, v, button),
+        changeCommonFormVisible: (status, button, value) => this.changeCommonFormVisible(index, status, button, value),
         onClick: this.onClick,
         onChange: this.onChange,
         InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props}/>,
@@ -277,8 +277,8 @@ export default class BasicContainer extends Component {
                  changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
                  onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
         <CommonForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
-                 changeCommonFormVisible={(v,button) => this.changeCommonFormVisible(index, v,button)}
-                 onOk={(value,action) => this.onClick(action, {value})} Input={props.Input}/>
+                    changeCommonFormVisible={(v, button) => this.changeCommonFormVisible(index, v, button)}
+                    onOk={(value, action) => this.onClick(action, {value})} Input={props.Input}/>
         {TopExtra && <TopExtra {...props}/>}
         <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== primaryKey)}
                   primaryKey={primaryKey}

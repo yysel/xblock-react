@@ -39,7 +39,8 @@ export default class CommonTable extends PureComponent {
   }
 
   onInnerButtonClick (button, value) {
-    const {onClick, changeEditFormVisible} = this.props
+    const {onClick, changeEditFormVisible, changeCommonFormVisible} = this.props
+    if (button.form) return changeCommonFormVisible(true, button, value)
     if (button.index === 'edit') return changeEditFormVisible(true, value)
     onClick(button.index, {button, value})
   };

@@ -1,3 +1,3 @@
-import { FormRules } from '../../tools/validator';
+import { FormRules } from '_tools/validator';
 
 export default FormRules;

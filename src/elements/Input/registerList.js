@@ -14,6 +14,7 @@ import Date from './component/Date';
 import Month from './component/Month';
 import Password from './component/Password';
 import DateTime from './component/DateTime'
+import DateRange  from './component/DateRange'
 
 export default [
   {
@@ -87,6 +88,11 @@ export default [
     title: '日期时间',
     key: 'datetime',
     component: DateTime,
+  },
+  {
+    title: '日期时间',
+    key: 'daterange',
+    component: DateRange,
   },
   {
     title: '月份选择器',

@@ -14,9 +14,11 @@ export default class CommonDetail extends PureComponent {
   }
   form = null
 
-  onButtonClick (button, firstContent) {
-    if (button.index === 'edit' && !this.props.block?.property?.open_edit) this.setState({editStatus: true})
-    else this.props.onClick(button.index, {value: firstContent, button: button})
+  onButtonClick (button, firstContent, block) {
+    const {changeCommonFormVisible, onClick} = this.props
+    if (button.form) return changeCommonFormVisible(true, button, firstContent)
+    if (button.index === 'edit' && !block?.property?.open_edit) this.setState({editStatus: true})
+    else onClick(button.index, {value: firstContent, button: button})
   }
 
   onEditButton = (value, primaryValue, onClick) => {
