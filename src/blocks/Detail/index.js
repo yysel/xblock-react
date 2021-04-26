@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react'
-import { Descriptions, Col, Row, Form, Button } from 'antd'
+import React, { PureComponent, Fragment } from 'react'
+import { Descriptions, Col, Row, Form, Button, Divider } from 'antd'
 import { FormRules } from '_tools/validator'
 import Loading from '_components/Loading'
+import groupBy from 'lodash/groupBy'
 
 const FormItem = Form.Item
 export default class CommonDetail extends PureComponent {
@@ -48,7 +49,15 @@ export default class CommonDetail extends PureComponent {
   }
 
   render () {
-    const {block: {content, header, primary_key, property: {column = 3, has_border = false, open_edit = false}}, TopButton, InnerButton, onClick, Cell, Input, loading} = this.props
+    const {
+      block: {content, header, primary_key, property: {column = 3, has_border = false, open_edit = false}},
+      TopButton,
+      InnerButton,
+      onClick,
+      Cell,
+      Input,
+      loading
+    } = this.props
     const editStatus = open_edit ? true : this.state.editStatus
     const firstContent = content[0] ? content[0] : {}
     const primary = {}
@@ -71,13 +80,37 @@ export default class CommonDetail extends PureComponent {
         </Form>
       )
     }
-    const Board = () => <Descriptions bordered={has_border} column={Number(column)}>
-      {header.filter(it => it.visible).map(item => (
-        <Descriptions.Item label={item.unit ? item.title + '（' + item.unit + '）' : item.title}
-                           span={item.width === 0 ? 1 : item.width}>{<Cell value={firstContent[item.index]}
-                                                                           header={item}
-                                                                           row={firstContent}/>}</Descriptions.Item>))}
-    </Descriptions>
+    const visibleHeader = header.filter(it => it.visible)
+    const data = groupBy(visibleHeader, 'group')
+    const allGroupName = Object.keys(data)
+
+    const Board = () => allGroupName.length < 2 ? <Descriptions bordered={has_border} column={Number(column)}>
+        {visibleHeader.map(item => (
+          <Descriptions.Item label={item.unit ? item.title + '（' + item.unit + '）' : item.title}
+                             span={item.width === 0 ? 1 : item.width}>{<Cell value={firstContent[item.index]}
+                                                                             header={item}
+                                                                             row={firstContent}/>}</Descriptions.Item>))}
+      </Descriptions> :
+      <Fragment bordered={has_border} column={Number(column)}>{
+        allGroupName.map(name => <div style={{marginBottom: '20px'}}>
+          <Row> <Col flex="none">
+            <div style={{
+              textAlign: 'center',
+              lineHeight: '45px',
+              fontSize: '20px',
+              fontWeight: 'bold'
+            }}>{name !== 'null' ? name : '未分组'}</div>
+          </Col> <Col flex="auto"><Divider></Divider></Col> </Row>
+          <Descriptions bordered={has_border} column={Number(column)}>
+            {data[name].map(item => (
+              <Descriptions.Item label={item.unit ? item.title + '（' + item.unit + '）' : item.title}
+                                 span={item.width === 0 ? 1 : item.width}>{<Cell value={firstContent[item.index]}
+                                                                                 header={item}
+                                                                                 row={firstContent}/>}</Descriptions.Item>))}
+          </Descriptions>
+        </div>)
+
+      }</Fragment>
     return <Loading loading={loading}>
       <Row>
         <Col style={{marginBottom: 20}} span={24}>
