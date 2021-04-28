@@ -32,10 +32,12 @@ export default class CommonTable extends PureComponent {
 
   onTopButtonClick = (button) => {
     const {selectedRowsValue, selectedRows} = this.state
-    const {changeAddFormVisible, changeCommonFormVisible, onClick} = this.props
+    const {changeAddFormVisible, changeCommonFormVisible, onClick, block: {primary_key}} = this.props
+    const value = {}
+    if (selectedRows) value[primary_key] = selectedRows
     if (button.form) return changeCommonFormVisible(true, button)
     if (button.index === 'add') return changeAddFormVisible(true)
-    onClick(button.index, {value: selectedRows, button, selectedRows: selectedRowsValue})
+    onClick(button.index, {value, button, selectedRows: selectedRowsValue})
   }
 
   onInnerButtonClick (button, value) {
