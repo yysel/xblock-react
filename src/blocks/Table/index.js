@@ -35,7 +35,7 @@ export default class CommonTable extends PureComponent {
     const {changeAddFormVisible, changeCommonFormVisible, onClick, block: {primary_key}} = this.props
     const value = {}
     if (selectedRows) value[primary_key] = selectedRows
-    if (button.form) return changeCommonFormVisible(true, button)
+    if (button.form) return changeCommonFormVisible(true, button,value)
     if (button.index === 'add') return changeAddFormVisible(true)
     onClick(button.index, {value, button, selectedRows: selectedRowsValue})
   }
