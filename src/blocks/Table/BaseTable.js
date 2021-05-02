@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
-import { Table } from 'antd'
-import { Alert } from 'antd'
+import React, {Fragment} from 'react'
+import {Table,Row,Col} from 'antd'
+import {Alert} from 'antd'
 
 export default function (props) {
   const {data: {list, pagination}, loading, columns, rowKey, rowClassName, onChange, selectBar, onSelectRow, selectedRows, ...rest} = props
@@ -21,16 +21,21 @@ export default function (props) {
   return (
     <div className='xblock-standard-table'>
       <div className='tableAlert'>
-        {selectBar ? <Alert
+        {selectBar && selectedRows.length ? <Alert
           message={
-            <Fragment>
-              已选择 <a style={{fontWeight: 600}}>{selectedRows.length}</a> 项&nbsp;&nbsp;
-              <a onClick={() => {
-                onSelectRow([])
-              }} style={{marginLeft: 24}}>
-                清空
-              </a>
-            </Fragment>
+            <Row justify='space-between'>
+              <Col>
+                已选择 <a style={{fontWeight: 600}}>{selectedRows.length}</a> 项&nbsp;&nbsp;
+              </Col>
+              <Col>
+                <a onClick={() => {
+                  onSelectRow([])
+                }} style={{marginLeft: 24}}>
+                  取消选择
+                </a>
+              </Col>
+
+            </Row>
           }
           type="info"
           showIcon

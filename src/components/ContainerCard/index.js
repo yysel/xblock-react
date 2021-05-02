@@ -1,17 +1,13 @@
 import React from 'react'
-import Card from '../../cards/ColorHeaderCard'
+import Card from '../../cards/TableCard'
 import debounce from 'lodash/debounce'
 
-export default function CommonCard (props) {
-  const {block: {parameter, button, title, index, has_card, recyclable}, loading, inFullScreen, fullScreen, setInitParam} = props
+export default function CommonCard(props) {
+  const {block: {parameter, component, button, title, index, has_card, recyclable, header}, TopButton, loading, inFullScreen, fullScreen, setInitParam} = props
   let isRecycle = false
   if (parameter && parameter.__deleted) isRecycle = true
   const newTitle = isRecycle ? title + ' - ' + '数据回收站' : title
-  const formatTitle = DEV
-    ? <a style={{color: isRecycle ? '#fff' : null}}>{newTitle + ' - ' + index}</a>
-    : <span
-      style={{color: '#333333'}}>{newTitle}
-    </span>
+  const formatTitle = DEV ? newTitle + ' - ' + index : {newTitle}
   const recyleAble = recyclable && button.filter(bnt => bnt.index === 'delete').length
   const events = {
     onRecycle: recyleAble ? () => {
@@ -39,8 +35,12 @@ export default function CommonCard (props) {
     }
   }
   return has_card && !fullScreen ? <Card title={formatTitle}
+                                         index={index}
+                                         hasSetting={component === 'table'}
+                                         header={header}
                                          recycled={isRecycle}
                                          loading={loading}
+                                         TopButton={TopButton}
                                          {...events}
   >
     {props.children}

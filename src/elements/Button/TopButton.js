@@ -11,7 +11,7 @@ const getButton = (key) => {
 export default function TopButton (props) {
   const {button, spread = true, extension = {}, event, onClick, value = {}, style = {},primaryKey} = props
   return (button.length < 4 || spread) ? (
-    <div style={style}>
+    <span style={style}>
       {button.map((item) => {
         const {title, index, confirm, component} = item
         const buttonProps = {
@@ -43,7 +43,7 @@ export default function TopButton (props) {
             <ButtonComponent {...buttonProps} DefaultButton={DefaultButton}> {title}</ButtonComponent>
           </span>)
       })}
-    </div>) : (
+    </span>) : (
     <div style={style}>
       {button.filter((item, key) => {
         return key <= 1

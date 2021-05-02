@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import getAction from '../../action'
-import { connect } from 'dva'
-import { BlockComponent } from '_blocks'
+import {connect} from 'dva'
+import {BlockComponent} from '_blocks'
 import Card from '_components/ContainerCard'
 import register from '_xblock/register'
 import AddForm from '_components/Form/AddForm'
 import CommonForm from '_components/Form/CommonForm'
 import EditForm from '_components/Form/EditForm'
-import TopFilterForm from '../../components/Form/TopFilterForm'
-import { Tabs, Row, Col, Empty, Skeleton } from 'antd'
+import TopFilterForm from '../../components/Form/TopFilterForm/new'
+import {Tabs, Row, Col, Empty, Skeleton, Card as AntdCard} from 'antd'
 import blockStructure from '_tools/block'
 import BaseCard from '../../cards/ColorHeaderCard'
-import { goPage, parseString, parseUrl } from '_tools/helper'
+import {goPage, parseString, parseUrl} from '_tools/helper'
 import showExportModal from '_components/Modals/ExportModal'
 import showImportModal from '_components/Modals/ExcelImportModal'
 import showImportResult from '_components/Modals/ImprotResult'
@@ -23,15 +23,16 @@ import * as Type from '_tools/type'
 
 const TabPane = Tabs.TabPane
 
-@connect(({'@@container': {blockData, loading, commonFormVisible}, loading: {effects}}) => ({
+@connect(({'@@container': {blockData, loading, commonFormVisible, selectedValue}, loading: {effects}}) => ({
   blockData,
   loading,
   commonFormVisible,
+  selectedValue,
   fetchLoading: effects['@@container/getBlock'],
 }))
 export default class BasicContainer extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     const {
       getBlock,
@@ -54,7 +55,7 @@ export default class BasicContainer extends Component {
     timestamp: 0,
   }
 
-  init () {
+  init() {
     const {match: {params = {}}, index, dispatch} = this.props
     this.event = {
       add: (value) => this.action('add', value),
@@ -77,7 +78,7 @@ export default class BasicContainer extends Component {
     this.state.initSort = this.config.initSort
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.init()
     const {match: {params = {}}} = this.props
     const {location: {query = {}}} = this.props
@@ -92,16 +93,16 @@ export default class BasicContainer extends Component {
     } else this.onChange({parameter: {...query}}, true)
   }
 
-  fetchBlock (action, option) {
+  fetchBlock(action, option) {
     return this.getBlock(this.props.index, action, option, this.props?.match?.path)
   }
 
-  getBlockData (data) {
+  getBlockData(data) {
     const {index, blockData} = this.props
     return data ? data[index] : blockData[index]
   }
 
-  getLoading (data) {
+  getLoading(data) {
     const {index, loading} = this.props
     return data ? data[index] : loading[index]
   }
@@ -189,7 +190,7 @@ export default class BasicContainer extends Component {
 
   }
 
-  getTabState (block) {
+  getTabState(block) {
     if (block?.tab_key) {
       const {header = [], parameter = {}, tab_key: tabKey} = block
       const tabHeader = header.find(item => item.index === tabKey)
@@ -203,7 +204,7 @@ export default class BasicContainer extends Component {
     return {tabItem: [], active: null}
   }
 
-  onTabChange (value, tabKey, parameter) {
+  onTabChange(value, tabKey, parameter) {
     const filter = {}
     filter[tabKey] = value
     this.setInitParam(filter)
@@ -218,12 +219,13 @@ export default class BasicContainer extends Component {
     this.setState({initParam: {...this.state.initParam, ...parameter}})
   }
 
-  render () {
-    const {key, index, dispatch, user, fetchLoading, commonFormVisible} = this.props
+  render() {
+    const {key, index, dispatch, user, fetchLoading, commonFormVisible, selectedValue} = this.props
     const block = this.getBlockData()
     const loading = this.getLoading()
     if (block) {
       blockStructure(block)
+      dd(block);
       const Component = this.config.component ? this.config.component : BlockComponent
       const TopExtra = this.config.topExtra
       const BottomExtra = this.config.bottomExtra
@@ -250,52 +252,63 @@ export default class BasicContainer extends Component {
         onClick: this.onClick,
         onChange: this.onChange,
         InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props}/>,
-        TopButton: (props) => <TopButton event={this.event} button={block.getTopButton()} {...buttonProps} {...props}/>,
+        TopButton: (props) => <TopButton onClick={(button) => {
+          if (button.form) return this.changeCommonFormVisible(index, true, button, selectedValue)
+          if (button.index === 'add') return this.changeAddFormVisible(index, true)
+          this.onClick(button.index, {value, button})
+        }} event={this.event} button={block.getTopButton()} {...buttonProps} {...props}/>,
         Input: (props) => <Input index={index} {...props} extension={this.config?.input ? this.config.input : {}}
                                  primaryKey={primaryKey}/>,
         Cell: (props) => <Cell index={index} event={this.event} {...props} dispatch={dispatch} primaryKey={primaryKey}
                                extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
-      return <Col span={block.width || 24}> <Card block={block}
-                                                  onClick={this.onClick}
-                                                  setInitParam={this.setInitParam}
-                                                  onChange={this.onChange}
-                                                  loading={loading}
-                                                  sync>
-        {
-          (tabItem && tabItem.length > 0) &&
-          <Tabs type={'card'} tabBarGutter={5} activeKey={active}
-                onChange={(value) => this.onTabChange(value, block.tab_key, block.parameter)}>
-            {tabItem.map(item => <TabPane tab={item.text} key={item.value}/>)}
-          </Tabs>
-        }
-        <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange} primaryKey={primaryKey}
-                       header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
-                       Input={props.Input}/>
+      return <Col span={block.width || 24}>
+        {block.getFilterHeader().length > 0 &&
+        <AntdCard style={{marginBottom: 20, padding: 0}} bodyStyle={{padding: '20px 20px 0 20px'}}>
+          <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange} primaryKey={primaryKey}
+                         header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
+                         Input={props.Input}/>
+        </AntdCard>}
 
-        <AddForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
-                 changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
-                 onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
-        {commonFormVisible[index] && <CommonForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
-                                                 changeCommonFormVisible={(v, button) => this.changeCommonFormVisible(index, v, button)}
-                                                 onOk={(value, action) => this.onClick(action, {value})}
-                                                 Input={props.Input}/>}
-        {TopExtra && <TopExtra {...props}/>}
-        <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== primaryKey)}
-                  primaryKey={primaryKey}
-                  changeEditFormVisible={(v) => this.changeEditFormVisible(index, v)}
-                  Input={props.Input}
-                  onOk={(value) => this.onClick('edit', {value})}/>
-        <Row>
-          <Col span={leftExtraWidth}><Col>{LeftExtra && <LeftExtra {...props}/>}</Col></Col>
-          <Col span={24 - leftExtraWidth - rightExtraWidth}><Component {...props} {...componentProps}/></Col>
-          <Col span={rightExtraWidth}>{RightExtra && <RightExtra {...props}/>}</Col>
-        </Row>
+        <Card block={block}
+              onClick={this.onClick}
+              setInitParam={this.setInitParam}
+              onChange={this.onChange}
+              loading={loading}
+              TopButton={props.TopButton}
+              sync>
+          {
+            (tabItem && tabItem.length > 0) &&
+            <Tabs type={'card'} tabBarGutter={5} activeKey={active}
+                  onChange={(value) => this.onTabChange(value, block.tab_key, block.parameter)}>
+              {tabItem.map(item => <TabPane tab={item.text} key={item.value}/>)}
+            </Tabs>
+          }
+
+          <AddForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
+                   changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
+                   onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
+          {commonFormVisible[index] && <CommonForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
+                                                   changeCommonFormVisible={(v, button) => this.changeCommonFormVisible(index, v, button)}
+                                                   onOk={(value, action) => this.onClick(action, {value: {...selectedValue[index], ...value}})
+                                                   }
+                                                   Input={props.Input}/>}
+          {TopExtra && <TopExtra {...props}/>}
+          <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== primaryKey)}
+                    primaryKey={primaryKey}
+                    changeEditFormVisible={(v) => this.changeEditFormVisible(index, v)}
+                    Input={props.Input}
+                    onOk={(value) => this.onClick('edit', {value})}/>
+          <Row>
+            <Col span={leftExtraWidth}><Col>{LeftExtra && <LeftExtra {...props}/>}</Col></Col>
+            <Col span={24 - leftExtraWidth - rightExtraWidth}><Component {...props} {...componentProps}/></Col>
+            <Col span={rightExtraWidth}>{RightExtra && <RightExtra {...props}/>}</Col>
+          </Row>
 
 
-        {BottomExtra && <BottomExtra {...props}/>}
-      </Card></Col>
+          {BottomExtra && <BottomExtra {...props}/>}
+        </Card></Col>
     } else {
       return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}>
         <Skeleton loading={fetchLoading || loading}>

@@ -1,6 +1,6 @@
-import React, { PureComponent, Fragment } from 'react'
-import { Descriptions, Col, Row, Form, Button, Divider } from 'antd'
-import { FormRules } from '_tools/validator'
+import React, {PureComponent, Fragment} from 'react'
+import {Descriptions, Col, Row, Form, Button, Divider} from 'antd'
+import {FormRules} from '_tools/validator'
 import Loading from '_components/Loading'
 import groupBy from 'lodash/groupBy'
 
@@ -14,7 +14,17 @@ export default class CommonDetail extends PureComponent {
   }
   form = null
 
-  onButtonClick (button, firstContent, block) {
+  componentDidMount() {
+    const {block} = this.props
+    const first = block.getFirst();
+    if (first) this.props.dispatch({
+      type: '@@container/saveSelectedValue',
+      value: first,
+      index: block?.index
+    })
+  }
+
+  onButtonClick(button, firstContent, block) {
     const {changeCommonFormVisible, onClick} = this.props
     if (button.form) return changeCommonFormVisible(true, button, firstContent)
     if (button.index === 'edit' && !block?.property?.open_edit) this.setState({editStatus: true})
@@ -37,7 +47,7 @@ export default class CommonDetail extends PureComponent {
     }
   }
 
-  submit (onClick) {
+  submit(onClick) {
     const {validateFields, resetFields} = this.form
     validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
@@ -50,7 +60,7 @@ export default class CommonDetail extends PureComponent {
 
   }
 
-  render () {
+  render() {
     const {
       block: {content, header, primary_key, property: {column = 3, has_border = false, open_edit = false}},
       TopButton,
@@ -115,19 +125,19 @@ export default class CommonDetail extends PureComponent {
       }</Fragment>
     return <Loading loading={loading}>
       <Row>
-        <Col style={{marginBottom: 20}} span={24}>
-          <TopButton spread={false}
-                     value={firstContent}
-                     onClick={(button) => {
-                       open_edit ? this.submit((value) => {
-                         this.onButtonClick(button, {
-                           ...value,
-                           ...primary
-                         })
-                       }) : this.onButtonClick(button, firstContent)
-                     }}
-          />
-        </Col>
+        {/*<Col style={{marginBottom: 20}} span={24}>*/}
+        {/*  <TopButton spread={false}*/}
+        {/*             value={firstContent}*/}
+        {/*             onClick={(button) => {*/}
+        {/*               open_edit ? this.submit((value) => {*/}
+        {/*                 this.onButtonClick(button, {*/}
+        {/*                   ...value,*/}
+        {/*                   ...primary*/}
+        {/*                 })*/}
+        {/*               }) : this.onButtonClick(button, firstContent)*/}
+        {/*             }}*/}
+        {/*  />*/}
+        {/*</Col>*/}
         <Col span={24}>
           {editStatus ? <EditBoard onClick={onClick}/> : <Board/>}
         </Col>
@@ -136,8 +146,8 @@ export default class CommonDetail extends PureComponent {
           <Button type="primary" style={{marginLeft: 8}}
                   onClick={() => this.submit((value) => this.onEditButton(value, primaryValue, onClick))}>保
             存</Button>
-        </Col> : <Col span={24} style={{marginTop: 50}}>
-          <InnerButton value={firstContent}
+        </Col> : <Col span={24}>
+          <InnerButton style={{marginTop: this.props.block?.getInnerButton().length > 0 ? 20 : 0}} value={firstContent}
                        onClick={(button) => {
                          open_edit ? this.submit((value) => {
                            this.onButtonClick(button, {

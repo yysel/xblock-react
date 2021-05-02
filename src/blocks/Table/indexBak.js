@@ -1,10 +1,8 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import StandardTable from './BaseTable'
-import {routerRedux} from 'dva/router'
-import {parseString} from '../../tools/helper'
-import {connect} from 'dva'
+import { routerRedux } from 'dva/router'
+import { parseString } from '../../tools/helper'
 
-@connect(({'@@container': {blockSetting, selectedValue}}) => ({blockSetting, selectedValue}))
 export default class CommonTable extends PureComponent {
   state = {
     selectedRows: [],
@@ -29,25 +27,27 @@ export default class CommonTable extends PureComponent {
   }
 
   handleSelectRows = (rows, rowValue) => {
-    const {block, block: {index, primary_key}} = this.props
-    const value = {}
-    if (rows.length) value[primary_key] = rows
-    this.props.dispatch({
-      type: '@@container/saveSelectedValue',
-      value,
-      index: block?.index
-    })
+    this.setState({selectedRows: rows, selectedRowsValue: rowValue})
   }
 
+  onTopButtonClick = (button) => {
+    const {selectedRowsValue, selectedRows} = this.state
+    const {changeAddFormVisible, changeCommonFormVisible, onClick, block: {primary_key}} = this.props
+    const value = {}
+    if (selectedRows) value[primary_key] = selectedRows
+    if (button.form) return changeCommonFormVisible(true, button,value)
+    if (button.index === 'add') return changeAddFormVisible(true)
+    onClick(button.index, {value, button, selectedRows: selectedRowsValue})
+  }
 
-  onInnerButtonClick(button, value) {
+  onInnerButtonClick (button, value) {
     const {onClick, changeEditFormVisible, changeCommonFormVisible} = this.props
     if (button.form) return changeCommonFormVisible(true, button, value)
     if (button.index === 'edit') return changeEditFormVisible(true, value)
     onClick(button.index, {button, value})
   };
 
-  getInnerButton(sizeRadio, fixed) {
+  getInnerButton (sizeRadio, fixed) {
     const {block: {button = [], property: {button_show_key = 'button_status'}}, InnerButton} = this.props
     const buttonInner = button ? button.filter(item => item.position === 'inner') : []
     if (buttonInner.length <= 0) return null
@@ -64,10 +64,8 @@ export default class CommonTable extends PureComponent {
   }
 
   getColumn = () => {
-    const {block: {header = [], sorting, index}, blockSetting, Cell} = this.props
-    const visibleHeader = header.filter(i => i.visible);
-    const checkedList = blockSetting[index] ? blockSetting[index] : visibleHeader.map(i => i.index);
-    return visibleHeader.filter(item => checkedList.indexOf(item.index) > -1).map(item => {
+    const {block: {header = [], sorting}, Cell} = this.props
+    return header.filter(item => item.visible).map(item => {
       let {
         title,
         index: dataIndex,
@@ -100,19 +98,17 @@ export default class CommonTable extends PureComponent {
     })
   }
 
-  render() {
+  render () {
     const {
       loading,
       dispatch,
-      block: {content, pagination, index, button, primary_key, property: {has_border, link}},
+      block: {content, pagination, button, primary_key, property: {has_border, link}},
       onRow,
-      selectedValue = {},
       rowClassName,
       TopButton,
       ...rest
     } = this.props
-    const selectedKeys = selectedValue?.[index]?.[primary_key] ?? [];
-    dd(selectedValue, 222222222);
+    const {selectedRows} = this.state
     const column = this.getColumn()
     let size = 'default'
     let sizeRadio = 1
@@ -141,12 +137,12 @@ export default class CommonTable extends PureComponent {
     }
     return (<div>
       <div className='xblock-table-tableList'>
-        {/*<div style={{marginBottom: 10}}>*/}
-        {/*  <TopButton spread={false} onClick={(button) => this.onTopButtonClick(button)}/>*/}
-        {/*</div>*/}
+        <div style={{marginBottom: 10}}>
+          <TopButton spread={false} onClick={(button) => this.onTopButtonClick(button)}/>
+        </div>
         <StandardTable
           bordered={has_border}
-          selectedRows={selectedKeys}
+          selectedRows={selectedRows}
           loading={loading}
           scroll={column.length <= 15 ? null : {x: '100vw'}}
           data={data}

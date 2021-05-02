@@ -36,7 +36,7 @@ export default function (props) {
 
       </Row>
       <Row className='xblock-color-header-card-content'>
-        <Card style={{marginBottom: '25px', padding: 10, width: '100%'}} {...rest}
+        <Card style={{marginBottom: '25px', padding: '0px 10px', width: '100%'}} {...rest}
               title={null}>{props.children}</Card>
       </Row>
     </div>
