@@ -3,6 +3,7 @@ import getAction from '../../action'
 import {connect} from 'dva'
 import {BlockComponent} from '_blocks'
 import Card from '_components/ContainerCard'
+import {isArray} from '_tools/type'
 import register from '_xblock/register'
 import AddForm from '_components/Form/AddForm'
 import CommonForm from '_components/Form/CommonForm'
@@ -118,9 +119,19 @@ export default class BasicContainer extends Component {
   }
 
   action = (action, value) => {
-    const {pagination, parameter, sorting} = this.getBlockData()
+    const {pagination, parameter, sorting, index, primary_key} = this.getBlockData()
+    const {selectedValue} = this.props
     return this.fetchBlock(action, {...value, parameter}).then((res) => {
       if (res?.success) {
+        if (isArray(selectedValue?.[index]?.[primary_key])) {
+          const obj = {}
+          obj[primary_key] = [];
+          this.props.dispatch({
+            type: '@@container/saveSelectedValue',
+            value: {...selectedValue?.[index], ...obj},
+            index: index
+          })
+        }
         this.onChange({
           pagination,
           parameter,
@@ -225,7 +236,6 @@ export default class BasicContainer extends Component {
     const loading = this.getLoading()
     if (block) {
       blockStructure(block)
-      dd(block);
       const Component = this.config.component ? this.config.component : BlockComponent
       const TopExtra = this.config.topExtra
       const BottomExtra = this.config.bottomExtra
@@ -253,7 +263,8 @@ export default class BasicContainer extends Component {
         onChange: this.onChange,
         InnerButton: (props) => <InnerButton button={block.getInnerButton()} {...buttonProps} {...props}/>,
         TopButton: (props) => <TopButton onClick={(button) => {
-          if (button.form) return this.changeCommonFormVisible(index, true, button, selectedValue)
+          const value = selectedValue[index] ?? {}
+          if (button.form) return this.changeCommonFormVisible(index, true, button, value)
           if (button.index === 'add') return this.changeAddFormVisible(index, true)
           this.onClick(button.index, {value, button})
         }} event={this.event} button={block.getTopButton()} {...buttonProps} {...props}/>,
@@ -265,7 +276,7 @@ export default class BasicContainer extends Component {
 
       return <Col span={block.width || 24}>
         {block.getFilterHeader().length > 0 &&
-        <AntdCard style={{marginBottom: 20, padding: 0}} bodyStyle={{padding: '20px 20px 0 20px'}}>
+        <AntdCard style={{margin: '30px 0 10px 0', padding: 0}} bodyStyle={{padding: '20px 20px 0 20px'}}>
           <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange} primaryKey={primaryKey}
                          header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
                          Input={props.Input}/>

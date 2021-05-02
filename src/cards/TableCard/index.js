@@ -46,8 +46,14 @@ const TableCard = function (props) {
 
            <span>
              {hasSetting && <span style={{marginLeft: 20}}>
-            <Popover content={<div style={{width: 100}}><CheckboxGroup options={options} value={checkedList}
-                                                                       onChange={onChange}/></div>}
+            <Popover content={<Row style={{maxWidth:'120px'}} ><CheckboxGroup options={options} value={checkedList}
+                                                                       onChange={onChange}>
+              <Row >
+              {checkedList.map(i => <Col span={24} flex={1}>
+                <Checkbox value={i}> {options.find(item => item.value === i)}</Checkbox>
+              </Col>)}
+              </Row>
+            </CheckboxGroup></Row>}
                      title={<Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
                        显示设置
                      </Checkbox>} trigger="click" placement="bottom">
