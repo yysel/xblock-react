@@ -1,8 +1,8 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import StandardTable from './BaseTable'
-import {routerRedux} from 'dva/router'
-import {parseString} from '../../tools/helper'
-import {connect} from 'dva'
+import { routerRedux } from 'dva/router'
+import { parseString } from '../../tools/helper'
+import { connect } from 'dva'
 
 @connect(({'@@container': {blockSetting, selectedValue}}) => ({blockSetting, selectedValue}))
 export default class CommonTable extends PureComponent {
@@ -39,15 +39,14 @@ export default class CommonTable extends PureComponent {
     })
   }
 
-
-  onInnerButtonClick(button, value) {
+  onInnerButtonClick (button, value) {
     const {onClick, changeEditFormVisible, changeCommonFormVisible} = this.props
     if (button.form) return changeCommonFormVisible(true, button, value)
     if (button.index === 'edit') return changeEditFormVisible(true, value)
     onClick(button.index, {button, value})
   };
 
-  getInnerButton(sizeRadio, fixed) {
+  getInnerButton (sizeRadio, fixed) {
     const {block: {button = [], property: {button_show_key = 'button_status'}}, InnerButton} = this.props
     const buttonInner = button ? button.filter(item => item.position === 'inner') : []
     if (buttonInner.length <= 0) return null
@@ -65,8 +64,8 @@ export default class CommonTable extends PureComponent {
 
   getColumn = () => {
     const {block: {header = [], sorting, index}, blockSetting, Cell} = this.props
-    const visibleHeader = header.filter(i => i.visible);
-    const checkedList = blockSetting[index] ? blockSetting[index] : visibleHeader.map(i => i.index);
+    const visibleHeader = header.filter(i => i.visible)
+    const checkedList = blockSetting[index] ? blockSetting[index] : visibleHeader.map(i => i.index)
     return visibleHeader.filter(item => checkedList.indexOf(item.index) > -1).map(item => {
       let {
         title,
@@ -100,7 +99,7 @@ export default class CommonTable extends PureComponent {
     })
   }
 
-  render() {
+  render () {
     const {
       loading,
       dispatch,
@@ -111,7 +110,7 @@ export default class CommonTable extends PureComponent {
       TopButton,
       ...rest
     } = this.props
-    const selectedKeys = selectedValue?.[index]?.[primary_key] ?? [];
+    const selectedKeys = selectedValue?.[index]?.[primary_key] ? selectedValue[index][primary_key] : []
     const column = this.getColumn()
     let size = 'default'
     let sizeRadio = 1
