@@ -18,7 +18,6 @@ export default function TopFilterForm(props) {
   }
   const [expand, setExpand] = useState(false)
   const [form] = Form.useForm()
-  console.log(header.length % 4)
   return (
     <Form form={form} initialValues={parameter} onFinish={onSubmit}>
       <Row gutter={24} justify='space-between'>
@@ -50,8 +49,8 @@ export default function TopFilterForm(props) {
           <Button
             style={{marginLeft: 8}}
             onClick={() => {
-              onChange({})
-              form.resetFields()
+              onChange({}).then(()=>form.resetFields(['name']))
+
             }}
           >
             重置

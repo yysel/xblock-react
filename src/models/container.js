@@ -19,7 +19,7 @@ export default {
   state: initState,
   effects: {
     * getBlock({payload, action, block, path}, {call, put}) {
-      if (action === 'list') yield put({type: 'startLoading', block})
+      yield put({type: 'startLoading', block, action})
       const response = yield call(getBlock, {payload, action, block, path})
       if (response) {
         yield checkCode(response)
@@ -33,7 +33,7 @@ export default {
           }))
         }
       }
-      if (action === 'list') yield put({type: 'stopLoading', block})
+      yield put({type: 'stopLoading', block, action})
       return response
     },
     * exportBlock({payload, block, blockName, path}, {call}) {
@@ -49,26 +49,28 @@ export default {
     saveBlock(state, {data, index}) {
       let block = {}
       block[index] = data
-      dd(data.selectedValue,1111111);
-      return data? {
+      return data ? {
         ...state,
         blockData: {...state.blockData, ...block},
       } : state
     },
-    startLoading(state, {block}) {
-      let loading = {...state.loading}
-      loading[block] = true
+    startLoading(state, {block, action}) {
+      const obj = {}
+      obj[block] = {}
+      obj[block][action] = true
       return {
         ...state,
-        loading: {...loading},
+        loading: {...state.loading, ...obj},
       }
     },
-    stopLoading(state, {block}) {
-      let loading = {...state.loading}
-      loading[block] = false
+    stopLoading(state, {block, action}) {
+      const obj = {}
+      obj[block] = {}
+      obj[block][action] = false
+
       return {
         ...state,
-        loading: {...loading},
+        loading: {...state.loading, ...obj},
       }
     },
     changeAddFormVisible(state, {status, index}) {

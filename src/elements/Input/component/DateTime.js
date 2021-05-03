@@ -25,7 +25,6 @@ export default class DateTime extends PureComponent {
 
   render() {
     const { value, minuteStep, format,header: {property}, ...rest } = this.props;
-    console.log(value )
     return (<InputGroup compact>
       <DatePicker onChange={this.onDateChange.bind(this)} style={{ width: '50%' }} format={'YYYY-MM-DD'}
                   value={value ? Moment(value, 'YYYY-MM-DD') : null} {...property}/>

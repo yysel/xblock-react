@@ -103,9 +103,9 @@ export default class BasicContainer extends Component {
     return data ? data[index] : blockData[index]
   }
 
-  getLoading(data) {
+  getLoading(action) {
     const {index, loading} = this.props
-    return data ? data[index] : loading[index]
+    return (action ? loading?.[index]?.[action] : loading?.[index]);
   }
 
   onChange = (query = {}, init = false) => {
@@ -233,7 +233,7 @@ export default class BasicContainer extends Component {
   render() {
     const {key, index, dispatch, user, fetchLoading, commonFormVisible, selectedValue} = this.props
     const block = this.getBlockData()
-    const loading = this.getLoading()
+    const loading = this.getLoading('list')
     if (block) {
       blockStructure(block)
       const Component = this.config.component ? this.config.component : BlockComponent
@@ -251,6 +251,8 @@ export default class BasicContainer extends Component {
         extension: this.config?.button ? this.config.button : {},
         dispatch,
         primaryKey,
+        index,
+        loading: this.getLoading()
       }
       const props = {
         key, block, loading, user, dispatch, blockConfig: this.config,
@@ -297,10 +299,11 @@ export default class BasicContainer extends Component {
             </Tabs>
           }
 
-          <AddForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
+          <AddForm index={index} header={block.getAddHeader()} primaryKey={primaryKey} loading={this.getLoading('add')}
                    changeAddFormVisible={(v) => this.changeAddFormVisible(index, v)}
                    onOk={(value) => this.onClick('add', {value})} Input={props.Input}/>
           {commonFormVisible[index] && <CommonForm index={index} header={block.getAddHeader()} primaryKey={primaryKey}
+                                                   loading={this.getLoading()}
                                                    changeCommonFormVisible={(v, button) => this.changeCommonFormVisible(index, v, button)}
                                                    onOk={(value, action) => this.onClick(action, {value: {...selectedValue[index], ...value}})
                                                    }
@@ -308,6 +311,7 @@ export default class BasicContainer extends Component {
           {TopExtra && <TopExtra {...props}/>}
           <EditForm index={index} header={block.header.filter(i => (i.editable) && i.index !== primaryKey)}
                     primaryKey={primaryKey}
+                    loading={this.getLoading('edit')}
                     changeEditFormVisible={(v) => this.changeEditFormVisible(index, v)}
                     Input={props.Input}
                     onOk={(value) => this.onClick('edit', {value})}/>
@@ -321,11 +325,11 @@ export default class BasicContainer extends Component {
           {BottomExtra && <BottomExtra {...props}/>}
         </Card></Col>
     } else {
-      return <BaseCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}>
+      return <AntdCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}>
         <Skeleton loading={fetchLoading || loading}>
           <Empty/>
         </Skeleton>
-      </BaseCard>
+      </AntdCard>
     }
   }
 }

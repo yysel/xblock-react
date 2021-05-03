@@ -112,7 +112,6 @@ export default class CommonTable extends PureComponent {
       ...rest
     } = this.props
     const selectedKeys = selectedValue?.[index]?.[primary_key] ?? [];
-    dd(selectedValue, 222222222);
     const column = this.getColumn()
     let size = 'default'
     let sizeRadio = 1

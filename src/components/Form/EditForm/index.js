@@ -1,14 +1,15 @@
 import React from 'react'
-import { Button, Drawer, Form } from 'antd'
-import { FormRules } from '../../../tools/validator'
-import { isUndefined } from '../../../tools/type'
-import { connect } from 'dva'
+import {Button, Drawer, Form} from 'antd'
+import {FormRules} from '../../../tools/validator'
+import {isUndefined} from '../../../tools/type'
+import {connect} from 'dva'
 
 const EditForm = function (props) {
-  const {editFormVisible, header, changeEditFormVisible, value, onOk, index, Input, primaryKey = 'id'} = props
+  const {editFormVisible, header, changeEditFormVisible, value, onOk, index, Input, primaryKey = 'id', loading} = props
   const primary = {}
   primary[primaryKey] = value[primaryKey];
-  function okHandle (value) {
+
+  function okHandle(value) {
     const filter = Object.keys(value).map(k => {
       if (isUndefined(value[k])) {
         value[k] = null
@@ -56,7 +57,7 @@ const EditForm = function (props) {
           <Button onClick={() => changeEditFormVisible(false)}>
             取消
           </Button>
-          <Button type="primary" style={{marginLeft: 20}} htmlType="submit">
+          <Button type="primary" style={{marginLeft: 20}} loading={loading} htmlType="submit">
             保存
           </Button>
         </div>

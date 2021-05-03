@@ -1,26 +1,26 @@
 import React from 'react'
-import { FormRules } from '_tools/validator'
+import {FormRules} from '_tools/validator'
 import {
   Row,
   Col,
   Modal,
   Form
 } from 'antd'
-import { connect } from 'dva'
+import {connect} from 'dva'
 
 const FormItem = Form.Item
 const AddForm = props => {
-  const {onOk, addFormVisible, header, changeAddFormVisible, index, Input} = props
+  const {onOk, addFormVisible, header, changeAddFormVisible, index, Input, loading} = props
   const [form] = Form.useForm()
   const initValue = {}
   header.forEach(i => {
     if (i.default) initValue[i.index] = i.default
   })
   const okHandle = () => {
-    form.validateFields().then((value) => {
+   return  form.validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
       if (filter.length) {
-        onOk(value).then(res => {
+         onOk(value).then(res => {
           if (res?.success) {
             changeAddFormVisible(false)
             form.resetFields()
@@ -75,6 +75,7 @@ const AddForm = props => {
       width={header.length >= 8 ? 800 : 550}
       visible={addFormVisible[index]}
       onOk={okHandle}
+      okButtonProps={{loading}}
       onCancel={() => changeAddFormVisible(false)}
     >
       <Form initialValues={initValue} form={form}>

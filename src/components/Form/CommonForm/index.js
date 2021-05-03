@@ -1,17 +1,18 @@
 import React from 'react'
-import { FormRules } from '_tools/validator'
+import {FormRules} from '_tools/validator'
 import {
   Row,
   Col,
   Modal,
   Form
 } from 'antd'
-import { connect } from 'dva'
+import {connect} from 'dva'
 
 const FormItem = Form.Item
 const CommonForm = props => {
-  const {onOk, commonFormVisible, changeCommonFormVisible, commonFormButton, index, Input, commonFormValue} = props
+  const {onOk, commonFormVisible, changeCommonFormVisible, commonFormButton, index, Input, commonFormValue, loading} = props
   const formBuilder = commonFormButton.form
+  const currentLoading = loading[commonFormButton.index]
   const formTitle = formBuilder?.title ? formBuilder.title : commonFormButton.title
   const [form] = Form.useForm()
 
@@ -78,6 +79,7 @@ const CommonForm = props => {
       visible={commonFormVisible[index]}
       // visible={true}
       onOk={okHandle}
+      okButtonProps={{loading: currentLoading}}
       onCancel={() => changeCommonFormVisible(false, {})}
       cancelText={formBuilder?.cancel_title}
       okText={formBuilder?.confirm_title}
