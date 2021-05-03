@@ -23,7 +23,7 @@
     "dva": "^2.4.1",
     "dva-loading": "^3.0.20",
     "enquire-js": "^0.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash-decorators": "^6.0.1",
     "prop-types": "^15.7.2",
     "react-container-query": "^0.11.1",
