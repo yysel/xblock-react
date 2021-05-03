@@ -49,7 +49,7 @@ export default function TopFilterForm(props) {
           <Button
             style={{marginLeft: 8}}
             onClick={() => {
-              onChange({}).then(()=>form.resetFields(['name']))
+              onChange({}).then(()=>form.resetFields())
 
             }}
           >

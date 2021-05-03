@@ -7,7 +7,7 @@ export default function CommonCard(props) {
   let isRecycle = false
   if (parameter && parameter.__deleted) isRecycle = true
   const newTitle = isRecycle ? title + ' - ' + '数据回收站' : title
-  const formatTitle = DEV ? newTitle + ' - ' + index : {newTitle}
+  const formatTitle = DEV ? newTitle + ' - ' + index : newTitle
   const recyleAble = recyclable && button.filter(bnt => bnt.index === 'delete').length
   const events = {
     onRecycle: recyleAble ? () => {

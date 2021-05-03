@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {Row, Col, Card, Tooltip, Popover, Checkbox} from 'antd'
 import {SyncOutlined, SettingOutlined, RestOutlined, ArrowLeftOutlined} from '@ant-design/icons'
-import './index.less';
 import {connect} from 'dva'
 
 const CheckboxGroup = Checkbox.Group;

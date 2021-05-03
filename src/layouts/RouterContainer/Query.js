@@ -3,7 +3,6 @@ import getAction from '../../action'
 import { connect } from 'dva'
 import { BlockComponent } from '_blocks'
 import Card from '_components/ContainerCard'
-import { isArray } from '_tools/type'
 import register from '_xblock/register'
 import AddForm from '_components/Form/AddForm'
 import CommonForm from '_components/Form/CommonForm'
@@ -21,6 +20,7 @@ import TopButton from '_elements/Button/TopButton'
 import Input from '_elements/Input'
 import Cell from '_elements/Cell'
 import * as Type from '_tools/type'
+
 
 const TabPane = Tabs.TabPane
 
@@ -123,7 +123,7 @@ export default class BasicContainer extends Component {
     const {selectedValue} = this.props
     return this.fetchBlock(action, {...value, parameter}).then((res) => {
       if (res?.success) {
-        if (isArray(selectedValue?.[index]?.[primary_key])) {
+        if (Type.isArray(selectedValue?.[index]?.[primary_key])) {
           const obj = {}
           obj[primary_key] = []
           this.props.dispatch({
@@ -325,11 +325,13 @@ export default class BasicContainer extends Component {
           {BottomExtra && <BottomExtra {...props}/>}
         </Card></Col>
     } else {
-      return <AntdCard title={(fetchLoading || loading) ? (this.props.sequence > 0 ? null : '加载中...') : ' '}>
-        <Skeleton loading={fetchLoading || loading}>
-          <Empty/>
-        </Skeleton>
-      </AntdCard>
+      return <div style={{width: '100%'}}>
+        <AntdCard>
+          <Skeleton loading={fetchLoading || loading} style={{width: '100%'}}>
+            <Empty/>
+          </Skeleton>
+        </AntdCard>
+      </div>
     }
   }
 }
