@@ -14,6 +14,6 @@ export default (props) => {
   let showIcon = icon ? icon : null;
   showIcon = loading ? 'loading' : showIcon;
   return <span className='xblock-element-color-button' style={style}
-  >{icon && <Icon type={showIcon}/>} <span style={children.length === 2 ? {letterSpacing: 5} : {}}>{text}</span>
+  >{showIcon && <Icon type={showIcon}/>} <span style={children.length === 2 ? {letterSpacing: 5} : {}}>{text}</span>
   </span>
 };

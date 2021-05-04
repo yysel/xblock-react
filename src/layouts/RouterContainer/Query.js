@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import getAction from '../../action'
-import { connect } from 'dva'
-import { BlockComponent } from '_blocks'
+import {connect} from 'dva'
+import {BlockComponent} from '_blocks'
 import Card from '_components/ContainerCard'
 import register from '_xblock/register'
 import AddForm from '_components/Form/AddForm'
 import CommonForm from '_components/Form/CommonForm'
 import EditForm from '_components/Form/EditForm'
 import TopFilterForm from '../../components/Form/TopFilterForm/new'
-import { Tabs, Row, Col, Empty, Skeleton, Card as AntdCard } from 'antd'
+import {Tabs, Row, Col, Empty, Skeleton, Card as AntdCard} from 'antd'
 import blockStructure from '_tools/block'
 import BaseCard from '../../cards/ColorHeaderCard'
-import { goPage, parseString, parseUrl } from '_tools/helper'
+import {goPage, parseString, parseUrl} from '_tools/helper'
 import showExportModal from '_components/Modals/ExportModal'
 import showImportModal from '_components/Modals/ExcelImportModal'
 import showImportResult from '_components/Modals/ImprotResult'
@@ -33,7 +33,7 @@ const TabPane = Tabs.TabPane
 }))
 export default class BasicContainer extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     const {
       getBlock,
@@ -56,7 +56,7 @@ export default class BasicContainer extends Component {
     timestamp: 0,
   }
 
-  init () {
+  init() {
     const {match: {params = {}}, index, dispatch} = this.props
     this.event = {
       add: (value) => this.action('add', value),
@@ -79,7 +79,7 @@ export default class BasicContainer extends Component {
     this.state.initSort = this.config.initSort
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.init()
     const {match: {params = {}}} = this.props
     const {location: {query = {}}} = this.props
@@ -94,16 +94,16 @@ export default class BasicContainer extends Component {
     } else this.onChange({parameter: {...query}}, true)
   }
 
-  fetchBlock (action, option) {
+  fetchBlock(action, option) {
     return this.getBlock(this.props.index, action, option, this.props?.match?.path)
   }
 
-  getBlockData (data) {
+  getBlockData(data) {
     const {index, blockData} = this.props
     return data ? data[index] : blockData[index]
   }
 
-  getLoading (action) {
+  getLoading(action) {
     const {index, loading} = this.props
     return (action ? loading?.[index]?.[action] : loading?.[index])
   }
@@ -122,7 +122,12 @@ export default class BasicContainer extends Component {
     const {pagination, parameter, sorting, index, primary_key} = this.getBlockData()
     const {selectedValue} = this.props
     return this.fetchBlock(action, {...value, parameter}).then((res) => {
-      if (res?.success) {
+      if (res.type === 'form') {
+        this.changeCommonFormVisible(index, true, {
+          index: action,
+          form: res.data,
+        }, value)
+      } else if (res?.success) {
         if (Type.isArray(selectedValue?.[index]?.[primary_key])) {
           const obj = {}
           obj[primary_key] = []
@@ -201,7 +206,7 @@ export default class BasicContainer extends Component {
 
   }
 
-  getTabState (block) {
+  getTabState(block) {
     if (block?.tab_key) {
       const {header = [], parameter = {}, tab_key: tabKey} = block
       const tabHeader = header.find(item => item.index === tabKey)
@@ -215,7 +220,7 @@ export default class BasicContainer extends Component {
     return {tabItem: [], active: null}
   }
 
-  onTabChange (value, tabKey, parameter) {
+  onTabChange(value, tabKey, parameter) {
     const filter = {}
     filter[tabKey] = value
     this.setInitParam(filter)
@@ -230,7 +235,7 @@ export default class BasicContainer extends Component {
     this.setState({initParam: {...this.state.initParam, ...parameter}})
   }
 
-  render () {
+  render() {
     const {key, index, dispatch, user, fetchLoading, commonFormVisible, selectedValue} = this.props
     const block = this.getBlockData()
     const loading = this.getLoading('list')

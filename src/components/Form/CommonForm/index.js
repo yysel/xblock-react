@@ -4,9 +4,12 @@ import {
   Row,
   Col,
   Modal,
-  Form
+  Form,
+  Alert,
+  Button
 } from 'antd'
 import {connect} from 'dva'
+import TopButton from '_elements/Button/TopButton';
 
 const FormItem = Form.Item
 const CommonForm = props => {
@@ -19,17 +22,15 @@ const CommonForm = props => {
   formBuilder?.fields.forEach(i => {
     if (i.default && !commonFormValue[i.index]) commonFormValue[i.index] = i.default
   })
-  const okHandle = () => {
+  const okHandle = (action = 'confirm') => {
     form.validateFields().then((value) => {
-      const filter = Object.keys(value).filter(k => value[k])
-      if (filter.length) {
-        onOk({...commonFormValue, ...value}, commonFormButton.index).then(res => {
-          if (res?.success) {
-            changeCommonFormVisible(false, {})
-            form.resetFields()
-          }
-        })
-      }
+      const filter = Object.keys(value).filter(k => value[k]);
+      onOk({...commonFormValue, ...filter, form_action: action}, commonFormButton.index).then(res => {
+        if (res?.success) {
+          changeCommonFormVisible(false, {})
+          form.resetFields()
+        }
+      })
     })
   }
 
@@ -70,7 +71,21 @@ const CommonForm = props => {
       })
     }</Row>
   </div>
-
+  const buttonProps = {
+    event: props.event,
+    dispatch: props.dispatch,
+    primaryKey: props.dispatch,
+    index: props.index,
+    loading: props.loading,
+    onClick: (b) => okHandle(b.index)
+  }
+  const info = <Alert
+    message={formBuilder.info_title ? formBuilder.info_title : undefined}
+    description={formBuilder.info}
+    type={formBuilder.info_type ? formBuilder.info_type : 'info'}
+    style={{margin: '20px 0'}}
+  />
+  const BottomButton = (props) => <TopButton button={formBuilder?.actions} {...buttonProps} {...props}/>
   return (
 
     <Modal
@@ -78,14 +93,17 @@ const CommonForm = props => {
       width={formBuilder?.fields?.length >= 8 ? 800 : 550}
       visible={commonFormVisible[index]}
       // visible={true}
-      onOk={okHandle}
+      footer={formBuilder?.actions?.length ? <BottomButton/> : undefined}
+      onOk={() => okHandle('confirm')}
       okButtonProps={{loading: currentLoading}}
       onCancel={() => changeCommonFormVisible(false, {})}
       cancelText={formBuilder?.cancel_title}
       okText={formBuilder?.confirm_title}
     >
       <Form initialValues={commonFormValue} form={form}>
+        {(formBuilder.info && formBuilder.info_position === 'top') && info}
         {formBuilder?.fields?.length >= 8 ? TwoColumn : oneColumn}
+        {(formBuilder.info && formBuilder.info_position === 'bottom') && info}
       </Form>
     </Modal>
 
