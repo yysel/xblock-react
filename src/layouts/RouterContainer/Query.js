@@ -284,7 +284,7 @@ export default class BasicContainer extends Component {
       return <Col span={block.width || 24}>
         {block.getFilterHeader().length > 0 &&
         <AntdCard style={{margin: '30px 0 10px 0', padding: 0}} bodyStyle={{padding: '20px 20px 0 20px'}}>
-          <TopFilterForm index={index} parameter={block.parameter} onChange={this.onChange} primaryKey={primaryKey}
+          <TopFilterForm index={index} parameter={block.parameter} expand={block.filter_expand} onChange={this.onChange} primaryKey={primaryKey}
                          header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
                          Input={props.Input}/>
         </AntdCard>}

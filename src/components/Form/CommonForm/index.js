@@ -1,5 +1,6 @@
 import React from 'react'
 import {FormRules} from '_tools/validator'
+import {clear} from '_tools/helper'
 import {
   Row,
   Col,
@@ -24,8 +25,8 @@ const CommonForm = props => {
   })
   const okHandle = (action = 'confirm') => {
     form.validateFields().then((value) => {
-      const filter = Object.keys(value).filter(k => value[k]);
-      onOk({...commonFormValue, ...filter, form_action: action}, commonFormButton.index).then(res => {
+      const newValue=clear(value)
+      onOk({...commonFormValue, ...newValue, form_action: action}, commonFormButton.index).then(res => {
         if (res?.success) {
           changeCommonFormVisible(false, {})
           form.resetFields()
