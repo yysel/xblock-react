@@ -96,8 +96,8 @@ export default class GlobalHeader extends PureComponent {
           </Link>,
           <Divider type="vertical" key="line"/>,
         ]}
-        {collapsed ? <MenuUnfoldOutlined className='xblock-global-header-trigger' onClick={this.toggle}/> :
-          <MenuFoldOutlined className='xblock-global-header-trigger' onClick={this.toggle}/>}
+        {collapsed ? <MenuUnfoldOutlined className='xblock-global-header-trigger' onClick={this.toggle} style={{lineHeight:'64px'}}/> :
+          <MenuFoldOutlined className='xblock-global-header-trigger' onClick={this.toggle} style={{lineHeight:'64px'}}/>}
         <div className='xblock-global-header-right'>
           {currentUser.name ? (
             <Dropdown overlay={menu}>
