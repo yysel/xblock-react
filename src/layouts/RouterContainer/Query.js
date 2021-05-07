@@ -55,6 +55,7 @@ export default class BasicContainer extends Component {
     initParam: {},
     timestamp: 0,
   }
+  block=null
 
   init() {
     const {match: {params = {}}, index, dispatch} = this.props
@@ -82,7 +83,7 @@ export default class BasicContainer extends Component {
   componentWillMount() {
     this.init()
     const {match: {params = {}}} = this.props
-    const {location: {query = {}}} = this.props
+    const {location: {query = {}},setTitle} = this.props
     const block = this.getBlockData()
     if (block) {
       const {pagination, parameter, sorting} = block
@@ -90,8 +91,16 @@ export default class BasicContainer extends Component {
         parameter: {...parameter, ...query, relation_uuid: params?.relation_uuid},
         pagination,
         sorting,
-      }, true)
-    } else this.onChange({parameter: {...query}}, true)
+      }, true).then(({data})=>setTitle(data?.title))
+    } else this.onChange({parameter: {...query}}, true).then(({data})=>setTitle(data?.title))
+  }
+
+  componentDidMount() {
+      const block= this.getBlockData()
+      if (this.props.setTitle && block){
+          this.props.setTitle(block.title)
+      }
+
   }
 
   fetchBlock(action, option) {
@@ -100,7 +109,8 @@ export default class BasicContainer extends Component {
 
   getBlockData(data) {
     const {index, blockData} = this.props
-    return data ? data[index] : blockData[index]
+     this.block= data ? data[index] : blockData[index]
+      return this.block;
   }
 
   getLoading(action) {
@@ -281,9 +291,9 @@ export default class BasicContainer extends Component {
                                extension={this.config?.cell ? this.config.cell : {}}/>,
       }
 
-      return <Col span={block.width || 24}>
+      return <Col span={block.width || 24} style={{marginBottom:25}}>
         {block.getFilterHeader().length > 0 &&
-        <AntdCard style={{margin: '30px 0 10px 0', padding: 0}} bodyStyle={{padding: '20px 20px 0 20px'}}>
+        <AntdCard style={{margin: '0 0 10px', padding: 0}} bodyStyle={{padding: '20px 20px 0 20px'}}>
           <TopFilterForm index={index} parameter={block.parameter} expand={block.filter_expand} onChange={this.onChange} primaryKey={primaryKey}
                          header={block.header.filter(i => i.filterable && i.filter_position === 'top')}
                          Input={props.Input}/>

@@ -18,7 +18,7 @@ const parseRoute = (router, menuRouter, user, rootPath) => {
     menuRouter.push(<Route key={router.path}
                            path={rootPath === '/' ? router.path : `/${trim(rootPath, '/')}/${trim(router.path, '/')}`}
                            exact
-                           component={(props) => <Component {...props} user={user} block={router.block}/>}/>)
+                           component={(props) => <Component {...props} user={user} block={router.block}  display={router.display}   />}/>)
   } else return null
 
 }

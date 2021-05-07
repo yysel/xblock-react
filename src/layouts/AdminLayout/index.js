@@ -169,7 +169,7 @@ export default class AdminLayout extends React.PureComponent {
               baseRedirect={baseRedirect}
             />
           </Header>
-          <Content style={{margin: '24px 24px 0', height: '100%'}}>
+          <Content style={{ height: '100%'}}>
             <Switch>
               {menuRouter}
               {registerState.router.map(route => <Route key={route.path}
