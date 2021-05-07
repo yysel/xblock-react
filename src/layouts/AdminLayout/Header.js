@@ -75,14 +75,14 @@ export default class GlobalHeader extends PureComponent {
     const currentUser = this.props.currentUser ? this.props.currentUser : {}
     const menu = (
       <Menu className={'xblock-global-header-menu'} selectedKeys={[]} onClick={this.onMenuClick}>
-        <Menu.Item key="personage">
-          <UserOutlined/>
-          个人中心
-        </Menu.Item>
+        {/*<Menu.Item key="personage" disabled >*/}
+        {/*  <UserOutlined/>*/}
+        {/*  个人中心*/}
+        {/*</Menu.Item>*/}
 
-        <Menu.Divider/>
+        {/*<Menu.Divider/>*/}
 
-        <Menu.Item key="logout">
+        <Menu.Item key="logout" >
           <LogoutOutlined/>
           退出登录
         </Menu.Item>
