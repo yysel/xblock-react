@@ -6,11 +6,11 @@ import {
   Tooltip,
   Legend,
 } from 'bizcharts';
-import { color as defaultColor } from '_tools/helper';
+import {color as defaultColor} from '_tools/helper';
 
 export default class Line extends React.Component {
   render() {
-    const { block: { content, property: { x, y, group_by, color, has_point }, getHeader } } = this.props;
+    const {block: {content, property: {x, y, group_by, color, has_point}, getHeader}} = this.props;
     const chartColor = color ? color : defaultColor;
     const xHeader = getHeader(x);
     const yHeader = getHeader(y);

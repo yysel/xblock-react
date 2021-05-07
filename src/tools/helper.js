@@ -72,12 +72,12 @@ export const color = [
 
 ]
 
-export function parseString (string = '', value = {}) {
+export function parseString(string = '', value = {}) {
   const substr = string.match(/{(\S*)}/)
   return substr ? string.replace(substr[0], value[substr[1]]) : string
 }
 
-export function find (str, c, n) {
+export function find(str, c, n) {
   let x = str.indexOf(c)
   for (let i = 0; i < n; i++) {
     x = str.indexOf(c, x + 1)
@@ -86,7 +86,7 @@ export function find (str, c, n) {
 }
 
 //查找级联中所有的父级节点
-export function findParent (value, dict, all = []) {
+export function findParent(value, dict, all = []) {
   all.unshift(value)
   const _self = dict.find(item => item.value == value)
   if (_self && _self.parent) {
@@ -101,7 +101,7 @@ export function findParent (value, dict, all = []) {
  * @param parent
  * @returns {*}
  */
-export function getDictTree (dict = [], parent = null, disabled = []) {
+export function getDictTree(dict = [], parent = null, disabled = []) {
   return dict.filter(i => parent ? i.parent === parent : !i.parent).map(i => ({
     ...i,
     title: i.text,
@@ -111,7 +111,7 @@ export function getDictTree (dict = [], parent = null, disabled = []) {
 }
 
 //清除对象中的无效值（undefined,null）
-export function clear (object) {
+export function clear(object) {
   const res = {}
   for (let key in object) {
     const value = object[key]
@@ -123,20 +123,20 @@ export function clear (object) {
 }
 
 //深度克隆
-export function deepClone (obj) {
+export function deepClone(obj) {
   const result = JSON.parse(JSON.stringify(obj))
   return result
 }
 
 //解析路由中的参数
-export function parseUrl (url, value) {
+export function parseUrl(url, value) {
   const newUrl = parseString(url, value)
   const {pathname, query: parameter} = Url.parse(newUrl, true)
   return {pathname, parameter}
 }
 
 //兼容模式进入全屏
-export function inFullScreen () {
+export function inFullScreen() {
   const de = document.documentElement
   if (de.requestFullscreen) {
     de.requestFullscreen()

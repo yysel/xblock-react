@@ -1,8 +1,8 @@
 import fetchData from 'dva/fetch'
-import { getToken } from './tools/auth'
-import { Modal, Divider } from 'antd'
+import {getToken} from './tools/auth'
+import {Modal, Divider} from 'antd'
 import registerState from './xblock/registerState'
-import { downloadFile } from './tools/file'
+import {downloadFile} from './tools/file'
 import React from 'react'
 
 export default class Fetch {
@@ -18,11 +18,11 @@ export default class Fetch {
     }
   }
 
-  static after () {
+  static after() {
 
   }
 
-  static before (response) {
+  static before(response) {
     if (response.status >= 200 && response.status < 300) {
       return response
     }
@@ -51,15 +51,15 @@ export default class Fetch {
     throw error
   }
 
-  static getToken () {
+  static getToken() {
     return getToken()
   }
 
-  static getHeaders () {
+  static getHeaders() {
     return {...Fetch.defaultHeaders(), ...Fetch.headers}
   }
 
-  static getOptions (options) {
+  static getOptions(options) {
     const defaultOptions = {
       credentials: 'include',
       headers: Fetch.getHeaders(),
@@ -88,12 +88,12 @@ export default class Fetch {
     return newOptions
   }
 
-  static fetch (url, options) {
+  static fetch(url, options) {
     const newOptions = Fetch.getOptions(options)
     return fetchData(url, newOptions)
   }
 
-  static request (url, options) {
+  static request(url, options) {
     return Fetch.fetch(url, options)
       .then(Fetch.before)
       .then(response => {
@@ -122,7 +122,7 @@ export default class Fetch {
       })
   }
 
-  static download (url, options) {
+  static download(url, options) {
     return Fetch.fetch(url, options)
       .then(response => {
         const filenameArray = response.headers.get('content-disposition').split(';')
@@ -142,7 +142,7 @@ export default class Fetch {
       })
   }
 
-  static proxy (url, params) {
+  static proxy(url, params) {
     return request('/api/system/proxy', {
       body: {
         ...params.body,
@@ -153,7 +153,7 @@ export default class Fetch {
     })
   }
 
-  static upload (url, params, headers) {
+  static upload(url, params, headers) {
     let formData = new FormData()
     for (let key in params) {
       formData.append(key, params[key])
@@ -171,7 +171,7 @@ export default class Fetch {
       })
   }
 
-  static post (url, body, header) {
+  static post(url, body, header) {
     return Fetch.request(url, {
       method: 'POST',
       body,
@@ -179,7 +179,7 @@ export default class Fetch {
     })
   }
 
-  static get (url, body, header) {
+  static get(url, body, header) {
     return Fetch.request(url, {
       method: 'GET',
       body,

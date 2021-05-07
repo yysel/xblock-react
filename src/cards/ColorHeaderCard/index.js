@@ -1,10 +1,10 @@
 import React from 'react'
-import { Row, Col, Card, Tooltip } from 'antd'
-import { SyncOutlined, FullscreenOutlined, RestOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import {Row, Col, Card, Tooltip} from 'antd'
+import {SyncOutlined, FullscreenOutlined, RestOutlined, ArrowLeftOutlined} from '@ant-design/icons'
 
 export default function (props) {
 
-  const {title, recycled = false, loading = false, onRecycle, onFullScreen, onSync, onBack,...rest} = props
+  const {title, recycled = false, loading = false, onRecycle, onFullScreen, onSync, onBack, ...rest} = props
   const style = recycled ? {
     color: '#ffffff',
     backgroundColor: '#ff8684'

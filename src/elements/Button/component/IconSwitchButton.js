@@ -1,8 +1,13 @@
 import React from 'react'
-import { Modal, Tooltip } from 'antd'
-import { Icon } from '@ant-design/compatible'
+import {Modal, Tooltip} from 'antd'
+import {Icon} from '@ant-design/compatible'
 
-export default function ({value, primaryKey, event: {edit}, button: {index, title, confirm_description = '该操作锁定数据，是否继续？'}}) {
+export default function ({
+                           value,
+                           primaryKey,
+                           event: {edit},
+                           button: {index, title, confirm_description = '该操作锁定数据，是否继续？'}
+                         }) {
   const editValue = {}
   editValue[primaryKey] = value[primaryKey]
   return <Tooltip placement="top" title={title} autoAdjustOverflow>
@@ -16,11 +21,10 @@ export default function ({value, primaryKey, event: {edit}, button: {index, titl
               Modal.confirm({
                 title: '操作提示',
                 content: confirm_description,
-                onOk () {
+                onOk() {
                   edit(editValue)
                 },
               })
-            }
-            else edit(editValue)
+            } else edit(editValue)
           }}/></Tooltip>
 }

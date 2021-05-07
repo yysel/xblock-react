@@ -1,12 +1,12 @@
 import React from 'react'
-import { Modal, Result } from 'antd'
+import {Modal, Result} from 'antd'
 import Table from '../../blocks/Table'
 import InnerButton from '_elements/Button/InnerButton'
 import TopButton from '_elements/Button/TopButton'
 import Input from '_elements/Input'
 import Cell from '_elements/Cell'
 import blockStructure from '_tools/block'
-import { checkCode } from '_tools/response'
+import {checkCode} from '_tools/response'
 
 const {error, success} = Modal
 

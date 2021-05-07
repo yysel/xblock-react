@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react'
+import React, {PureComponent} from 'react'
 import NoticeIcon from './NoticeIcon'
-import { connect } from 'dva'
+import {connect} from 'dva'
 import moment from 'moment'
-import { Tag } from 'antd'
+import {Tag} from 'antd'
 import groupBy from 'lodash/groupBy'
 import getAction from '../../action'
 
@@ -13,14 +13,14 @@ import getAction from '../../action'
 }))
 export default class Notice extends PureComponent {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     const {clearNotices, fetchNotices} = getAction(this.props.dispatch)
     this.clearNotices = clearNotices
     this.fetchNotices = fetchNotices
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.fetchNotices()
   }
 
@@ -32,7 +32,7 @@ export default class Notice extends PureComponent {
     this.clearNotices({payload: {type}})
   }
 
-  getNoticeData () {
+  getNoticeData() {
     const {notices = []} = this.props
     if (notices.length === 0) {
       return {}
@@ -64,7 +64,7 @@ export default class Notice extends PureComponent {
     return groupBy(newNotices, 'type')
   }
 
-  render () {
+  render() {
     const {
       fetchingNotices,
       dispatch,

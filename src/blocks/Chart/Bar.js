@@ -1,5 +1,5 @@
 import React from 'react';
-import { color } from '_tools/helper';
+import {color} from '_tools/helper';
 import {
   G2,
   Chart,
@@ -22,7 +22,7 @@ export default class Bar extends React.Component {
     if (this.chart) {
       this.chart.forceFit();
     }
-    const { block: { height = 600, data: { content, header }, property: { x, y } } } = this.props;
+    const {block: {height = 600, data: {content, header}, property: {x, y}}} = this.props;
     let dict = {};
     const yAxis = y.split(',');
     header.map(i => {

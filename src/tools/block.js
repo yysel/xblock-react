@@ -1,4 +1,4 @@
-export default function(block) {
+export default function (block) {
   block.getHeader = (key = null) => {
     if (key) return block?.header?.find(i => i.index === key);
     else return block?.header;

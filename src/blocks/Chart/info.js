@@ -10,8 +10,8 @@ export default {
       index: 'type',
     },
     {
-      title:'x',
-      index:'x周'
+      title: 'x',
+      index: 'x周'
     }
   ],
 };

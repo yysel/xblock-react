@@ -1,4 +1,4 @@
-import { connect } from 'dva'
+import {connect} from 'dva'
 import React from 'react'
 
 document.title

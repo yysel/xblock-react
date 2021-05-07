@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react'
-import { Menu, Spin, Dropdown, Avatar, Divider } from 'antd'
-import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons'
+import React, {PureComponent} from 'react'
+import {Menu, Spin, Dropdown, Avatar, Divider} from 'antd'
+import {UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined} from '@ant-design/icons'
 import Debounce from 'lodash-decorators/debounce'
-import { Link } from 'dva/router'
-import { connect } from 'dva'
+import {Link} from 'dva/router'
+import {connect} from 'dva'
 import * as routerRedux from 'react-router-redux'
 import getAction from '../../action'
 
@@ -20,7 +20,7 @@ export default class GlobalHeader extends PureComponent {
   }
 
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     const {changeLayoutCollapsed, clearMenu, logoutGoHome} = getAction(this.props.dispatch)
     this.changeLayoutCollapsed = changeLayoutCollapsed
@@ -28,7 +28,7 @@ export default class GlobalHeader extends PureComponent {
     this.logoutGoHome = logoutGoHome
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.triggerResizeEvent.cancel()
   }
 
@@ -60,13 +60,13 @@ export default class GlobalHeader extends PureComponent {
   }
 
   @Debounce(600)
-  triggerResizeEvent () {
+  triggerResizeEvent() {
     const event = document.createEvent('HTMLEvents')
     event.initEvent('resize', true, false)
     window.dispatchEvent(event)
   }
 
-  render () {
+  render() {
     const {
       collapsed,
       isMobile,

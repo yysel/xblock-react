@@ -1,9 +1,20 @@
 import React, {Fragment} from 'react'
-import {Table,Row,Col} from 'antd'
+import {Table, Row, Col} from 'antd'
 import {Alert} from 'antd'
 
 export default function (props) {
-  const {data: {list, pagination}, loading, columns, rowKey, rowClassName, onChange, selectBar, onSelectRow, selectedRows, ...rest} = props
+  const {
+    data: {list, pagination},
+    loading,
+    columns,
+    rowKey,
+    rowClassName,
+    onChange,
+    selectBar,
+    onSelectRow,
+    selectedRows,
+    ...rest
+  } = props
   const paginationProps = pagination ? {
     showSizeChanger: true,
     showQuickJumper: true,

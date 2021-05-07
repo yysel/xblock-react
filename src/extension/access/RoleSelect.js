@@ -6,7 +6,7 @@ export default class RoleSelect extends React.Component {
   disabledList = [];
 
   componentDidMount() {
-    const { header: { dict }, value, mode } = this.props;
+    const {header: {dict}, value, mode} = this.props;
     if (mode === 'edit') {
       const uuid = this.props?.row?.uuid ? this.props.row.uuid : null;
       this.disabledList = uuid ? [uuid] : [];
@@ -19,7 +19,7 @@ export default class RoleSelect extends React.Component {
   }
 
   render() {
-    const { onChange } = this.props;
+    const {onChange} = this.props;
     return <TreeCascade {...this.props} disabledList={this.disabledList} onChange={(v) => {
       onChange(v);
     }}/>;

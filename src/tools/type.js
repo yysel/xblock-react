@@ -16,19 +16,19 @@ export const isUndefined = value => value === void 0;
  * 判断类型Boolean
  * @param {any} value
  */
-export const isBoolean = value => typeof(value) === 'boolean';
+export const isBoolean = value => typeof (value) === 'boolean';
 
 /**
  * 判断类型Number
  * @param {any} value
  */
-export const isNumber = value => typeof(value) === 'number';
+export const isNumber = value => typeof (value) === 'number';
 
 /**
  * 判断类型String
  * @param {any} value
  */
-export const isString = value => typeof(value) === 'string';
+export const isString = value => typeof (value) === 'string';
 
 /**
  * 判断类型Symbol
@@ -72,7 +72,7 @@ export const getType = (value) => toString(value).match(/\s([a-z]+)/i)[1].toLoca
  * @param {any} value
  */
 export const isEmpty = (value) => {
-  if (value === void(0) || value === null) return true;
+  if (value === void (0) || value === null) return true;
   else if (isObject(value)) return !Object.keys(value).length;
   else if (isArray(value)) return !value.length;
   else if (isString(value)) return !value;
@@ -86,7 +86,7 @@ export const isEmpty = (value) => {
  * @param y
  * @returns {boolean}
  */
-export const objectCompare = function(x, y) {
+export const objectCompare = function (x, y) {
   if (x === y) {
     return true;
   }

@@ -4,12 +4,10 @@ export default {
     edit: {},
     add: {},
     filter: {},
-    change:{
-
-    }
+    change: {}
   },
   reducers: {
-    editParent(state, { payload }) {
+    editParent(state, {payload}) {
       return {
         ...state,
         edit: {
@@ -18,7 +16,7 @@ export default {
         },
       };
     },
-    addParent(state, { payload }) {
+    addParent(state, {payload}) {
       return {
         ...state,
         add: {
@@ -27,7 +25,7 @@ export default {
         },
       };
     },
-    filterParent(state, { payload }) {
+    filterParent(state, {payload}) {
       return {
         ...state,
         filter: {

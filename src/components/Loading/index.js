@@ -1,7 +1,7 @@
 import React from 'react';
-import { Spin, Alert } from 'antd';
+import {Spin, Alert} from 'antd';
 
-export default function({ children, loading }) {
+export default function ({children, loading}) {
   if (!loading) return children;
   return <Spin>
     {children}

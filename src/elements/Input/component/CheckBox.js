@@ -1,12 +1,12 @@
 import React from 'react';
-import { Checkbox } from 'antd';
+import {Checkbox} from 'antd';
 
-const { Group } = Checkbox;
+const {Group} = Checkbox;
 
-export default function({ header: { dict }, value = [], onChange }) {
+export default function ({header: {dict}, value = [], onChange}) {
 
   return <Group value={value instanceof Array ? value : []}
-                mode="multiple" style={{ width: '100%' }}
+                mode="multiple" style={{width: '100%'}}
                 allowClear
                 showArrow
                 placeholder="请选择"

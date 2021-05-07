@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import { Input, AutoComplete } from 'antd';
+import {Input, AutoComplete} from 'antd';
 import {SearchOutlined} from '@ant-design/icons'
 import classNames from 'classnames';
 import styles from '_styles/component.less';
@@ -8,8 +8,10 @@ import styles from '_styles/component.less';
 export default class HeaderSearch extends PureComponent {
   static defaultProps = {
     defaultActiveFirstOption: false,
-    onPressEnter: () => {},
-    onSearch: () => {},
+    onPressEnter: () => {
+    },
+    onSearch: () => {
+    },
     className: '',
     placeholder: '',
     dataSource: [],
@@ -28,9 +30,11 @@ export default class HeaderSearch extends PureComponent {
     searchMode: this.props.defaultOpen,
     value: '',
   };
+
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
+
   onKeyDown = e => {
     if (e.key === 'Enter') {
       this.timeout = setTimeout(() => {
@@ -39,13 +43,13 @@ export default class HeaderSearch extends PureComponent {
     }
   };
   onChange = value => {
-    this.setState({ value });
+    this.setState({value});
     if (this.props.onChange) {
       this.props.onChange();
     }
   };
   enterSearchMode = () => {
-    this.setState({ searchMode: true }, () => {
+    this.setState({searchMode: true}, () => {
       if (this.state.searchMode) {
         this.input.focus();
       }
@@ -57,15 +61,16 @@ export default class HeaderSearch extends PureComponent {
       value: '',
     });
   };
+
   render() {
-    const { className, placeholder, ...restProps } = this.props;
+    const {className, placeholder, ...restProps} = this.props;
     delete restProps.defaultOpen; // for rc-select not affected
     const inputClass = classNames(styles.input, {
       [styles.show]: this.state.searchMode,
     });
     return (
       <span className={classNames(className, styles.headerSearch)} onClick={this.enterSearchMode}>
-        <SearchOutlined />
+        <SearchOutlined/>
         <AutoComplete
           key="AutoComplete"
           {...restProps}

@@ -44,11 +44,15 @@ export default {
   config: (data) => {
     registerObject(data, 'config')
   },
-  mainLayout:(data)=>{
+  mainLayout: (data) => {
     registerObject(data, 'mainLayout')
   },
-  mainLayoutMount:(func)=>{registerState.mount=func},
-  mainLayoutMounted:(func)=>{registerState.mounted=func},
+  mainLayoutMount: (func) => {
+    registerState.mount = func
+  },
+  mainLayoutMounted: (func) => {
+    registerState.mounted = func
+  },
   menu: (data) => {
     registerArray(data, 'menu')
   },

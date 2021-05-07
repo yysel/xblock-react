@@ -1,7 +1,7 @@
-import { getLoginUser, getMenu, login, register, queryNotices, clearNotices } from '../api'
-import { setToken } from '../tools/auth'
-import { replace, push } from 'react-router-redux'
-import { checkCode } from '../tools/response'
+import {getLoginUser, getMenu, login, register, queryNotices, clearNotices} from '../api'
+import {setToken} from '../tools/auth'
+import {replace, push} from 'react-router-redux'
+import {checkCode} from '../tools/response'
 
 export default {
   namespace: '@@xblock',
@@ -20,7 +20,7 @@ export default {
 
   effects: {
 
-    * fetchNotices (_, {call, put}) {
+    * fetchNotices(_, {call, put}) {
       const res = yield call(queryNotices)
       if (res?.success && res?.data)
         yield put({
@@ -29,7 +29,7 @@ export default {
         })
     },
 
-    * clearNotices ({payload}, {put, call}) {
+    * clearNotices({payload}, {put, call}) {
       yield call(clearNotices, payload)
       const res = yield call(queryNotices)
       if (res?.success && res?.data)
@@ -39,7 +39,7 @@ export default {
         })
     },
 
-    * fetchMenu ({payload = true, callback, no_module = false}, {call, put}) {
+    * fetchMenu({payload = true, callback, no_module = false}, {call, put}) {
       const res = yield call(getMenu, {dynamic: payload, no_module})
       if (res?.success) {
         yield put({
@@ -52,7 +52,7 @@ export default {
       }
     },
 
-    * fetchCurrent (_, {call, put}) {
+    * fetchCurrent(_, {call, put}) {
       const response = yield call(getLoginUser)
       if (response?.success) {
         yield put({
@@ -62,7 +62,7 @@ export default {
       }
     },
 
-    * login ({payload, goPath}, {call, put}) {
+    * login({payload, goPath}, {call, put}) {
       const response = yield call(login, payload)
       if (response?.success && response?.data) {
         yield setToken(response.data)
@@ -75,7 +75,7 @@ export default {
       return response
     },
 
-    * logout (_, {put, select}) {
+    * logout(_, {put, select}) {
       yield window.top.postMessage('logout', '*')
       const pathname = yield select(state => state.routing.location.pathname)
       let goPath = yield trim('/', pathname)
@@ -99,7 +99,7 @@ export default {
       yield put(replace(`/user/login/${goPath}`))
     },
 
-    * logoutGoHome ({home}, {put, select}) {
+    * logoutGoHome({home}, {put, select}) {
       yield window.top.postMessage('logout', '*')
       let goPath = yield trim('/', home)
       yield goPath = goPath ? goPath.replace(/\//g, '@') : null
@@ -110,7 +110,7 @@ export default {
       yield put(replace(`/user/login/${goPath}`))
     },
 
-    * register ({payload, goPath, callBack}, {call, put}) {
+    * register({payload, goPath, callBack}, {call, put}) {
       const response = yield call(register, payload)
       yield  checkCode(response)
       if (response.code < 1000) {
@@ -120,69 +120,69 @@ export default {
   },
 
   reducers: {
-    saveMenu (state, {payload}) {
+    saveMenu(state, {payload}) {
       return {
         ...state,
         mainLayoutMenu: payload,
       }
     },
-    changeLayoutCollapsed (state, {payload}) {
+    changeLayoutCollapsed(state, {payload}) {
       return {
         ...state,
         collapsed: payload,
       }
     },
-    saveNotices (state, {payload}) {
+    saveNotices(state, {payload}) {
       return {
         ...state,
         notices: payload,
       }
     },
-    saveClearedNotices (state, {payload}) {
+    saveClearedNotices(state, {payload}) {
       return {
         ...state,
         notices: state.notices.filter(item => item.type !== payload),
       }
     },
 
-    clearMenu (state) {
+    clearMenu(state) {
       return {
         ...state,
         menuData: [],
         menuBlock: {},
       }
     },
-    wsClose (state) {
+    wsClose(state) {
       return {
         ...state,
         webSocketStatus: false,
       }
     },
-    wsOpen (state) {
+    wsOpen(state) {
       return {
         ...state,
         webSocketStatus: true,
       }
     },
-    save (state, {payload}) {
+    save(state, {payload}) {
       return {
         ...state,
         ...payload,
       }
     },
-    saveSearchResult (state, {payload}) {
+    saveSearchResult(state, {payload}) {
       return {
         ...state,
         searchResult: payload,
       }
     },
-    saveCurrentUser (state, action) {
+    saveCurrentUser(state, action) {
       return {
         ...state,
         currentUser: action.payload,
       }
     },
-    changeNotifyCount (state, action) {
+    changeNotifyCount(state, action) {
       return {
         ...state,
         currentUser: {
@@ -194,7 +194,7 @@ export default {
   },
 
   subscriptions: {
-    setup ({history}) {
+    setup({history}) {
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
       return history.listen(({pathname, search}) => {
         if (typeof window.ga !== 'undefined') {

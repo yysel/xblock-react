@@ -1,15 +1,16 @@
 import React from 'react'
-import { Avatar, List } from 'antd'
+import {Avatar, List} from 'antd'
 import classNames from 'classnames'
-export default function NoticeList ({
-                                      data = [],
-                                      onClick,
-                                      onClear,
-                                      title,
-                                      locale,
-                                      emptyText,
-                                      emptyImage,
-                                    }) {
+
+export default function NoticeList({
+                                     data = [],
+                                     onClick,
+                                     onClear,
+                                     title,
+                                     locale,
+                                     emptyText,
+                                     emptyImage,
+                                   }) {
   if (data.length === 0) {
     return (
       <div className='xblock-global-header-notice-notfound'>

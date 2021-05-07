@@ -3,7 +3,14 @@ import Card from '../../cards/TableCard'
 import debounce from 'lodash/debounce'
 
 export default function CommonCard(props) {
-  const {block: {parameter, component, button, title, index, has_card, recyclable, header}, TopButton, loading, inFullScreen, fullScreen, setInitParam} = props
+  const {
+    block: {parameter, component, button, title, index, has_card, recyclable, header},
+    TopButton,
+    loading,
+    inFullScreen,
+    fullScreen,
+    setInitParam
+  } = props
   let isRecycle = false
   if (parameter && parameter.__deleted) isRecycle = true
   const newTitle = isRecycle ? title + ' - ' + '数据回收站' : title

@@ -1,13 +1,13 @@
 import React from 'react'
-import { Route, Switch, routerRedux } from 'dva/router'
+import {Route, Switch, routerRedux} from 'dva/router'
 import XBlock from './registerState'
-import { ConfigProvider } from 'antd'
+import {ConfigProvider} from 'antd'
 import zhCN from 'antd/es/locale/zh_CN'
 import DocumentTitleAndIcon from '../components/DocumentTitleAndIcon'
 
 const {ConnectedRouter} = routerRedux
 
-function RouterConfig ({history, ...rest}) {
+function RouterConfig({history, ...rest}) {
   const MainLayout = XBlock.mainLayout.component().default
   const UserLayout = XBlock.userLayout.component().default
   return (

@@ -1,7 +1,21 @@
-import { Input, InputNumber } from 'antd'
+import {Input, InputNumber} from 'antd'
 import React from 'react'
 
-export default function ({header = {}, value, onChange, disabled = true, type = 'filter',dispatch, id, index, mode, parentValue, primaryKey, resetChildrenValue, ...rest}) {
+export default function ({
+                           header = {},
+                           value,
+                           onChange,
+                           disabled = true,
+                           type = 'filter',
+                           dispatch,
+                           id,
+                           index,
+                           mode,
+                           parentValue,
+                           primaryKey,
+                           resetChildrenValue,
+                           ...rest
+                         }) {
 
   if (header.value_type === 'number') {
     return (

@@ -1,11 +1,11 @@
 export default class Provider {
   app = null
 
-  boot () {
+  boot() {
 
   }
 
-  register () {
+  register() {
 
   }
 }

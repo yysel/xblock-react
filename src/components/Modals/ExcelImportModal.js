@@ -1,10 +1,10 @@
 import React from 'react'
-import { Modal, Upload } from 'antd'
-import { InboxOutlined, CheckCircleFilled, ExclamationCircleFilled } from '@ant-design/icons'
+import {Modal, Upload} from 'antd'
+import {InboxOutlined, CheckCircleFilled, ExclamationCircleFilled} from '@ant-design/icons'
 
 const Dragger = Upload.Dragger
 
-export default function ExcelImportModal (onExportSample, onOk) {
+export default function ExcelImportModal(onExportSample, onOk) {
   const modal = Modal.confirm({})
   let result = null
   const onChange = (file) => {
@@ -24,10 +24,11 @@ export default function ExcelImportModal (onExportSample, onOk) {
     return false
   }
   const Content = ({result = null, title}) => <Dragger beforeUpload={onChange} fileList={[]}>
-    <p >
-      <p className="ant-upload-drag-icon" style={{marginTop:20}}>
-        {result ? <CheckCircleFilled style={{color: 'var(--success-color)',fontSize:70}}/> : (result === false ?
-          <ExclamationCircleFilled style={{color: 'var(--error-color)',fontSize:70}}/> : <InboxOutlined style={{fontSize:70}} />)}
+    <p>
+      <p className="ant-upload-drag-icon" style={{marginTop: 20}}>
+        {result ? <CheckCircleFilled style={{color: 'var(--success-color)', fontSize: 70}}/> : (result === false ?
+          <ExclamationCircleFilled style={{color: 'var(--error-color)', fontSize: 70}}/> :
+          <InboxOutlined style={{fontSize: 70}}/>)}
 
       </p>
       <p className="ant-upload-hint" style={{fontSize: 8, marginTop: 40}}>

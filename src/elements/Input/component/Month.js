@@ -1,5 +1,5 @@
 import React from 'react'
-import { DatePicker } from 'antd'
+import {DatePicker} from 'antd'
 
 const {MonthPicker} = DatePicker
 import locale from 'antd/lib/date-picker/locale/zh_CN'

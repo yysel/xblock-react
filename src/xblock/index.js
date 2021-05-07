@@ -15,7 +15,7 @@ export default class XBlock {
   model = null
   register = register
 
-  constructor () {
+  constructor() {
     this.provider_list.push(new Bootstrap)
   }
 
@@ -23,7 +23,7 @@ export default class XBlock {
     console.log(e.message)
   }
 
-  run (root, props) {
+  run(root, props) {
     const app = dva({
       onError: this.onError,
     })
@@ -50,7 +50,7 @@ export default class XBlock {
     return this
   }
 
-  provider (provider) {
+  provider(provider) {
     const obj = new provider
     if (obj instanceof Provider) {
       this.provider_list.push(obj)

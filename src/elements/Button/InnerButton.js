@@ -1,14 +1,14 @@
 import React from 'react'
 import registerState from '../../xblock/registerState'
-import { Popconfirm } from 'antd'
+import {Popconfirm} from 'antd'
 
 const getButton = (key) => {
   const button = registerState.button.find(item => item.key === key)
   return button?.component ? button.component : null
 }
 
-export default function InnerButton (props) {
-  const {button = [], extension = {}, onClick, value = {}, event, style,primaryKey, buttonStatue = {}} = props
+export default function InnerButton(props) {
+  const {button = [], extension = {}, onClick, value = {}, event, style, primaryKey, buttonStatue = {}} = props
   return (
     <div className='xblock-element-inner-button' style={style}>
       {button.map((item, key) => {

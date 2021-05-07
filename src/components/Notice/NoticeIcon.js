@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react'
-import { Popover, Tabs, Badge, Spin } from 'antd'
-import { BellOutlined } from '@ant-design/icons'
+import React, {PureComponent} from 'react'
+import {Popover, Tabs, Badge, Spin} from 'antd'
+import {BellOutlined} from '@ant-design/icons'
 import classNames from 'classnames'
 import List from './NoticeList'
 
@@ -25,7 +25,7 @@ export default class NoticeIcon extends PureComponent {
   }
   static Tab = TabPane
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
     if (props.children && props.children[0]) {
@@ -42,7 +42,7 @@ export default class NoticeIcon extends PureComponent {
     this.props.onTabChange(tabType)
   }
 
-  getNotificationBox () {
+  getNotificationBox() {
     const {children, loading, locale} = this.props
     if (!children) {
       return null
@@ -74,7 +74,7 @@ export default class NoticeIcon extends PureComponent {
     )
   }
 
-  render () {
+  render() {
     const {className, count, popupAlign, onPopupVisibleChange} = this.props
     const noticeButtonClass = classNames(className, 'xblock-global-header-notice-button')
     const notificationBox = this.getNotificationBox()

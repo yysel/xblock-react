@@ -6,7 +6,7 @@ import {UpOutlined, DownOutlined} from '@ant-design/icons'
 const FormItem = Form.Item
 
 export default function TopFilterForm(props) {
-  const {header = [], parameter = {}, Input, onChange,expand:filter_expand} = props
+  const {header = [], parameter = {}, Input, onChange, expand: filter_expand} = props
   if (header.length <= 0) return null
   const onSubmit = (value) => {
     const {onChange} = props
@@ -49,7 +49,7 @@ export default function TopFilterForm(props) {
           <Button
             style={{marginLeft: 8}}
             onClick={() => {
-              onChange({}).then(()=>form.resetFields())
+              onChange({}).then(() => form.resetFields())
 
             }}
           >

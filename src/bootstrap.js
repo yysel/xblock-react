@@ -15,7 +15,7 @@ import appModel from '_models/app'
 
 export default class Bootstrap extends Provider {
 
-  boot () {
+  boot() {
     const app = this.app
     //注册相关model
 
@@ -49,7 +49,7 @@ export default class Bootstrap extends Provider {
 
   }
 
-  register () {
+  register() {
 
   }
 

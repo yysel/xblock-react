@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Row, Col, Button, Form } from 'antd'
+import React, {useState} from 'react'
+import {Row, Col, Button, Form} from 'antd'
 
-import { UpOutlined, DownOutlined } from '@ant-design/icons'
+import {UpOutlined, DownOutlined} from '@ant-design/icons'
 
 const FormItem = Form.Item
 
-export default function TopFilterForm (props) {
+export default function TopFilterForm(props) {
   const {header = [], parameter = {}, Input, onChange} = props
   if (header.length <= 0) return null
   const onSubmit = (value) => {

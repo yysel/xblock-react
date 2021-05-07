@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Layout } from 'antd'
-import { connect } from 'dva'
-import { Route, Redirect, Switch } from 'dva/router'
-import { ContainerQuery } from 'react-container-query'
+import {Layout} from 'antd'
+import {connect} from 'dva'
+import {Route, Redirect, Switch} from 'dva/router'
+import {ContainerQuery} from 'react-container-query'
 import classNames from 'classnames'
-import { enquireScreen, unenquireScreen } from 'enquire-js'
+import {enquireScreen, unenquireScreen} from 'enquire-js'
 import GlobalHeader from './Header'
 import SiderMenu from './SiderMenu'
 import NotFount from '../../components/Exception/404'
@@ -95,7 +95,7 @@ export default class AdminLayout extends React.PureComponent {
     lock: false
   }
 
-  getChildContext () {
+  getChildContext() {
     const {location, routerData = [], menuData} = this.props
     return {
       location,
@@ -103,7 +103,7 @@ export default class AdminLayout extends React.PureComponent {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     registerState.mount.bind(this)
     registerState.mount(this.props)
     const {getMenu, getUser} = getAction(this.props.dispatch)
@@ -117,7 +117,7 @@ export default class AdminLayout extends React.PureComponent {
 
   }
 
-  componentDidMount () {
+  componentDidMount() {
     registerState.mounted.bind(this)
     registerState.mounted(this.props)
     document.documentElement.onkeydown = (ev) => {
@@ -133,7 +133,7 @@ export default class AdminLayout extends React.PureComponent {
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     unenquireScreen(this.enquireHandler)
 
     document.documentElement.onkeydown = () => {
@@ -142,7 +142,7 @@ export default class AdminLayout extends React.PureComponent {
 
   }
 
-  render () {
+  render() {
     const {
       currentUser,
       location,
@@ -163,13 +163,13 @@ export default class AdminLayout extends React.PureComponent {
         {/*<ThemeConfig/>*/}
 
         <Layout style={{width: '100%'}}>
-          <Header style={{padding: 0}}>
+          <Header style={{padding: 0,}}>
             <GlobalHeader
               isMobile={this.state.isMobile}
               baseRedirect={baseRedirect}
             />
           </Header>
-          <Content style={{ height: '100%'}}>
+          <Content style={{height: '100%'}}>
             <Switch>
               {menuRouter}
               {registerState.router.map(route => <Route key={route.path}

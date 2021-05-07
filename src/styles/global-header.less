@@ -4,6 +4,7 @@
   :global(.anticon) {
     margin-right: 8px;
   }
+
   :global(.ant-dropdown-menu-item) {
     width: 160px;
   }
@@ -16,6 +17,7 @@
   transition: all 0.3s, padding 0s;
   padding: 0 24px;
   color: var(--text-color);
+
   &:hover {
     background: @primary-1;
   }
@@ -38,6 +40,7 @@
   padding: 0 0 0 24px;
   cursor: pointer;
   font-size: 20px;
+
   img {
     display: inline-block;
     vertical-align: middle;
@@ -47,9 +50,11 @@
 .xblock-global-header-right {
   float: right;
   height: 100%;
+
   .name {
     color: #666666;
   }
+
   .action {
     cursor: pointer;
     padding: 0 12px;
@@ -62,18 +67,22 @@
       vertical-align: middle;
       //color: var(--icon-color);
     }
+
     &:hover,
     &:global(.ant-popover-open) {
       background: @primary-1;
     }
   }
+
   .search {
     padding: 0;
     margin: 0 12px;
+
     &:hover {
       background: transparent;
     }
   }
+
   .account {
     .avatar {
       margin: 20px 8px 20px 0;
@@ -83,6 +92,7 @@
       vertical-align: middle;
       border: 2px solid #CCC;
       box-shadow: #dcdcdc 0 0 3px 1px inset;
+
       & > img {
         border-radius: 50%;
       }
@@ -95,6 +105,7 @@
     .ant-tabs-nav-scroll {
       text-align: center;
     }
+
     .ant-tabs-bar {
       margin-bottom: 4px;
     }
@@ -108,6 +119,7 @@
 
 .xblock-global-header-notice-popover {
   width: 336px;
+
   :global(.ant-popover-inner-content) {
     padding: 0;
   }
@@ -123,6 +135,7 @@
   text-align: center;
   padding: 73px 0 88px 0;
   color: @text-color-secondary;
+
   img {
     display: inline-block;
     margin-bottom: 16px;
@@ -133,6 +146,7 @@
 .xblock-global-header-notice-list {
   max-height: 400px;
   overflow: auto;
+
   .item {
     transition: all 0.3s;
     overflow: hidden;
@@ -152,25 +166,31 @@
     &.read {
       opacity: 0.4;
     }
+
     &:last-child {
       border-bottom: 0;
     }
+
     &:hover {
       background: @primary-1;
     }
+
     .title {
       font-weight: normal;
       margin-bottom: 8px;
     }
+
     .description {
       font-size: 12px;
       line-height: @line-height-base;
     }
+
     .datetime {
       font-size: 12px;
       margin-top: 4px;
       line-height: @line-height-base;
     }
+
     .extra {
       float: right;
       color: @text-color-secondary;
@@ -180,6 +200,7 @@
     }
   }
 }
+
 .xblock-global-header-notice-clear {
   height: 46px;
   line-height: 46px;

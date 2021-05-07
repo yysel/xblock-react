@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'dva'
-import { message, Input, Button, Form } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import React, {Component} from 'react'
+import {connect} from 'dva'
+import {message, Input, Button, Form} from 'antd'
+import {UserOutlined, LockOutlined} from '@ant-design/icons'
 import getAction from '../../action'
 
 const FormItem = Form.Item
@@ -11,7 +11,7 @@ const Password = Input.Password
   register: loading.effects['@@xblock/register'],
 }))
 export default class LoginPage extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     const {login} = getAction(this.props.dispatch)
     this.login = login
@@ -42,7 +42,7 @@ export default class LoginPage extends Component {
 
   }
 
-  render () {
+  render() {
     const {} = this.props
     const username = {
       props: {

@@ -12,10 +12,13 @@ export default class RegisterState {
   static dispatch = ({type}) => {
     console.log(`${type} 调用失败！dispatch未注册`)
   }
-  static mount = () => {}
-  static mounted = () => {}
+  static mount = () => {
+  }
+  static mounted = () => {
+  }
 
-  static getState = () => {}
+  static getState = () => {
+  }
   static userLayout = {
     path: '/user',
     component: () => require('../layouts/UserLayout'),

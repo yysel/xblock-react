@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react'
-import { Layout, Menu, Badge } from 'antd'
+import React, {PureComponent} from 'react'
+import {Layout, Menu, Badge} from 'antd'
 import Icon from '@ant-design/compatible/lib/icon'
 import pathToRegexp from 'path-to-regexp'
-import { Link } from 'dva/router'
-import { urlToList } from './pathTools'
-import { checkAuthority } from '../../../tools/auth'
-import { connect } from 'dva'
+import {Link} from 'dva/router'
+import {urlToList} from './pathTools'
+import {checkAuthority} from '../../../tools/auth'
+import {connect} from 'dva'
 import getAction from '../../../action'
 
 const {Sider} = Layout
@@ -31,7 +31,7 @@ export const getMeunMatcheys = (flatMenuKeys, path) => {
   logo, collapsed, title
 }))
 export default class SiderMenu extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.flatMenuKeys = this.getFlatMenuKeys(this.props.menuData)
     this.state = {
@@ -39,7 +39,7 @@ export default class SiderMenu extends PureComponent {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.location.pathname !== this.props.location.pathname) {
       this.setState({
         openKeys: this.getDefaultCollapsedSubMenus(nextProps),
@@ -52,7 +52,7 @@ export default class SiderMenu extends PureComponent {
    * /list/search/articles = > ['list','/list/search']
    * @param  props
    */
-  getDefaultCollapsedSubMenus (props) {
+  getDefaultCollapsedSubMenus(props) {
     const {location: {pathname}} = props || this.props
     return urlToList(pathname)
       .map(item => {
@@ -66,7 +66,7 @@ export default class SiderMenu extends PureComponent {
    * [{path:string},{path:string}] => {path,path2}
    * @param  menus
    */
-  getFlatMenuKeys (menus) {
+  getFlatMenuKeys(menus) {
     let keys = []
     menus.forEach(item => {
       if (item.children) {
@@ -223,7 +223,7 @@ export default class SiderMenu extends PureComponent {
     })
   }
 
-  render () {
+  render() {
     const {logo, title, collapsed} = this.props
     const {openKeys} = this.state
     // Don't show popup menu when it is been collapsed

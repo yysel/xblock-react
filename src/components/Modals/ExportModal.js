@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Modal, Form, Input, Checkbox, Col, Row, Radio, Switch } from 'antd'
+import React, {useState} from 'react'
+import {Modal, Form, Input, Checkbox, Col, Row, Radio, Switch} from 'antd'
 import moment from 'moment'
 
 export default function (onOk, header, fileName, current) {

@@ -5,7 +5,7 @@ const getCell = (key) => {
   const button = registerState.cell.find(item => item.key === key)
   return button?.component ? button.component : null
 }
-export default function Column (props) {
+export default function Column(props) {
   const {header: {render = 'text', index}, extension = {}, value} = props
   let ColumnComponent = getCell(render)
   if (extension[index] && extension[index]) ColumnComponent = extension[index]

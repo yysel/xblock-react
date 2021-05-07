@@ -11,7 +11,7 @@ export default {
   state: initState,
   effects: {},
   reducers: {
-    save (state, {payload}) {
+    save(state, {payload}) {
       return {
         ...state,
         ...payload,

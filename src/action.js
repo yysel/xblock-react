@@ -1,6 +1,6 @@
 import registerState from './xblock/registerState'
 
-export default function getAction (dispatch) {
+export default function getAction(dispatch) {
   let thisDispatch = registerState.dispatch
   if (dispatch) thisDispatch = dispatch
   return {
@@ -61,7 +61,7 @@ export default function getAction (dispatch) {
       index,
     }),
 
-    changeCommonFormVisible: (index, status, button,value) => thisDispatch({
+    changeCommonFormVisible: (index, status, button, value) => thisDispatch({
       type: '@@container/changeCommonFormVisible',
       status,
       index,

@@ -1,9 +1,10 @@
 @import '~antd/lib/style/themes/default.less';
 
-.xblock-sider-menu-icon{
+.xblock-sider-menu-icon {
   width: 14px;
   margin-right: 10px !important;
 }
+
 .xblock-sider-menu-logo {
   height: 64px;
   position: relative;
@@ -43,6 +44,7 @@
 
     .logo {
       background: white;
+
       h1 {
         color: #002140;
       }
@@ -52,7 +54,7 @@
   & > div {
     @media screen and (max-width: 992px) {
       width: inherit;
-      position: inherit;
+      position: fixed;
     }
 
     width: 300px;
@@ -103,6 +105,7 @@
 
     .logo {
       background: white;
+
       h1 {
         color: #002140;
       }
@@ -112,12 +115,12 @@
   & > div {
     @media screen and (max-width: 992px) {
       width: inherit;
-      position: inherit;
+      position: fixed;
     }
 
     width: 80px;
-    min-width:  80px;
-    max-width:  80px;
+    min-width: 80px;
+    max-width: 80px;
     position: fixed;
     overflow-y: auto;
     background-color: var(--layout-sider-background);

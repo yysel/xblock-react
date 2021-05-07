@@ -20,8 +20,10 @@ function selectMessageType(type) {
       };
     case 'form' :
       return {
-        success: () => {},
-        error: () => {}
+        success: () => {
+        },
+        error: () => {
+        }
       };
     default :
       return {

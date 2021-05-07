@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import { Modal } from 'antd';
-import { getFileType } from '_tools/file';
+import React, {PureComponent} from 'react';
+import {Modal} from 'antd';
+import {getFileType} from '_tools/file';
 
 export default class FileRenderModal extends PureComponent {
 
@@ -16,18 +16,18 @@ export default class FileRenderModal extends PureComponent {
         width="100%"
         height="1000px" frameBorder="0"/>;
     } else {
-      return <embed src={file} style={{ width: '100%' }} onClick={e => e.stopPropagation()}/>;
+      return <embed src={file} style={{width: '100%'}} onClick={e => e.stopPropagation()}/>;
     }
 
   };
 
   show = () => {
-    this.setState({ visible: true });
+    this.setState({visible: true});
   };
 
   render() {
-    const { file, children, clickAble = false } = this.props;
-    const { visible } = this.state;
+    const {file, children, clickAble = false} = this.props;
+    const {visible} = this.state;
     const props = clickAble ? {
       clickAble: this.show,
     } : {};
@@ -35,7 +35,7 @@ export default class FileRenderModal extends PureComponent {
       <div>{children}</div>
       <Modal visible={visible} footer={null} width='1000px' onCancel={(e) => {
         e.stopPropagation();
-        this.setState({ visible: false });
+        this.setState({visible: false});
       }}>
         {
           this.getFile(file)

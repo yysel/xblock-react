@@ -17,10 +17,10 @@ const AddForm = props => {
     if (i.default) initValue[i.index] = i.default
   })
   const okHandle = () => {
-   return  form.validateFields().then((value) => {
+    return form.validateFields().then((value) => {
       const filter = Object.keys(value).filter(k => value[k])
       if (filter.length) {
-         onOk(value).then(res => {
+        onOk(value).then(res => {
           if (res?.success) {
             changeAddFormVisible(false)
             form.resetFields()

@@ -3,8 +3,8 @@ import React from 'react';
 import findChild from './findChild';
 
 let first = false;
-export default function(props) {
-  const { header: { dict }, value, onChange, multiple = true } = props;
+export default function (props) {
+  const {header: {dict}, value, onChange, multiple = true} = props;
   if (!first) first = value;
   const disabledList = [];
   if (value && value instanceof Array) value.map(i => findChild(i, disabledList, dict));

@@ -6,7 +6,22 @@ import {connect} from 'dva'
 const CheckboxGroup = Checkbox.Group;
 const TableCard = function (props) {
 
-  const {title, hasSetting = false, recycled = false, loading = false, index, dispatch, blockSetting, header, onRecycle, onFullScreen, onSync, onBack, TopButton, ...rest} = props
+  const {
+    title,
+    hasSetting = false,
+    recycled = false,
+    loading = false,
+    index,
+    dispatch,
+    blockSetting,
+    header,
+    onRecycle,
+    onFullScreen,
+    onSync,
+    onBack,
+    TopButton,
+    ...rest
+  } = props
   const options = header.filter(i => i.visible).map(i => ({label: i.title, value: i.index}))
   const color = recycled ? '#ff8684' : 'var(--primary-color)'
   // const color = recycled ? '#ff8684' : '#888888'
@@ -45,12 +60,12 @@ const TableCard = function (props) {
 
            <span>
              {hasSetting && <span style={{marginLeft: 20}}>
-            <Popover content={<Row style={{maxWidth:'120px'}} ><CheckboxGroup options={options} value={checkedList}
-                                                                       onChange={onChange}>
-              <Row >
-              {checkedList.map(i => <Col span={24} flex={1}>
-                <Checkbox value={i}> {options.find(item => item.value === i)}</Checkbox>
-              </Col>)}
+            <Popover content={<Row style={{maxWidth: '120px'}}><CheckboxGroup options={options} value={checkedList}
+                                                                              onChange={onChange}>
+              <Row>
+                {checkedList.map(i => <Col span={24} flex={1}>
+                  <Checkbox value={i}> {options.find(item => item.value === i)}</Checkbox>
+                </Col>)}
               </Row>
             </CheckboxGroup></Row>}
                      title={<Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>

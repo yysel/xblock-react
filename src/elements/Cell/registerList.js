@@ -1,8 +1,8 @@
 import React from 'react'
 import FileReader from './component/FileReader'
-import { Tag, Switch } from 'antd'
-import { Icon } from '@ant-design/compatible'
-import { getTextFromHeader, goPage, color } from '_tools/helper'
+import {Tag, Switch} from 'antd'
+import {Icon} from '@ant-design/compatible'
+import {getTextFromHeader, goPage, color} from '_tools/helper'
 
 export default [
   {

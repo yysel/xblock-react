@@ -11,7 +11,7 @@ const initState = {
   commonFormVisible: {},
   commonFormButton: {},
   commonFormValue: {},
-  blockSetting: JSON.parse(window.localStorage.getItem('blockSetting')) ? JSON.parse(window.localStorage.getItem('blockSetting')):{},
+  blockSetting: JSON.parse(window.localStorage.getItem('blockSetting')) ? JSON.parse(window.localStorage.getItem('blockSetting')) : {},
   selectedValue: {}
 }
 export default {

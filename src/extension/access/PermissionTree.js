@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react'
-import { getBlock } from '../../api'
-import { Tree } from 'antd'
-import { BarsOutlined, AppstoreOutlined, AuditOutlined, CaretDownOutlined } from '@ant-design/icons'
+import React, {PureComponent} from 'react'
+import {getBlock} from '../../api'
+import {Tree} from 'antd'
+import {BarsOutlined, AppstoreOutlined, AuditOutlined, CaretDownOutlined} from '@ant-design/icons'
 
 const {TreeNode} = Tree
 
@@ -14,7 +14,7 @@ export default class PermissionTree extends PureComponent {
     originValue: null,
   }
 
-  getTreeData (id) {
+  getTreeData(id) {
     getBlock({block: this.props.index, action: 'permission_tree', payload: {id}}).then(({success, data}) => {
       if (success) this.setState({treeData: data})
     })
@@ -51,13 +51,13 @@ export default class PermissionTree extends PureComponent {
       return <TreeNode key={item.value} selectable={false} title={title}/>
     })
 
-  componentDidMount () {
+  componentDidMount() {
     this.getTreeData(this.props.parentValue)
     this.state.originParent = this.props?.row?.parent_id
     this.state.originValue = this.props?.value
   }
 
-  componentWillReceiveProps ({parentValue}) {
+  componentWillReceiveProps({parentValue}) {
     const {parentValue: old, onChange, row = {}, mode} = this.props
     if (old !== parentValue && (old || parentValue)) {
       this.getTreeData(parentValue)
@@ -67,7 +67,7 @@ export default class PermissionTree extends PureComponent {
     }
   }
 
-  render () {
+  render() {
     const {treeData, value} = this.state
     return <Tree
       checkedKeys={this.props.value}

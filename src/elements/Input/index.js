@@ -1,10 +1,10 @@
 import React from 'react'
 import registerState from '../../xblock/registerState'
-import { connect } from 'dva'
+import {connect} from 'dva'
 
 class Field extends React.Component {
 
-  getInput (key) {
+  getInput(key) {
     const button = registerState.input.find(item => item.key === key)
     return button?.component ? button.component : null
   }
@@ -16,7 +16,7 @@ class Field extends React.Component {
     resetChildrenValue()
   }
 
-  setValueToStore (value) {
+  setValueToStore(value) {
     const {dispatch, mode, header: {index, parent}, index: blockIndex, onChange} = this.props
     const payload = {}
     payload[`${blockIndex}-${index}`] = {value, save: onChange, parent: `${blockIndex}-${parent}`}
@@ -26,13 +26,16 @@ class Field extends React.Component {
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setValueToStore(this.props.value)
   }
 
-  render () {
+  render() {
     const {extension = {}, ...rest} = this.props
-    const {header: {input = 'text', index, addable = true, editable = true, filterable = true}, mode = 'edit'} = this.props
+    const {
+      header: {input = 'text', index, addable = true, editable = true, filterable = true},
+      mode = 'edit'
+    } = this.props
     let Field = this.getInput(input)
     if (extension[index] && extension[index]) Field = extension[index]
     let disabled = false

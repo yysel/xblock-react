@@ -14,7 +14,16 @@ import TopButton from '_elements/Button/TopButton';
 
 const FormItem = Form.Item
 const CommonForm = props => {
-  const {onOk, commonFormVisible, changeCommonFormVisible, commonFormButton, index, Input, commonFormValue, loading} = props
+  const {
+    onOk,
+    commonFormVisible,
+    changeCommonFormVisible,
+    commonFormButton,
+    index,
+    Input,
+    commonFormValue,
+    loading
+  } = props
   const formBuilder = commonFormButton.form
   const currentLoading = loading[commonFormButton.index]
   const formTitle = formBuilder?.title ? formBuilder.title : commonFormButton.title
@@ -25,7 +34,7 @@ const CommonForm = props => {
   })
   const okHandle = (action = 'confirm') => {
     form.validateFields().then((value) => {
-      const newValue=clear(value)
+      const newValue = clear(value)
       onOk({...commonFormValue, ...newValue, form_action: action}, commonFormButton.index).then(res => {
         if (res?.success) {
           changeCommonFormVisible(false, {})

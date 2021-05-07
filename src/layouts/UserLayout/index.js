@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link, Redirect, Switch, Route } from 'dva/router'
+import {Link, Redirect, Switch, Route} from 'dva/router'
 import registerState from '../../xblock/registerState'
-import { connect } from 'dva'
+import {connect} from 'dva'
 
 @connect(({'@@app': {logo, title, tabTitle}}) => ({logo, title, tabTitle}))
 class UserLayout extends React.PureComponent {
 
-  render () {
+  render() {
     return (
       <div className='xblock-user-layout-container'>
         <div className='content'>

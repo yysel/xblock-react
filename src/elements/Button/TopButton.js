@@ -10,7 +10,17 @@ const getButton = (key) => {
 }
 
 export default function TopButton(props) {
-  const {button, spread = true, loading = {}, extension = {}, event, onClick, value = {}, style = {}, primaryKey} = props
+  const {
+    button,
+    spread = true,
+    loading = {},
+    extension = {},
+    event,
+    onClick,
+    value = {},
+    style = {},
+    primaryKey
+  } = props
 
   return (button.length < 4 || spread) ? (
     <span style={style}>

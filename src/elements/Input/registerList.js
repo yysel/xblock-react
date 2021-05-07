@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'antd';
+import {Switch} from 'antd';
 
 import Upload from './component/Upload';
 import Editor from './component/Editor';
@@ -14,7 +14,7 @@ import Date from './component/Date';
 import Month from './component/Month';
 import Password from './component/Password';
 import DateTime from './component/DateTime'
-import DateRange  from './component/DateRange'
+import DateRange from './component/DateRange'
 
 export default [
   {
@@ -75,8 +75,8 @@ export default [
   {
     title: '开关',
     key: 'switch',
-    component: ({ header = {}, value, onChange, ...rest }) => {
-      return <Switch style={{ marginLeft: 5 }} checked={Number(value)} onChange={v => onChange(Number(v))} {...rest}/>;
+    component: ({header = {}, value, onChange, ...rest}) => {
+      return <Switch style={{marginLeft: 5}} checked={Number(value)} onChange={v => onChange(Number(v))} {...rest}/>;
     },
   },
   {

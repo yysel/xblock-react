@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
-import { Upload as AntdUpload, message, Modal } from 'antd'
+import React, {Component} from 'react'
+import {Upload as AntdUpload, message, Modal} from 'antd'
 import FileRenderModal from '../../Cell/component/FileRenderModal'
-import { request } from '../../../fetch'
+import {request} from '../../../fetch'
 import Fetch from '../../../fetch'
 import {InboxOutlined} from '@ant-design/icons'
-function removeFile (url, params) {
+
+function removeFile(url, params) {
   return request(url, {
     method: 'POST',
     body: params,
   })
 }
 
-function beforeUpload (file) {
+function beforeUpload(file) {
   // const isJPG = file.type === 'image/jpeg';
   // if (!isJPG) {
   //   message.error('You can only upload JPG file!');
@@ -25,7 +26,7 @@ function beforeUpload (file) {
   return isLt2M
 }
 
-function getBase64 (file) {
+function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -36,7 +37,7 @@ function getBase64 (file) {
 
 export default class Upload extends Component {
 
-  constructor (props) {
+  constructor(props) {
     const config = window.xblock
     super(props)
     this.state = {
@@ -46,7 +47,7 @@ export default class Upload extends Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     if (this.props.value) {
       this.setState({
         fileList: [
@@ -60,7 +61,7 @@ export default class Upload extends Component {
     }
   }
 
-  componentWillReceiveProps (props, net) {
+  componentWillReceiveProps(props, net) {
     if (props.value !== this.props.value) {
       const fileList = props.value ? [{
         uid: '1',
@@ -81,7 +82,7 @@ export default class Upload extends Component {
     }
   }
 
-  render () {
+  render() {
     const {fileList, uploadUrl, removeUrl} = this.state
     const uploadButton = (
       <div>

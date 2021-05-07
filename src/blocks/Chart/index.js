@@ -1,8 +1,8 @@
 import React from 'react';
 import Line from './Line'
 
-export default function(props) {
-  const { block: { property: { type = 'line' } } } = props;
+export default function (props) {
+  const {block: {property: {type = 'line'}}} = props;
   switch (type) {
     case 'line':
       return <Line {...props}/>
