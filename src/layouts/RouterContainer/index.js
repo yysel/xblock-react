@@ -13,7 +13,7 @@ const parseRoute = (router, menuRouter, user, rootPath) => {
   }
   const res = checkAuthority(router.permission, user?.permission, true, false)
   const Component = res ? BasicContainer : NoAccess
-  if (!firstPath && res) firstPath = router.path
+  if (!firstPath && res && router.path.search(':') < 0) firstPath = router.path
   if (router.block && router.block instanceof Array) {
     menuRouter.push(<Route key={router.path}
                            path={rootPath === '/' ? router.path : `/${trim(rootPath, '/')}/${trim(router.path, '/')}`}
