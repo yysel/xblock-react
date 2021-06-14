@@ -91,8 +91,8 @@ export default class BasicContainer extends Component {
         parameter: {...parameter, ...query, relation_uuid: params?.relation_uuid},
         pagination,
         sorting,
-      }, true).then(({data}) => setTitle(data?.title))
-    } else this.onChange({parameter: {...query}}, true).then(({data}) => setTitle(data?.title))
+      }, true).then(({data}) => setTitle && setTitle(data?.title))
+    } else this.onChange({parameter: {...query}}, true).then(({data}) =>setTitle &&  setTitle(data?.title))
   }
 
   componentDidMount() {
