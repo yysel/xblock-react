@@ -4,8 +4,8 @@ import {routerRedux} from 'dva/router'
 import {parseString} from '../../tools/helper'
 import {connect} from 'dva'
 
-@connect(({'@@container': {blockSetting, selectedValue}}) => ({blockSetting, selectedValue}))
-export default class CommonTable extends PureComponent {
+
+const CommonTable = class extends PureComponent {
   state = {
     selectedRows: [],
     selectedRowsValue: [],
@@ -63,7 +63,7 @@ export default class CommonTable extends PureComponent {
   }
 
   getColumn = () => {
-    const {block: {header = [], sorting, index}, blockSetting, Cell} = this.props
+    const {block: {header = [], sorting, index}, blockSetting = {}, Cell} = this.props
     const visibleHeader = header.filter(i => i.visible)
     const checkedList = blockSetting[index] ? blockSetting[index] : visibleHeader.map(i => i.index)
     return visibleHeader.filter(item => checkedList.indexOf(item.index) > -1).map(item => {
@@ -174,3 +174,5 @@ export default class CommonTable extends PureComponent {
     </div>)
   }
 }
+export default connect(({'@@container': {blockSetting, selectedValue}}) => ({blockSetting, selectedValue}))(CommonTable)
+export const Table = CommonTable

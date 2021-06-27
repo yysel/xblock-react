@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Upload} from 'antd'
+import {Modal, Upload, Button} from 'antd'
 import {InboxOutlined, CheckCircleFilled, ExclamationCircleFilled} from '@ant-design/icons'
 
 const Dragger = Upload.Dragger
@@ -23,7 +23,7 @@ export default function ExcelImportModal(onExportSample, onOk) {
     }
     return false
   }
-  const Content = ({result = null, title}) => <Dragger beforeUpload={onChange} fileList={[]}>
+  const Content = ({result = null, title}) => <div><Dragger beforeUpload={onChange} fileList={[]}>
     <p>
       <p className="ant-upload-drag-icon" style={{marginTop: 20}}>
         {result ? <CheckCircleFilled style={{color: 'var(--success-color)', fontSize: 70}}/> : (result === false ?
@@ -41,25 +41,22 @@ export default function ExcelImportModal(onExportSample, onOk) {
     </p>
 
   </Dragger>
+    <div style={{textAlign: "right", marginTop: 20}}>
+      <Button type={'primary'} disabled={!result} onClick={() => {
+        if (result) {
+          modal.destroy()
+          return onOk(result)
+        }
+        return Modal.error({
+          title: '文件不能为空'
+        })
+      }}>提交</Button>
+    </div>
+  </div>
   const modalProps = {
     width: 600,
     content: <Content result={null}/>,
     okText: '导入',
-    okButtonProps: {disabled: true},
-    onOk: () => {
-      modal.update({
-        content: <Content result={result}/>,
-        cancelButtonProps: {disabled: true}
-      })
-      if (result) {
-        return onOk(result)
-      }
-
-      return Modal.error({
-        title: '文件不能为空'
-      })
-
-    }
   }
   modal.update(modalProps)
 }

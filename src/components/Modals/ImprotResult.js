@@ -1,6 +1,6 @@
 import React from 'react'
-import {Modal, Result} from 'antd'
-import Table from '../../blocks/Table'
+import {Modal, Result,ConfigProvider} from 'antd'
+import {Table} from '../../blocks/Table'
 import InnerButton from '_elements/Button/InnerButton'
 import TopButton from '_elements/Button/TopButton'
 import Input from '_elements/Input'
@@ -35,7 +35,7 @@ export default function (res, dispatch) {
         Cell: (props) => <Cell index={index} dispatch={dispatch} primaryKey={primaryKey} {...props}/>,
       }
       return error({
-        content: <Table {...props} scroll={{y: 600}}/>,
+        content: <ConfigProvider store={{}}><Table {...props} scroll={true}/></ConfigProvider>,
         width: '1000px',
         footer: null,
         title: <span>导入成功
