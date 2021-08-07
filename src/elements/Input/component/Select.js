@@ -39,6 +39,7 @@ export default class SelectRadio extends PureComponent {
                 allowClear
                 placeholder="请选择"
                 optionFilterProp="children"
+                {...header?.property}
                 filterOption={(input, option) => option.props.children && option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} {...rest}
                 onChange={onChange}
         >

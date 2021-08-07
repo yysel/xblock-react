@@ -2,7 +2,7 @@ import React from 'react'
 import {Route, Switch, routerRedux} from 'dva/router'
 import XBlock from './registerState'
 import {ConfigProvider} from 'antd'
-import zhCN from 'antd/es/locale/zh_CN'
+import locale from 'antd/lib/locale/zh_CN';
 import DocumentTitleAndIcon from '../components/DocumentTitleAndIcon'
 
 const {ConnectedRouter} = routerRedux
@@ -11,7 +11,7 @@ function RouterConfig({history, ...rest}) {
   const MainLayout = XBlock.mainLayout.component().default
   const UserLayout = XBlock.userLayout.component().default
   return (
-    <ConfigProvider locale={zhCN}>
+    <ConfigProvider locale={locale}>
       <DocumentTitleAndIcon>
         <ConnectedRouter history={history}>
           <Switch>

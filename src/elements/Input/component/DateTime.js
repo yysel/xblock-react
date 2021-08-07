@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Col, Row, Input, DatePicker, TimePicker} from 'antd';
 import Moment from 'moment';
+import locale from "antd/lib/date-picker/locale/zh_CN";
 
 const InputGroup = Input.Group;
 export default class DateTime extends PureComponent {
@@ -25,12 +26,14 @@ export default class DateTime extends PureComponent {
   }
 
   render() {
-    const {value, minuteStep, format, header: {property}, ...rest} = this.props;
+    const {value, format, header: {property: {date = {}, time = {},time_format}}
+    , ...rest} = this.props;
     return (<InputGroup compact>
-      <DatePicker onChange={this.onDateChange.bind(this)} style={{width: '50%'}} format={'YYYY-MM-DD'}
-                  value={value ? Moment(value, 'YYYY-MM-DD') : null} {...property}/>
-      <TimePicker minuteStep={minuteStep} style={{width: '50%'}}
-                  format={property?.time_format ? property?.time_format : 'HH:mm:ss'}
+      <DatePicker locale={locale} style={{width: '50%'}} format={'YYYY-MM-DD'} {...date}
+                  value={value ? Moment(value, 'YYYY-MM-DD') : null} onChange={this.onDateChange.bind(this)}/>
+      <TimePicker style={{width: '50%'}}
+                  format={time_format ? time_format : 'HH:mm:ss'}
+                  {...time}
                   onChange={this.onTimeChange.bind(this)}
                   value={value ? Moment(value) : null}/>
     </InputGroup>);

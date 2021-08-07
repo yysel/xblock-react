@@ -18,6 +18,6 @@ export default function ({
                            resetChildrenValue,
                            ...rest
                          }) {
-  return <TextArea placeholder="请输入" key={header.index} value={value} onChange={onChange}  {...rest}
+  return <TextArea placeholder="请输入" key={header.index}    {...header?.property} value={value} onChange={onChange}  {...rest}
                    disabled={disabled}/>;
 }

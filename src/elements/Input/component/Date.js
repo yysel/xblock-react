@@ -7,6 +7,7 @@ export default function ({value = null, header: {property}, onChange, mode, ...r
   return <DatePicker style={{width: '100%'}}
                      placeholder="选择日期"
                      format="YYYY-MM-DD"
+                     {...property}
                      value={value ? moment(value, 'YYYY-MM-DD') : null}
-                     onChange={(value) => onChange(value ? value.format('YYYY-MM-DD') : null)} {...rest} {...property}/>
+                     onChange={(value) => onChange(value ? value.format('YYYY-MM-DD') : null)} {...rest}/>
 }

@@ -1,4 +1,4 @@
-import {Input, InputNumber} from 'antd'
+import {Input, InputNumber, Select} from 'antd'
 import React from 'react'
 
 export default function ({
@@ -25,8 +25,10 @@ export default function ({
     return (<Input placeholder="请输入"
                    key={header.index}
                    disabled={disabled}
+                   {...header?.property}
+                   {...rest}
                    value={value}
                    onChange={onChange}
-                   {...rest} />)
+                   />)
   }
 };

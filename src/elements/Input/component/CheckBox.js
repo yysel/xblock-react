@@ -3,7 +3,7 @@ import {Checkbox} from 'antd';
 
 const {Group} = Checkbox;
 
-export default function ({header: {dict}, value = [], onChange}) {
+export default function ({header: {dict, property}, value = [], onChange}) {
 
   return <Group value={value instanceof Array ? value : []}
                 mode="multiple" style={{width: '100%'}}
@@ -11,6 +11,7 @@ export default function ({header: {dict}, value = [], onChange}) {
                 showArrow
                 placeholder="请选择"
                 optionFilterProp='title'
+                {...property}
                 onChange={onChange}>
     {dict.map(item => <Checkbox
       value={item.value} title={item.text}>{item.text}</Checkbox>)}

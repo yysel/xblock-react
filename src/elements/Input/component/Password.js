@@ -7,6 +7,7 @@ export default function ({header = {}, value, onChange, disabled = true, type = 
   return (<Password placeholder="请输入"
                     key={header.index}
                     disabled={disabled}
+                    {...header?.property}
                     value={value}
                     onChange={onChange}
                     {...rest} />);

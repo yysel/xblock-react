@@ -8,7 +8,7 @@ import AddForm from '_components/Form/AddForm'
 import CommonForm from '_components/Form/CommonForm'
 import EditForm from '_components/Form/EditForm'
 import TopFilterForm from '../../components/Form/TopFilterForm/new'
-import {Tabs, Row, Col, Empty, Skeleton, Card as AntdCard} from 'antd'
+import {Tabs, Row, Col, Empty, Skeleton, Card as AntdCard, message} from 'antd'
 import blockStructure from '_tools/block'
 import BaseCard from '../../cards/ColorHeaderCard'
 import {goPage, parseString, parseUrl} from '_tools/helper'
@@ -64,7 +64,7 @@ export default class BasicContainer extends Component {
       edit: (value) => this.action('edit', value),
       delete: (value) => this.action('delete', value),
       select: (value) => this.onChange(value),
-      action: (action, value) => this.action(action, value),
+      action: (action, value, showLoading) => this.action(action, value, showLoading),
       refresh: () => this.setState({timestamp: new Date().getTime()}),
     }
     this.config = register.getBlockConfig(index, {
@@ -92,7 +92,7 @@ export default class BasicContainer extends Component {
         pagination,
         sorting,
       }, true).then(({data}) => setTitle && setTitle(data?.title))
-    } else this.onChange({parameter: {...query}}, true).then(({data}) =>setTitle &&  setTitle(data?.title))
+    } else this.onChange({parameter: {...query}}, true).then(({data}) => setTitle && setTitle(data?.title))
   }
 
   componentDidMount() {
@@ -128,10 +128,16 @@ export default class BasicContainer extends Component {
     })
   }
 
-  action = (action, value) => {
+  action = (action, value, showLoading = true) => {
     const {pagination, parameter, sorting, index, primary_key} = this.getBlockData()
     const {selectedValue} = this.props
+    if (showLoading) message.loading({
+      content: '操作中...',
+      duration: 0,
+      key: `${index}${action}`
+    })
     return this.fetchBlock(action, {...value, parameter}).then((res) => {
+      message.destroy(`${index}${action}`)
       if (res.type === 'form') {
         this.changeCommonFormVisible(index, true, {
           index: action,

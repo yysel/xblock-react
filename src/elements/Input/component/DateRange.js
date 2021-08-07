@@ -9,9 +9,10 @@ export default function ({value = null, header: {property}, onChange, mode, ...r
   const end = value?.[1] ? moment(value[1]) : null
   return <RangePicker style={{width: '100%'}}
                       format="YYYY-MM-DD"
+                      {...property}
                       value={[begin, end]}
                       onChange={(value, valueString) => {
                         if (!value) onChange(undefined)
                         else onChange(valueString ? valueString : [])
-                      }} {...rest} {...property}/>
+                      }} {...rest} />
 }

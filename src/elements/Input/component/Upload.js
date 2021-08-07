@@ -97,6 +97,7 @@ export default class Upload extends Component {
             action={uploadUrl}
             listType="picture-card"
             headers={Fetch.getHeaders()}
+            {...this.props?.header?.property}
             fileList={fileList}
             onPreview={() => this.show && this.show()}
             onChange={this.handleChange}
