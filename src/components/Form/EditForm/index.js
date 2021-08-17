@@ -19,7 +19,6 @@ const EditForm = function (props) {
       onOk({...value, ...primary}).then(({success}) => {
         if (success) {
           changeEditFormVisible(false)
-          form.resetFields()
         }
       })
     }

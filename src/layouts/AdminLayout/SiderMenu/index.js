@@ -139,13 +139,6 @@ export default class SiderMenu extends PureComponent {
    * get SubMenu or Item
    */
   getSubMenuOrItem = item => {
-    let count = 0
-    item.children.map(function (i) {
-
-      if (i.count) {
-        count += i.count * 1
-      }
-    })
     if (item.children && item.children.some(child => child.title)) {
       const childrenItems = this.getNavMenuItems(item.children)
       // 当无子菜单时就不展示菜单
@@ -154,17 +147,12 @@ export default class SiderMenu extends PureComponent {
           <SubMenu
             title={
               item.icon ? (
-                item.path !== '/index' ?
-                  <Badge count={count ? count : ''} offset={[20, 5]} showZero>
+                <Badge count={item.badge ? item.badge : ''} size={'small'} offset={[20, 5]}>
                     <span>
                         {getIcon(item.icon)}
                       <span>{item.title}</span>
                       </span>
-                  </Badge>
-                  : <span>
-                      {getIcon(item.icon)}
-                    <span>{item.title}</span>
-                    </span>
+                </Badge>
               ) : (
                 item.title
               )

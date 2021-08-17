@@ -63,7 +63,7 @@ const TableCard = function (props) {
             <Popover content={<Row style={{maxWidth: '120px'}}><CheckboxGroup options={options} value={checkedList}
                                                                               onChange={onChange}>
               <Row>
-                {checkedList.map(i => <Col span={24} flex={1}>
+                {checkedList.map((i, k) => <Col span={24} flex={1} key={k}>
                   <Checkbox value={i}> {options.find(item => item.value === i)}</Checkbox>
                 </Col>)}
               </Row>

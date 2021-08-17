@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default (props) => {
-  const {button: {color, title}, onClick} = props;
+  const {button: {color, title} = {}, children, onClick} = props;
   const style = {
     color: '#fff',
     cursor: 'pointer',
@@ -10,5 +10,5 @@ export default (props) => {
     backgroundColor: (color && color !== 'primary') ? color : 'var(--primary-color)',
   };
   return <span className='xblock-element-small-button' style={style}
-               onClick={onClick}>{title}</span>;
+               onClick={onClick}>{title ? title : children}</span>;
 }
