@@ -11,7 +11,7 @@ export default function InnerButton(props) {
   const {button = [], extension = {}, onClick, value = {}, event, style, primaryKey, buttonStatue = {}} = props
   return (
     <div className='xblock-element-inner-button' style={style}>
-      {button.map((item, key) => {
+      {button.filter(i=>i.visible).map((item, key) => {
         const {title, index, confirm, component} = item
         const buttonProps = {
           button: item,

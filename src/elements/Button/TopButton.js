@@ -11,7 +11,7 @@ const getButton = (key) => {
 
 export default function TopButton(props) {
   const {
-    button,
+    button: btn,
     spread = true,
     loading = {},
     extension = {},
@@ -21,7 +21,7 @@ export default function TopButton(props) {
     style = {},
     primaryKey
   } = props
-
+  const button = btn.filter(i => i.visible)
   return (button.length < 4 || spread) ? (
     <span style={style}>
       {button.map((item) => {
